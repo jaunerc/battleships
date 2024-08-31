@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Websocket Test</title>
+</head>
+<body>
+<script>
+    const ws = new WebSocket('ws://localhost:3001/1234')
+    ws.onopen = () => {
+        console.log('ws opened on browser')
+        ws.send('hello world 1')
+        ws.send('hello world 2')
+        ws.send('hello world 3')
+    }
+
+    ws.onmessage = (message) => {
+        console.log(`message received`, message.data)
+    }
+</script>
+</body>
+</html>
