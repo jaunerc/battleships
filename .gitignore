@@ -1,0 +1,6 @@
+# Intellij
+.idea
+
+# Build & packages
+dist
+node_modules
