@@ -14,10 +14,12 @@
     "ext": "ts,js,json"
   },
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "express-ws": "^5.0.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@types/express-ws": "^3.0.5",
     "@types/node": "^22.5.1",
     "typescript": "^5.5.4",
     "nodemon": "^3.1.4"
