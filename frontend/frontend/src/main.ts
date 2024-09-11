@@ -1,19 +1,15 @@
 import './style.css'
+import "reflect-metadata";
+import {container} from "./inversify.config.ts";
+import {View} from "./view/View.ts";
 
-const webSocket: WebSocket = new WebSocket('ws://localhost:3001');
-let username: string | undefined = undefined;
+const webSocket: WebSocket = container.get<WebSocket>('Websocket')
+
+const usernameView = container.get<View>('UsernameView')
 
 webSocket.onopen = () => {
-    console.log('websocket connected');
-    document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-      <div>
-        <label for="username">Please type your username</label>
-        <input id="username"/>
-        <button id="submit">Submit</button>
-      </div>
-    `
-    const submitButton: HTMLButtonElement = document.querySelector<HTMLButtonElement>('#submit')!;
-    submitButton.addEventListener('click', onSubmitClick);
+    console.log('websocket connected')
+    usernameView.show(document.querySelector<HTMLDivElement>('#app')!)
 }
 
 interface WebsocketMessage {
@@ -23,25 +19,11 @@ interface WebsocketMessage {
 
 webSocket.onmessage = (message: MessageEvent<string>) => {
     const websocketMessage: WebsocketMessage = JSON.parse(message.data);
-
     switch (websocketMessage.messageType) {
         case "READY":
             onReadyMessage();
     }
 }
-
-function onSubmitClick(): void {
-    username = document.querySelector<HTMLInputElement>('#username')?.value;
-    const websocketMessage: WebsocketMessage = { messageType: 'SEND_USERNAME', username: username};
-    webSocket.send(JSON.stringify(websocketMessage));
-
-    document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-        <div>
-            <p>Your Username: ${username}</p>
-        </div>
-    `
-}
-
 function onReadyMessage(): void {
     document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <div>
