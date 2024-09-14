@@ -27,6 +27,7 @@ export class UsernameView implements View {
         const submitButton: HTMLButtonElement = document.querySelector<HTMLButtonElement>('#submit')!
         submitButton.addEventListener('click', () => {
             const username: string = this.readUsernameFromDom()
+            this.state.username = username
             this.sendUsername(username)
         })
     }

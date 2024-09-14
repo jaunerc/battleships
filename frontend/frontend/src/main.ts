@@ -2,19 +2,17 @@ import './style.css'
 import "reflect-metadata";
 import {container} from "./inversify.config.ts";
 import {View} from "./view/View.ts";
+import {WebsocketMessage} from "./WebsocketMessage.ts";
+import {State} from "./State.ts";
 
 const webSocket: WebSocket = container.get<WebSocket>('Websocket')
 
-const usernameView = container.get<View>('UsernameView')
+const startView = container.get<View>('StartView')
+const state = container.get<State>('State')
 
 webSocket.onopen = () => {
     console.log('websocket connected')
-    usernameView.show(document.querySelector<HTMLDivElement>('#app')!)
-}
-
-interface WebsocketMessage {
-    messageType: 'READY' | 'SEND_USERNAME';
-    username?: string;
+    startView.show(document.querySelector<HTMLDivElement>('#app')!)
 }
 
 webSocket.onmessage = (message: MessageEvent<string>) => {
@@ -25,6 +23,7 @@ webSocket.onmessage = (message: MessageEvent<string>) => {
     }
 }
 function onReadyMessage(): void {
+    console.log('username from state: ' + state.username)
     document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <div>
             <p>Battle!</p>
