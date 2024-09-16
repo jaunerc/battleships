@@ -1,8 +1,8 @@
 import {View} from "./View.ts";
 import {inject, injectable} from "inversify";
 import type {State} from "../State.ts";
-import {Carrier} from "../game/Carrier.ts";
-import {Board, Ship} from "../game/Game";
+import {Ship} from "../game/Ship.ts";
+import {BoardDimension} from "../game/Game";
 
 interface MouseDragPosition {
     x: number
@@ -19,7 +19,7 @@ export class PlaceShipsView implements View {
     mouseDragging: boolean = false
     context?: CanvasRenderingContext2D
 
-    board?: Board
+    board?: BoardDimension
     carrier?: Ship
 
     constructor(
@@ -48,7 +48,7 @@ export class PlaceShipsView implements View {
             shipFillStyle: '#FF964B80'
         }
 
-        this.carrier = new Carrier(this.board, { x: 2, y: 2})
+        this.carrier = new Ship(this.board, { x: 2, y: 2}, 'Carrier')
 
         this.drawGrid()
         this.carrier.draw(this.context)

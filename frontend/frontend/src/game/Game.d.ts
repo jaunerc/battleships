@@ -1,15 +1,9 @@
 
-export interface Board {
+export interface BoardDimension {
     canvasSizeInPixels: number
     columnSizeInPixels: number
     shipStrokeStyle: string
     shipFillStyle: string
-}
-
-export interface Ship {
-    move: (nextStartField: FieldPosition) => void
-    draw: (context: CanvasRenderingContext2D) => void
-    rotate: (context: CanvasRenderingContext2D) => void
 }
 
 export interface FieldPosition {

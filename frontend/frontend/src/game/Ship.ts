@@ -1,18 +1,19 @@
 import {ShipDrawer} from "./ShipDrawer.ts";
-import {Board, FieldPosition, Ship, ShipOrientation} from "./Game";
+import {BoardDimension, FieldPosition, ShipOrientation, ShipType} from "./Game";
+import {ShipSize} from "./ShipSize.ts";
 
-const SIZE: number = 5
-
-export class Carrier implements Ship {
+export class Ship {
     
-    board: Board
+    board: BoardDimension
     startField: FieldPosition
     shipOrientation: ShipOrientation = 'Vertical'
     shipDrawer: ShipDrawer
+    shipType: ShipType
     
-    constructor(board: Board, startField: FieldPosition, shipDrawer: ShipDrawer = new ShipDrawer()) {
+    constructor(board: BoardDimension, startField: FieldPosition, shipType: ShipType, shipDrawer: ShipDrawer = new ShipDrawer()) {
         this.board = board
         this.startField = startField
+        this.shipType = shipType
         this.shipDrawer = shipDrawer
     }
 
@@ -27,7 +28,7 @@ export class Carrier implements Ship {
                     context,
                     this.board,
                     this.startField,
-                    SIZE
+                    ShipSize[this.shipType]
                 )
                 break
             case 'Vertical':
@@ -35,7 +36,7 @@ export class Carrier implements Ship {
                     context,
                     this.board,
                     this.startField,
-                    SIZE
+                    ShipSize[this.shipType]
                 )
         }
     }
