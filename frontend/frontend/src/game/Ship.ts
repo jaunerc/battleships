@@ -4,14 +4,14 @@ import {ShipSize} from "./ShipSize.ts";
 
 export class Ship {
     
-    board: BoardDimension
+    boardDimension: BoardDimension
     startField: FieldPosition
     shipOrientation: ShipOrientation = 'Vertical'
     shipDrawer: ShipDrawer
     shipType: ShipType
     
     constructor(board: BoardDimension, startField: FieldPosition, shipType: ShipType, shipDrawer: ShipDrawer = new ShipDrawer()) {
-        this.board = board
+        this.boardDimension = board
         this.startField = startField
         this.shipType = shipType
         this.shipDrawer = shipDrawer
@@ -26,7 +26,7 @@ export class Ship {
             case 'Horizontal':
                 this.shipDrawer.drawShipHorizontal(
                     context,
-                    this.board,
+                    this.boardDimension,
                     this.startField,
                     ShipSize[this.shipType]
                 )
@@ -34,7 +34,7 @@ export class Ship {
             case 'Vertical':
                 this.shipDrawer.drawShipVertical(
                     context,
-                    this.board,
+                    this.boardDimension,
                     this.startField,
                     ShipSize[this.shipType]
                 )

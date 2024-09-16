@@ -3,6 +3,7 @@ import {inject, injectable} from "inversify";
 import type {State} from "../State.ts";
 import {Ship} from "../game/Ship.ts";
 import {BoardDimension} from "../game/Game";
+import {Grid} from "../game/Grid.ts";
 
 interface MouseDragPosition {
     x: number
@@ -21,6 +22,7 @@ export class PlaceShipsView implements View {
 
     board?: BoardDimension
     carrier?: Ship
+    grid?: Grid
 
     constructor(
         @inject('State') state: State,
@@ -49,8 +51,9 @@ export class PlaceShipsView implements View {
         }
 
         this.carrier = new Ship(this.board, { x: 2, y: 2}, 'Carrier')
+        this.grid = new Grid(this.board)
 
-        this.drawGrid()
+        this.grid.draw(this.context)
         this.carrier.draw(this.context)
 
         battleShipCanvas.addEventListener('mousedown', this.onMouseDown)
@@ -61,25 +64,7 @@ export class PlaceShipsView implements View {
     private clearCanvas() {
         const canvasSizeInPixels: number = 400
         this.context!.clearRect(0, 0, canvasSizeInPixels, canvasSizeInPixels)
-        this.drawGrid()
-    }
-
-    private drawGrid() {
-        const canvasSizeInPixels: number = 400
-        const numberOfColumns: number = 10
-        const columnSize: number = canvasSizeInPixels / numberOfColumns
-
-        this.context!.strokeStyle = 'black'
-        for (let i = 0; i <= numberOfColumns; i++) {
-            this.context!.beginPath()
-            this.context!.moveTo(i * columnSize, 0)
-            this.context!.lineTo(i * columnSize, canvasSizeInPixels)
-            this.context!.stroke()
-
-            this.context!.moveTo(0, i * columnSize)
-            this.context!.lineTo(canvasSizeInPixels, i * columnSize)
-            this.context!.stroke()
-        }
+        this.grid?.draw(this.context!)
     }
     private onMouseDown = (event: MouseEvent): void => {
         this.mouseDragStart = { x: event.offsetX, y: event.offsetY }
