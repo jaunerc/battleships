@@ -47,20 +47,17 @@ export class ShipDrawer {
         // draw horizontal lines
         context.moveTo(startField.x*board.columnSizeInPixels, startField.y*board.columnSizeInPixels)
         context.lineTo(startField.x*board.columnSizeInPixels, (startField.y+shipSize)*board.columnSizeInPixels)
-        context.stroke()
 
-        context.moveTo((startField.x + 1)*board.columnSizeInPixels, board.columnSizeInPixels)
+        context.moveTo((startField.x + 1)*board.columnSizeInPixels, startField.y*board.columnSizeInPixels)
         context.lineTo((startField.x + 1)*board.columnSizeInPixels, (startField.y + shipSize)*board.columnSizeInPixels)
-        context.stroke()
 
         // draw vertical lines
         context.moveTo(startField.x*board.columnSizeInPixels, startField.y*board.columnSizeInPixels)
         context.lineTo((startField.x + 1)*board.columnSizeInPixels, startField.y*board.columnSizeInPixels)
-        context.stroke()
 
-
-        context.moveTo(startField.x*board.columnSizeInPixels, (startField.y+shipSize)*board.columnSizeInPixels)
+        context.moveTo((startField.x + 1)*board.columnSizeInPixels, startField.y*board.columnSizeInPixels)
         context.lineTo((startField.x + 1)*board.columnSizeInPixels, (startField.y + shipSize)*board.columnSizeInPixels)
+
         context.stroke()
     }
 }

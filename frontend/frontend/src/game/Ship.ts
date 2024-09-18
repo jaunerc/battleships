@@ -41,7 +41,7 @@ export class Ship {
         }
     }
     
-    rotate(context: CanvasRenderingContext2D): void {
+    rotate(): void {
         switch (this.shipOrientation) {
             case 'Horizontal':
                 this.shipOrientation = 'Vertical'
@@ -49,7 +49,6 @@ export class Ship {
             case 'Vertical':
                 this.shipOrientation = 'Horizontal'
         }
-        this.draw(context)
     }
     
 }

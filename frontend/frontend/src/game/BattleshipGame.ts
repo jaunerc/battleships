@@ -1,0 +1,68 @@
+import {BoardDimension, FieldPosition} from "./Game";
+import {Ship} from "./Ship.ts";
+import {Grid} from "./Grid.ts";
+
+export class BattleshipGame {
+
+    board: BoardDimension
+    context: CanvasRenderingContext2D
+
+    ships: Ship[]
+    grid: Grid
+
+    mouseDragStart?: FieldPosition
+    mouseDragging: boolean = false
+
+    constructor(board: BoardDimension, canvas: HTMLCanvasElement) {
+        this.board = board
+        this.context = canvas.getContext('2d')!
+
+        this.grid = new Grid(this.board)
+        this.ships = [
+            new Ship(this.board, {x: 2, y: 2}, 'Carrier'),
+            //new Ship(this.board, {x: 3, y: 3}, 'Cruiser'),
+            //new Ship(this.board, {x: 4, y: 3}, 'Cruiser')
+        ]
+
+        canvas.addEventListener('mousedown', this.onMouseDown)
+        canvas.addEventListener('mousemove', this.onMouseMove)
+        canvas.addEventListener('mouseup', this.onMouseUp)
+    }
+
+    draw(): void {
+        this.clearCanvas()
+        this.grid.draw(this.context)
+        this.ships.forEach(ship => ship.draw(this.context))
+    }
+
+    private clearCanvas(): void {
+        this.context.clearRect(0, 0, this.board.canvasSizeInPixels, this.board.canvasSizeInPixels)
+    }
+
+    private onMouseDown = (event: MouseEvent): void => {
+        this.mouseDragStart = {x: event.offsetX, y: event.offsetY}
+        this.mouseDragging = true
+    }
+
+    private onMouseMove = (event: MouseEvent): void => {
+        if (!this.mouseDragging) {
+            return
+        }
+        // convert mouse position to field index
+        const fieldIndexX: number = Math.floor(event.offsetX / this.board.columnSizeInPixels)
+        const fieldIndexY: number = Math.floor(event.offsetY / this.board.columnSizeInPixels)
+
+        // todo implement ship picking by mouse position
+        this.ships[0].move({x: fieldIndexX, y: fieldIndexY})
+        this.draw()
+    }
+
+    private onMouseUp = (event: MouseEvent): void => {
+        this.mouseDragging = false
+        if (this.mouseDragStart?.x === event.offsetX && this.mouseDragStart.y === event.offsetY) {
+            // todo implement ship picking by mouse position
+            this.ships[0].rotate()
+            this.draw()
+        }
+    }
+}
