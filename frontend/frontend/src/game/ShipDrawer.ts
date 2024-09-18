@@ -13,23 +13,17 @@ export class ShipDrawer {
         context.beginPath()
         context.fillRect(startField.x*board.columnSizeInPixels, startField.y*board.columnSizeInPixels, shipSize*board.columnSizeInPixels, board.columnSizeInPixels)
 
-        // draw horizontal lines
+        // draw lines
         context.moveTo(startField.x*board.columnSizeInPixels, startField.y*board.columnSizeInPixels)
+        // top
         context.lineTo((startField.x+shipSize)*board.columnSizeInPixels, startField.y*board.columnSizeInPixels)
-        context.stroke()
-
-        context.moveTo(startField.x*board.columnSizeInPixels, (startField.y + 1)*board.columnSizeInPixels)
+        // right
         context.lineTo((startField.x+shipSize)*board.columnSizeInPixels, (startField.y + 1)*board.columnSizeInPixels)
-        context.stroke()
-
-        // draw vertical lines
-        context.moveTo(startField.x*board.columnSizeInPixels, startField.y*board.columnSizeInPixels)
+        // bottom
         context.lineTo(startField.x*board.columnSizeInPixels, (startField.y + 1)*board.columnSizeInPixels)
-        context.stroke()
+        // left
+        context.lineTo(startField.x*board.columnSizeInPixels, startField.y*board.columnSizeInPixels)
 
-
-        context.moveTo((startField.x+shipSize)*board.columnSizeInPixels, startField.y*board.columnSizeInPixels)
-        context.lineTo((startField.x+shipSize)*board.columnSizeInPixels, (startField.y + 1)*board.columnSizeInPixels)
         context.stroke()
     }
 
@@ -44,19 +38,16 @@ export class ShipDrawer {
         context.beginPath()
         context.fillRect(startField.x*board.columnSizeInPixels, startField.y*board.columnSizeInPixels, board.columnSizeInPixels, shipSize*board.columnSizeInPixels)
 
-        // draw horizontal lines
+        // draw lines
         context.moveTo(startField.x*board.columnSizeInPixels, startField.y*board.columnSizeInPixels)
+        // left
         context.lineTo(startField.x*board.columnSizeInPixels, (startField.y+shipSize)*board.columnSizeInPixels)
-
-        context.moveTo((startField.x + 1)*board.columnSizeInPixels, startField.y*board.columnSizeInPixels)
+        // bottom
         context.lineTo((startField.x + 1)*board.columnSizeInPixels, (startField.y + shipSize)*board.columnSizeInPixels)
-
-        // draw vertical lines
-        context.moveTo(startField.x*board.columnSizeInPixels, startField.y*board.columnSizeInPixels)
+        // right
         context.lineTo((startField.x + 1)*board.columnSizeInPixels, startField.y*board.columnSizeInPixels)
-
-        context.moveTo((startField.x + 1)*board.columnSizeInPixels, startField.y*board.columnSizeInPixels)
-        context.lineTo((startField.x + 1)*board.columnSizeInPixels, (startField.y + shipSize)*board.columnSizeInPixels)
+        // top
+        context.lineTo(startField.x*board.columnSizeInPixels, startField.y*board.columnSizeInPixels)
 
         context.stroke()
     }
