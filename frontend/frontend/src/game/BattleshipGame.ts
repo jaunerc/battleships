@@ -1,6 +1,7 @@
 import {BoardDimension, FieldPosition} from "./Game";
 import {Ship} from "./Ship.ts";
 import {Grid} from "./Grid.ts";
+import {convertToFieldPosition} from "./MousePositionConverter.ts";
 
 export class BattleshipGame {
 
@@ -49,11 +50,10 @@ export class BattleshipGame {
             return
         }
         // convert mouse position to field index
-        const fieldIndexX: number = Math.floor(event.offsetX / this.board.columnSizeInPixels)
-        const fieldIndexY: number = Math.floor(event.offsetY / this.board.columnSizeInPixels)
+        const mousePosition = convertToFieldPosition(event.offsetX, event.offsetY, this.board.columnSizeInPixels)
 
         // todo implement ship picking by mouse position
-        this.ships[0].move({x: fieldIndexX, y: fieldIndexY})
+        this.ships[0].move({x: mousePosition.x, y: mousePosition.y})
         this.draw()
     }
 
