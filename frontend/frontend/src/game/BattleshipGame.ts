@@ -13,6 +13,7 @@ export class BattleshipGame {
 
     mouseDragStart?: FieldPosition
     mouseDragging: boolean = false
+    clickedShip?: Ship
 
     constructor(board: BoardDimension, canvas: HTMLCanvasElement) {
         this.board = board
@@ -21,8 +22,8 @@ export class BattleshipGame {
         this.grid = new Grid(this.board)
         this.ships = [
             new Ship(this.board, {x: 2, y: 2}, 'Carrier'),
-            //new Ship(this.board, {x: 3, y: 3}, 'Cruiser'),
-            //new Ship(this.board, {x: 4, y: 3}, 'Cruiser')
+            new Ship(this.board, {x: 6, y: 3}, 'Cruiser'),
+            new Ship(this.board, {x: 8, y: 6}, 'Cruiser')
         ]
 
         canvas.addEventListener('mousedown', this.onMouseDown)
@@ -43,26 +44,27 @@ export class BattleshipGame {
     private onMouseDown = (event: MouseEvent): void => {
         this.mouseDragStart = {x: event.offsetX, y: event.offsetY}
         this.mouseDragging = true
+
+        const mousePosition = convertToFieldPosition(event.offsetX, event.offsetY, this.board.columnSizeInPixels)
+        this.clickedShip = this.ships.find(ship => ship.isClicked(mousePosition))
     }
 
     private onMouseMove = (event: MouseEvent): void => {
         if (!this.mouseDragging) {
             return
         }
-        // convert mouse position to field index
         const mousePosition = convertToFieldPosition(event.offsetX, event.offsetY, this.board.columnSizeInPixels)
 
-        // todo implement ship picking by mouse position
-        this.ships[0].move({x: mousePosition.x, y: mousePosition.y})
+        this.clickedShip?.move({x: mousePosition.x, y: mousePosition.y})
         this.draw()
     }
 
     private onMouseUp = (event: MouseEvent): void => {
         this.mouseDragging = false
         if (this.mouseDragStart?.x === event.offsetX && this.mouseDragStart.y === event.offsetY) {
-            // todo implement ship picking by mouse position
-            this.ships[0].rotate()
+            this.clickedShip?.rotate()
             this.draw()
         }
+        this.clickedShip = undefined
     }
 }

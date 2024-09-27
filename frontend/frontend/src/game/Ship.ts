@@ -1,6 +1,7 @@
 import {ShipDrawer} from "./ShipDrawer.ts";
 import {BoardDimension, FieldPosition, ShipOrientation, ShipType} from "./Game";
 import {ShipSize} from "./ShipSize.ts";
+import {isShipClicked} from "./ShipClickDetector.ts";
 
 export class Ship {
     
@@ -50,5 +51,12 @@ export class Ship {
                 this.shipOrientation = 'Horizontal'
         }
     }
-    
+
+    isClicked(clickedField: FieldPosition): boolean {
+        return isShipClicked(
+            this.startField,
+            this.shipType,
+            this.shipOrientation,
+            clickedField)
+    }
 }
