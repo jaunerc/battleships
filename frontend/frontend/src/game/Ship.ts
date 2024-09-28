@@ -7,14 +7,15 @@ export class Ship {
     
     boardDimension: BoardDimension
     startField: FieldPosition
-    shipOrientation: ShipOrientation = 'Vertical'
+    shipOrientation: ShipOrientation
     shipDrawer: ShipDrawer
     shipType: ShipType
     
-    constructor(board: BoardDimension, startField: FieldPosition, shipType: ShipType, shipDrawer: ShipDrawer = new ShipDrawer()) {
+    constructor(board: BoardDimension, startField: FieldPosition, shipType: ShipType, shipOrientation: ShipOrientation = 'Vertical', shipDrawer: ShipDrawer = new ShipDrawer()) {
         this.boardDimension = board
         this.startField = startField
         this.shipType = shipType
+        this.shipOrientation = shipOrientation
         this.shipDrawer = shipDrawer
     }
 

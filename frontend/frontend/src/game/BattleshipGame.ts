@@ -1,44 +1,52 @@
-import {BoardDimension, FieldPosition} from "./Game";
+import type {BoardDimension, FieldPosition} from "./Game";
 import {Ship} from "./Ship.ts";
-import {Grid} from "./Grid.ts";
+import type {Grid} from "./Grid.ts";
 import {convertToFieldPosition} from "./MousePositionConverter.ts";
+import type {ShipFactory} from "./ShipFactory.ts";
+import {inject, injectable} from "inversify";
 
+@injectable()
 export class BattleshipGame {
 
     board: BoardDimension
-    context: CanvasRenderingContext2D
-
-    ships: Ship[]
+    context?: CanvasRenderingContext2D
+    shipFactory: ShipFactory
     grid: Grid
+    ships: Ship[] = []
 
     mouseDragStart?: FieldPosition
     mouseDragging: boolean = false
     clickedShip?: Ship
 
-    constructor(board: BoardDimension, canvas: HTMLCanvasElement) {
+    constructor(
+        @inject('BoardDimension') board: BoardDimension,
+        @inject('ShipFactory') shipFactory: ShipFactory,
+        @inject('Grid') grid: Grid) {
         this.board = board
+        this.shipFactory = shipFactory
+        this.grid = grid
+    }
+
+    init(canvas: HTMLCanvasElement): void {
         this.context = canvas.getContext('2d')!
-
-        this.grid = new Grid(this.board)
-        this.ships = [
-            new Ship(this.board, {x: 2, y: 2}, 'Carrier'),
-            new Ship(this.board, {x: 6, y: 3}, 'Cruiser'),
-            new Ship(this.board, {x: 8, y: 6}, 'Cruiser')
-        ]
-
         canvas.addEventListener('mousedown', this.onMouseDown)
         canvas.addEventListener('mousemove', this.onMouseMove)
         canvas.addEventListener('mouseup', this.onMouseUp)
+
+        this.ships = this.shipFactory.buildFleet()
     }
 
     draw(): void {
+        if (this.context === undefined) {
+            throw 'The drawing context cannot be undefined.'
+        }
         this.clearCanvas()
         this.grid.draw(this.context)
-        this.ships.forEach(ship => ship.draw(this.context))
+        this.ships.forEach(ship => ship.draw(this.context!))
     }
 
     private clearCanvas(): void {
-        this.context.clearRect(0, 0, this.board.canvasSizeInPixels, this.board.canvasSizeInPixels)
+        this.context?.clearRect(0, 0, this.board.canvasSizeInPixels, this.board.canvasSizeInPixels)
     }
 
     private onMouseDown = (event: MouseEvent): void => {

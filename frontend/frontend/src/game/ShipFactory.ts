@@ -1,0 +1,28 @@
+import {inject, injectable} from "inversify";
+import type {BoardDimension} from "./Game";
+import {Ship} from "./Ship.ts";
+
+@injectable()
+export class ShipFactory {
+
+    boardDimension: BoardDimension
+
+    constructor(@inject('BoardDimension') boardDimension: BoardDimension) {
+        this.boardDimension = boardDimension
+    }
+
+    buildFleet(): Ship[] {
+        return [
+            new Ship(this.boardDimension, {x: 2, y: 2}, 'Battleship'),
+            new Ship(this.boardDimension, {x: 6, y: 3}, 'Carrier'),
+            new Ship(this.boardDimension, {x: 8, y: 6}, 'Carrier'),
+            new Ship(this.boardDimension, {x: 0, y: 2}, 'Cruiser'),
+            new Ship(this.boardDimension, {x: 0, y: 6}, 'Cruiser'),
+            new Ship(this.boardDimension, {x: 4, y: 2}, 'Cruiser'),
+            new Ship(this.boardDimension, {x: 0, y: 0}, 'Submarine', 'Horizontal'),
+            new Ship(this.boardDimension, {x: 4, y: 0}, 'Submarine', 'Horizontal'),
+            new Ship(this.boardDimension, {x: 8, y: 0}, 'Submarine', 'Horizontal'),
+            new Ship(this.boardDimension, {x: 4, y: 8}, 'Submarine', 'Horizontal'),
+        ]
+    }
+}

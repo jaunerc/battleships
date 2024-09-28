@@ -13,4 +13,4 @@ export interface FieldPosition {
 
 export type ShipOrientation = 'Horizontal' | 'Vertical'
 
-export type ShipType = 'Carrier' | 'Battleship' | 'Cruiser' | 'Submarine' | 'Destroyer'
+export type ShipType = 'Carrier' | 'Battleship' | 'Cruiser' | 'Submarine'

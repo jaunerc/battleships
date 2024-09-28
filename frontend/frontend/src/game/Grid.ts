@@ -1,10 +1,12 @@
-import {BoardDimension} from "./Game";
+import type {BoardDimension} from "./Game";
+import {inject, injectable} from "inversify";
 
+@injectable()
 export class Grid {
     
     boardDimension: BoardDimension
     
-    constructor(boardDimension: BoardDimension) {
+    constructor(@inject('BoardDimension') boardDimension: BoardDimension) {
         this.boardDimension = boardDimension
     }
     

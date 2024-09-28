@@ -3,6 +3,8 @@ import {inject, injectable} from "inversify";
 import type {State} from "../State.ts";
 import {BoardDimension} from "../game/Game";
 import {BattleshipGame} from "../game/BattleshipGame.ts";
+import {container} from "../inversify.config.ts";
+import {gameContainer} from "../game/Game.inversify.config.ts";
 
 @injectable()
 export class PlaceShipsView implements View {
@@ -38,7 +40,9 @@ export class PlaceShipsView implements View {
             shipFillStyle: '#FF964B80'
         }
 
-        const battleShipGame: BattleshipGame = new BattleshipGame(this.board, battleShipCanvas)
+        container.load(gameContainer)
+        const battleShipGame: BattleshipGame = container.get<BattleshipGame>('BattleshipGame')
+        battleShipGame.init(battleShipCanvas)
         battleShipGame.draw()
     }
 }
