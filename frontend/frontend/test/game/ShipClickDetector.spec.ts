@@ -4,10 +4,9 @@ import {isShipClicked} from "../../src/game/ShipClickDetector";
 
 describe('ShipClickDetector', () => {
     describe.each([
-        { ship: 'Battleship' as ShipType, clickedField: { x: 7, y: 3 } },
-        { ship: 'Carrier' as ShipType, clickedField: { x: 6, y: 3 } },
-        { ship: 'Cruiser' as ShipType, clickedField: { x: 5, y: 3 } },
-        { ship: 'Destroyer' as ShipType, clickedField: { x: 4, y: 3 } },
+        { ship: 'Battleship' as ShipType, clickedField: { x: 6, y: 3 } },
+        { ship: 'Carrier' as ShipType, clickedField: { x: 5, y: 3 } },
+        { ship: 'Cruiser' as ShipType, clickedField: { x: 4, y: 3 } },
         { ship: 'Submarine' as ShipType, clickedField: { x: 3, y: 3 } }
     ])('should return true when the ship in horizontal position is clicked', ({ship, clickedField}) => {
             test(`ShipType ${ship}`, () => {
@@ -21,10 +20,9 @@ describe('ShipClickDetector', () => {
     )
 
     describe.each([
-        { ship: 'Battleship' as ShipType, clickedField: { x: 3, y: 7 } },
-        { ship: 'Carrier' as ShipType, clickedField: { x: 3, y: 6 } },
-        { ship: 'Cruiser' as ShipType, clickedField: { x: 3, y: 5 } },
-        { ship: 'Destroyer' as ShipType, clickedField: { x: 3, y: 4 } },
+        { ship: 'Battleship' as ShipType, clickedField: { x: 3, y: 6 } },
+        { ship: 'Carrier' as ShipType, clickedField: { x: 3, y: 5 } },
+        { ship: 'Cruiser' as ShipType, clickedField: { x: 3, y: 4 } },
         { ship: 'Submarine' as ShipType, clickedField: { x: 3, y: 3 } }
     ])('should return true when the ship in vertical position is clicked', ({ship, clickedField}) => {
             test(`ShipType ${ship}`, () => {
@@ -39,7 +37,7 @@ describe('ShipClickDetector', () => {
 
     it('should return false when the click is on a non-ship field', () => {
         const shipStartField: FieldPosition = { x: 0, y: 0 }
-        const shipType: ShipType = 'Destroyer'
+        const shipType: ShipType = 'Submarine'
         const shipOrientation: ShipOrientation = 'Horizontal'
 
         const clickedField: FieldPosition = { x: 1, y: 7 }
