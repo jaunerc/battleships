@@ -1,0 +1,1 @@
+export type WebsocketMessageType = 'SEND_USERNAME' | 'READY'

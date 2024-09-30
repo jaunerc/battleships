@@ -2,7 +2,7 @@ import './style.css'
 import "reflect-metadata";
 import {container} from "./inversify.config.ts";
 import {View} from "./view/View.ts";
-import {WebsocketMessage} from "./WebsocketMessage.ts";
+import {WebsocketMessage} from "../../../messages/WebsocketMessage.ts";
 
 const webSocket: WebSocket = container.get<WebSocket>('Websocket')
 
@@ -16,7 +16,7 @@ webSocket.onopen = () => {
 
 webSocket.onmessage = (message: MessageEvent<string>) => {
     const websocketMessage: WebsocketMessage = JSON.parse(message.data);
-    switch (websocketMessage.messageType) {
+    switch (websocketMessage.type) {
         case "READY":
             onReadyMessage();
     }

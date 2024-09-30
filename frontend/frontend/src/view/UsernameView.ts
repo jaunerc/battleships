@@ -2,7 +2,8 @@ import {View} from "./View.ts";
 import {inject, injectable} from "inversify";
 import type {State} from "../State.ts";
 import {PlaceShipsView} from "./PlaceShipsView.ts";
-import {SendUsernameMessage} from "../../../../messages/SendUsernameMessage.ts";
+import {SendUsernamePayload} from "../../../../messages/SendUsernamePayload.ts";
+import {WebsocketMessage} from "../../../../messages/WebsocketMessage.ts";
 
 @injectable()
 export class UsernameView implements View {
@@ -43,7 +44,8 @@ export class UsernameView implements View {
     }
 
     sendUsername(username: string): void {
-        const websocketMessage: SendUsernameMessage = { name: username }
+        const sendUsernamePayload: SendUsernamePayload = { name: username }
+        const websocketMessage: WebsocketMessage = { type: "SEND_USERNAME", payload: JSON.stringify(sendUsernamePayload) }
         this.websocket.send(JSON.stringify(websocketMessage))
     }
 }

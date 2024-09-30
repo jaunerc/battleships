@@ -1,7 +1,8 @@
 import express from 'express';
 import expressWs from 'express-ws';
 import WebSocket from 'ws';
-import {SendUsernameMessage} from "../../messages/SendUsernameMessage";
+import {SendUsernamePayload} from "../../messages/SendUsernamePayload";
+import {WebsocketMessage} from "../../messages/WebsocketMessage";
 
 const expressWsInstance = expressWs(express());
 const app = expressWsInstance.app;
@@ -23,25 +24,25 @@ app.get('/api', (_req, res) => {
     res.status(200).json({message: 'Hello from the server!'});
 });
 
-interface WebsocketMessage {
-    messageType: 'READY' | 'SEND_USERNAME';
-    username?: string;
-}
-
 // websocket handler with a placeholder
 app.ws('/', function (ws, _req) {
     console.log('new connection');
     clients.push(ws)
 
     ws.on('message', function (msg) {
-        const websocketMessage: SendUsernameMessage = JSON.parse(msg.toString());
-        console.log('msg received');
-        players.push({name: websocketMessage.name!});
-        if (players.length === 2) {
-            clients.forEach(client => {
-                const broadcastMessage: WebsocketMessage = {messageType: "READY"};
-                client.send(JSON.stringify(broadcastMessage));
-            })
+        const websocketMessage: WebsocketMessage = JSON.parse(msg.toString());
+        console.log('msg received of type: ' + websocketMessage.type);
+
+        switch (websocketMessage.type) {
+            case "SEND_USERNAME":
+                const sendUsernamePayload: SendUsernamePayload = JSON.parse(websocketMessage.payload!)
+                players.push({name: sendUsernamePayload.name});
+                if (players.length === 2) {
+                    clients.forEach(client => {
+                        const broadcastMessage: WebsocketMessage = {type: "READY"};
+                        client.send(JSON.stringify(broadcastMessage));
+                    })
+                }
         }
 
     });
