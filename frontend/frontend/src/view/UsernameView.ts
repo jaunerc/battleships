@@ -2,18 +2,22 @@ import {View} from "./View.ts";
 import {WebsocketMessage} from "../WebsocketMessage.ts";
 import {inject, injectable} from "inversify";
 import type {State} from "../State.ts";
+import {PlaceShipsView} from "./PlaceShipsView.ts";
 
 @injectable()
 export class UsernameView implements View {
 
     websocket: WebSocket
     state: State
+    placeShipsView: PlaceShipsView
 
     constructor(
         @inject('State') state: State,
-        @inject('Websocket') websocket: WebSocket) {
+        @inject('Websocket') websocket: WebSocket,
+        @inject('PlaceShipsView') placeShipsView: PlaceShipsView) {
         this.websocket = websocket
         this.state = state
+        this.placeShipsView = placeShipsView
     }
 
     show(appDiv: HTMLDivElement): void {
@@ -29,6 +33,8 @@ export class UsernameView implements View {
             const username: string = this.readUsernameFromDom()
             this.state.username = username
             this.sendUsername(username)
+
+            this.placeShipsView.show(appDiv)
         })
     }
 

@@ -11,9 +11,7 @@ const placeShipsView = container.get<View>('PlaceShipsView')
 
 webSocket.onopen = () => {
     console.log('websocket connected')
-    //startView.show(document.querySelector<HTMLDivElement>('#app')!)
-
-    placeShipsView.show(document.querySelector<HTMLDivElement>('#app')!)
+    startView.show(document.querySelector<HTMLDivElement>('#app')!)
 }
 
 webSocket.onmessage = (message: MessageEvent<string>) => {
