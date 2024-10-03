@@ -4,5 +4,5 @@ export interface Player {
 }
 
 export interface GameState {
-    players?: Player[]
+    players: Player[]
 }
