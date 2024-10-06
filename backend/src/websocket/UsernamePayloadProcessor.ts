@@ -4,7 +4,7 @@ import {WebsocketPayloadProcessor} from "./WebsocketPayloadProcessor";
 import {GameState} from "../Backend";
 
 @injectable()
-export class SendUsernamePayloadProcessor implements WebsocketPayloadProcessor {
+export class UsernamePayloadProcessor implements WebsocketPayloadProcessor {
 
     gameState: GameState
 

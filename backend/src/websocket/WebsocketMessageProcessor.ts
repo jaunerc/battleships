@@ -1,5 +1,5 @@
 import {WebsocketMessage} from "../../../messages/WebsocketMessage";
-import {SendUsernamePayloadProcessor} from "./SendUsernamePayloadProcessor";
+import {UsernamePayloadProcessor} from "./UsernamePayloadProcessor";
 import {inject, injectable} from "inversify";
 import WebSocket from "ws";
 import {PlayerJoiningPayloadProcessor} from "./PlayerJoiningPayloadProcessor";
@@ -7,10 +7,10 @@ import {PlayerJoiningPayloadProcessor} from "./PlayerJoiningPayloadProcessor";
 @injectable()
 export class WebsocketMessageProcessor {
 
-    sendUsernameMessagePayloadProcessor: SendUsernamePayloadProcessor
+    sendUsernameMessagePayloadProcessor: UsernamePayloadProcessor
     playerJoiningPayloadProcessor: PlayerJoiningPayloadProcessor
 
-    constructor(@inject('SendUsernamePayloadProcessor') sendUsernameMessagePayloadProcessor: SendUsernamePayloadProcessor,
+    constructor(@inject('UsernamePayloadProcessor') sendUsernameMessagePayloadProcessor: UsernamePayloadProcessor,
                 @inject('PlayerJoiningPayloadProcessor') playerJoiningPayloadProcessor: PlayerJoiningPayloadProcessor) {
         this.sendUsernameMessagePayloadProcessor = sendUsernameMessagePayloadProcessor
         this.playerJoiningPayloadProcessor = playerJoiningPayloadProcessor
@@ -24,7 +24,7 @@ export class WebsocketMessageProcessor {
                 }
                 this.playerJoiningPayloadProcessor.process('', clientWs)
                 break
-            case 'SEND_USERNAME':
+            case 'USERNAME':
                 if (websocketMessage.payload === undefined) {
                     throw 'The payload cannot be undefined'
                 }
