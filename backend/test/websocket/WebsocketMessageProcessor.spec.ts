@@ -1,10 +1,10 @@
 import 'reflect-metadata'; // this import is necessary so that inversify is working with tests
-import {SendUsernameMessagePayloadProcessor} from "../../src/websocket/SendUsernameMessagePayloadProcessor";
+import {SendUsernamePayloadProcessor} from "../../src/websocket/SendUsernamePayloadProcessor";
 import {WebsocketMessageProcessor} from "../../src/websocket/WebsocketMessageProcessor";
 
 describe('WebsocketMessageProcessor', () => {
     describe('processWebsocketMessage', () => {
-        const sendUsernameMessagePayloadProcessorMock: SendUsernameMessagePayloadProcessor = mockSendUsernameMessagePayloadProcess()
+        const sendUsernameMessagePayloadProcessorMock: SendUsernamePayloadProcessor = mockSendUsernameMessagePayloadProcess()
         const websocketMessageProcess: WebsocketMessageProcessor = new WebsocketMessageProcessor(sendUsernameMessagePayloadProcessorMock)
 
         it('should throw an error if the payload is undefined.', () => {
@@ -19,7 +19,7 @@ describe('WebsocketMessageProcessor', () => {
     })
 })
 
-function mockSendUsernameMessagePayloadProcess(): SendUsernameMessagePayloadProcessor {
+function mockSendUsernameMessagePayloadProcess(): SendUsernamePayloadProcessor {
     return jest.fn().mockReturnValue({
         process: jest.fn(),
         gameState: ''

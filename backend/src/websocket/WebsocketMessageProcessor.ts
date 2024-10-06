@@ -1,5 +1,5 @@
 import {WebsocketMessage} from "../../../messages/WebsocketMessage";
-import {SendUsernameMessagePayloadProcessor} from "./SendUsernameMessagePayloadProcessor";
+import {SendUsernamePayloadProcessor} from "./SendUsernamePayloadProcessor";
 import {inject, injectable} from "inversify";
 import WebSocket from "ws";
 import {PlayerJoiningPayloadProcessor} from "./PlayerJoiningPayloadProcessor";
@@ -7,10 +7,10 @@ import {PlayerJoiningPayloadProcessor} from "./PlayerJoiningPayloadProcessor";
 @injectable()
 export class WebsocketMessageProcessor {
 
-    sendUsernameMessagePayloadProcessor: SendUsernameMessagePayloadProcessor
+    sendUsernameMessagePayloadProcessor: SendUsernamePayloadProcessor
     playerJoiningPayloadProcessor: PlayerJoiningPayloadProcessor
 
-    constructor(@inject('SendUsernameMessagePayloadProcessor') sendUsernameMessagePayloadProcessor: SendUsernameMessagePayloadProcessor,
+    constructor(@inject('SendUsernamePayloadProcessor') sendUsernameMessagePayloadProcessor: SendUsernamePayloadProcessor,
                 @inject('PlayerJoiningPayloadProcessor') playerJoiningPayloadProcessor: PlayerJoiningPayloadProcessor) {
         this.sendUsernameMessagePayloadProcessor = sendUsernameMessagePayloadProcessor
         this.playerJoiningPayloadProcessor = playerJoiningPayloadProcessor

@@ -1,5 +1,5 @@
 import 'reflect-metadata'; // this import is necessary so that inversify is working with tests
-import {SendUsernameMessagePayloadProcessor} from "../../src/websocket/SendUsernameMessagePayloadProcessor";
+import {SendUsernamePayloadProcessor} from "../../src/websocket/SendUsernamePayloadProcessor";
 import {SendUsernamePayload} from "../../../messages/SendUsernamePayload";
 import { GameState } from '../../src/Backend';
 
@@ -7,7 +7,7 @@ describe('SendUsernameMessagePayloadProcessor', () => {
     describe('process', () => {
         it('should add a the given player name to the game state', () => {
             const gameState: GameState = { players: [] }
-            const processor: SendUsernameMessagePayloadProcessor = new SendUsernameMessagePayloadProcessor(gameState)
+            const processor: SendUsernamePayloadProcessor = new SendUsernamePayloadProcessor(gameState)
 
             const payload: SendUsernamePayload = { name: 'Han Solo' }
             processor.process(JSON.stringify(payload))

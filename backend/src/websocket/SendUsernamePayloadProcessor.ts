@@ -1,10 +1,10 @@
 import {inject, injectable} from "inversify";
 import {SendUsernamePayload} from "../../../messages/SendUsernamePayload";
-import {WebsocketMessagePayloadProcessor} from "./WebsocketMessagePayloadProcessor";
+import {WebsocketPayloadProcessor} from "./WebsocketPayloadProcessor";
 import {GameState} from "../Backend";
 
 @injectable()
-export class SendUsernameMessagePayloadProcessor implements WebsocketMessagePayloadProcessor {
+export class SendUsernamePayloadProcessor implements WebsocketPayloadProcessor {
 
     gameState: GameState
 
