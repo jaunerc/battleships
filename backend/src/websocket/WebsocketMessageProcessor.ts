@@ -1,8 +1,8 @@
-import {UsernamePayloadProcessor} from "./UsernamePayloadProcessor";
 import {inject, injectable} from "inversify";
 import WebSocket from "ws";
-import {PlayerJoiningPayloadProcessor} from "./PlayerJoiningPayloadProcessor";
-import {WebsocketMessage} from "../../../../messages/WebsocketMessage";
+import {UsernamePayloadProcessor} from "./processor/UsernamePayloadProcessor";
+import {PlayerJoiningPayloadProcessor} from "./processor/PlayerJoiningPayloadProcessor";
+import {WebsocketMessage} from "../../../messages/WebsocketMessage";
 
 @injectable()
 export class WebsocketMessageProcessor {
