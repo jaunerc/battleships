@@ -3,7 +3,7 @@ import {SendUsernamePayloadProcessor} from "../../src/websocket/SendUsernamePayl
 import {SendUsernamePayload} from "../../../messages/SendUsernamePayload";
 import { GameState } from '../../src/Backend';
 
-describe('SendUsernameMessagePayloadProcessor', () => {
+describe('SendUsernamePayloadProcessor', () => {
     describe('process', () => {
         it('should add a the given player name to the game state', () => {
             const gameState: GameState = { players: [] }
