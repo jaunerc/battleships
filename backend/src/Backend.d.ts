@@ -1,6 +1,6 @@
-
 export interface Player {
-    name: string;
+    id: string
+    name?: string;
 }
 
 export interface GameState {

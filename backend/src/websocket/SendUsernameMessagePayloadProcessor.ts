@@ -1,7 +1,7 @@
 import {inject, injectable} from "inversify";
-import {GameState} from "../GameState";
 import {SendUsernamePayload} from "../../../messages/SendUsernamePayload";
 import {WebsocketMessagePayloadProcessor} from "./WebsocketMessagePayloadProcessor";
+import {GameState} from "../Backend";
 
 @injectable()
 export class SendUsernameMessagePayloadProcessor implements WebsocketMessagePayloadProcessor {
@@ -14,6 +14,6 @@ export class SendUsernameMessagePayloadProcessor implements WebsocketMessagePayl
 
     process(payload: string): void {
         const sendUsernamePayload: SendUsernamePayload = JSON.parse(payload)
-        this.gameState.players?.push({name: sendUsernamePayload.name});
+        this.gameState.players?.push({name: sendUsernamePayload.name, id: 'asdf'});
     }
 }

@@ -7,7 +7,6 @@ import {WebsocketMessage} from "../../../messages/WebsocketMessage.ts";
 const webSocket: WebSocket = container.get<WebSocket>('Websocket')
 
 const startView = container.get<View>('StartView')
-const placeShipsView = container.get<View>('PlaceShipsView')
 
 webSocket.onopen = () => {
     console.log('websocket connected')
@@ -17,10 +16,7 @@ webSocket.onopen = () => {
 webSocket.onmessage = (message: MessageEvent<string>) => {
     const websocketMessage: WebsocketMessage = JSON.parse(message.data);
     switch (websocketMessage.type) {
-        case "READY":
-            onReadyMessage();
+        case "PLAYER_ID":
+            console.log('Player id received: ', websocketMessage.payload)
     }
-}
-function onReadyMessage(): void {
-    placeShipsView.show(document.querySelector<HTMLDivElement>('#app')!)
 }
