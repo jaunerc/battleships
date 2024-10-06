@@ -3,7 +3,7 @@ import express from 'express';
 import expressWs from 'express-ws';
 import {WebsocketMessage} from "../../messages/WebsocketMessage";
 import {container} from "./inversify.config";
-import {WebsocketMessageProcessor} from "./websocket/WebsocketMessageProcessor";
+import {WebsocketMessageProcessor} from "./websocket/processor/WebsocketMessageProcessor";
 
 const expressWsInstance = expressWs(express());
 const app = expressWsInstance.app;

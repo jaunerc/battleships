@@ -1,11 +1,11 @@
-import {WebsocketPayloadProcessor} from "./WebsocketPayloadProcessor";
 import {inject, injectable} from "inversify";
-import {GameState, Player} from "../Backend";
 import {v4} from "uuid";
-import {WebsocketMessageSender} from "./WebsocketMessageSender";
 import WebSocket from "ws";
-import {WebsocketMessage} from "../../../messages/WebsocketMessage";
-import {PlayerIdPayload} from "../../../messages/PlayerIdPayload";
+import {WebsocketPayloadProcessor} from "../WebsocketPayloadProcessor";
+import {GameState, Player} from "../../Backend";
+import {WebsocketMessageSender} from "../WebsocketMessageSender";
+import {PlayerIdPayload} from "../../../../messages/PlayerIdPayload";
+import {WebsocketMessage} from "../../../../messages/WebsocketMessage";
 
 @injectable()
 export class PlayerJoiningPayloadProcessor implements WebsocketPayloadProcessor {

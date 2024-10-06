@@ -1,7 +1,7 @@
 import 'reflect-metadata'; // this import is necessary so that inversify is working with tests
-import {UsernamePayloadProcessor} from "../../src/websocket/UsernamePayloadProcessor";
-import {SendUsernamePayload} from "../../../messages/SendUsernamePayload";
-import { GameState } from '../../src/Backend';
+import {GameState} from "../../../src/Backend";
+import {UsernamePayloadProcessor} from "../../../src/websocket/processor/UsernamePayloadProcessor";
+import {SendUsernamePayload} from "../../../../messages/SendUsernamePayload";
 
 describe('UsernamePayloadProcessor', () => {
     describe('process', () => {

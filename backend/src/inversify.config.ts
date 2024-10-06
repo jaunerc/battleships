@@ -1,10 +1,10 @@
 import {Container} from "inversify";
 import {WebsocketPayloadProcessor} from "./websocket/WebsocketPayloadProcessor";
-import {UsernamePayloadProcessor} from "./websocket/UsernamePayloadProcessor";
-import {WebsocketMessageProcessor} from "./websocket/WebsocketMessageProcessor";
 import {GameState} from "./Backend";
 import {WebsocketMessageSender} from "./websocket/WebsocketMessageSender";
-import {PlayerJoiningPayloadProcessor} from "./websocket/PlayerJoiningPayloadProcessor";
+import {UsernamePayloadProcessor} from "./websocket/processor/UsernamePayloadProcessor";
+import {PlayerJoiningPayloadProcessor} from "./websocket/processor/PlayerJoiningPayloadProcessor";
+import {WebsocketMessageProcessor} from "./websocket/processor/WebsocketMessageProcessor";
 
 const container = new Container()
 container.bind<GameState>('GameState').toConstantValue({ players: [] })
