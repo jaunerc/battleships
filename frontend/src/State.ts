@@ -10,7 +10,8 @@ export interface ShipCoordinates {
 }
 
 export interface State {
-    username?: string;
+    playerId?: string
+    username?: string
     fleet?: ShipFieldCoordinate[][]
 }
 

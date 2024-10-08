@@ -1,7 +1,7 @@
 import 'reflect-metadata'; // this import is necessary so that inversify is working with tests
 import {GameState} from "../../../src/Backend";
 import {UsernamePayloadProcessor} from "../../../src/websocket/processor/UsernamePayloadProcessor";
-import {SendUsernamePayload} from "../../../../messages/SendUsernamePayload";
+import {UsernamePayload} from "../../../../messages/UsernamePayload";
 
 describe('UsernamePayloadProcessor', () => {
     describe('process', () => {
@@ -9,7 +9,7 @@ describe('UsernamePayloadProcessor', () => {
             const gameState: GameState = { players: [] }
             const processor: UsernamePayloadProcessor = new UsernamePayloadProcessor(gameState)
 
-            const payload: SendUsernamePayload = { name: 'Han Solo' }
+            const payload: UsernamePayload = { name: 'Han Solo' }
             processor.process(JSON.stringify(payload))
 
             expect(gameState.players.length).toBe(1)
