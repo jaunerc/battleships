@@ -6,11 +6,7 @@ import {WebsocketPayloadProcessor} from "./WebsocketPayloadProcessor";
 @injectable()
 export class UsernamePayloadProcessor implements WebsocketPayloadProcessor {
 
-    gameState: GameState
-
-    constructor(@inject('GameState') gameState: GameState) {
-        this.gameState = gameState
-    }
+    constructor(@inject('GameState') private gameState: GameState) {}
 
     process(payload: string): void {
         const sendUsernamePayload: UsernamePayload = JSON.parse(payload)

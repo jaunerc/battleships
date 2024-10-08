@@ -7,14 +7,9 @@ import {WebsocketMessage} from "../../../messages/WebsocketMessage";
 @injectable()
 export class WebsocketMessageProcessor {
 
-    sendUsernameMessagePayloadProcessor: UsernamePayloadProcessor
-    playerJoiningPayloadProcessor: PlayerJoiningPayloadProcessor
-
-    constructor(@inject('UsernamePayloadProcessor') sendUsernameMessagePayloadProcessor: UsernamePayloadProcessor,
-                @inject('PlayerJoiningPayloadProcessor') playerJoiningPayloadProcessor: PlayerJoiningPayloadProcessor) {
-        this.sendUsernameMessagePayloadProcessor = sendUsernameMessagePayloadProcessor
-        this.playerJoiningPayloadProcessor = playerJoiningPayloadProcessor
-    }
+    constructor(@inject('UsernamePayloadProcessor') private sendUsernameMessagePayloadProcessor: UsernamePayloadProcessor,
+                @inject('PlayerJoiningPayloadProcessor') private playerJoiningPayloadProcessor: PlayerJoiningPayloadProcessor
+    ) {}
 
     processWebsocketMessage(websocketMessage: WebsocketMessage, clientWs?: WebSocket): void {
         switch (websocketMessage.type) {

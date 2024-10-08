@@ -8,18 +8,11 @@ import {WebsocketMessage} from "../../../messages/WebsocketMessage.ts";
 @injectable()
 export class UsernameView implements View {
 
-    websocket: WebSocket
-    state: State
-    placeShipsView: PlaceShipsView
-
     constructor(
-        @inject('State') state: State,
-        @inject('Websocket') websocket: WebSocket,
-        @inject('PlaceShipsView') placeShipsView: PlaceShipsView) {
-        this.websocket = websocket
-        this.state = state
-        this.placeShipsView = placeShipsView
-    }
+        @inject('State') private state: State,
+        @inject('Websocket') private websocket: WebSocket,
+        @inject('PlaceShipsView') private placeShipsView: PlaceShipsView
+    ) {}
 
     show(appDiv: HTMLDivElement): void {
         appDiv.innerHTML = `

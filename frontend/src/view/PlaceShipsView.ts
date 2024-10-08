@@ -12,23 +12,14 @@ import {GameView} from "./GameView.ts";
 @injectable()
 export class PlaceShipsView implements View {
 
-    websocket: WebSocket
-    state: State
-    gameView: GameView
-
     context?: CanvasRenderingContext2D
     board?: BoardDimension
     battleshipGame?: BattleshipGame
 
     constructor(
-        @inject('State') state: State,
-        @inject('Websocket') websocket: WebSocket,
-        @inject('GameView') gameView: GameView
-    ) {
-        this.state = state
-        this.websocket = websocket
-        this.gameView = gameView
-    }
+        @inject('State') private state: State,
+        @inject('GameView') private gameView: GameView
+    ) {}
 
     show(appDiv: HTMLDivElement): void {
         appDiv.innerHTML = `

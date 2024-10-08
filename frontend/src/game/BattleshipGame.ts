@@ -7,11 +7,7 @@ import {inject, injectable} from "inversify";
 
 @injectable()
 export class BattleshipGame {
-
-    board: BoardDimension
     context?: CanvasRenderingContext2D
-    shipFactory: ShipFactory
-    grid: Grid
     ships: Ship[] = []
 
     mouseDragStart?: FieldPosition
@@ -19,13 +15,10 @@ export class BattleshipGame {
     clickedShip?: Ship
 
     constructor(
-        @inject('BoardDimension') board: BoardDimension,
-        @inject('ShipFactory') shipFactory: ShipFactory,
-        @inject('Grid') grid: Grid) {
-        this.board = board
-        this.shipFactory = shipFactory
-        this.grid = grid
-    }
+        @inject('BoardDimension') private board: BoardDimension,
+        @inject('ShipFactory') private shipFactory: ShipFactory,
+        @inject('Grid') private grid: Grid
+    ) {}
 
     init(canvas: HTMLCanvasElement): void {
         this.context = canvas.getContext('2d')!

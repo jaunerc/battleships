@@ -3,12 +3,8 @@ import {inject, injectable} from "inversify";
 
 @injectable()
 export class Grid {
-    
-    boardDimension: BoardDimension
-    
-    constructor(@inject('BoardDimension') boardDimension: BoardDimension) {
-        this.boardDimension = boardDimension
-    }
+
+    constructor(@inject('BoardDimension') private boardDimension: BoardDimension) {}
     
     draw(context: CanvasRenderingContext2D) {
         context.strokeStyle = '#000000'

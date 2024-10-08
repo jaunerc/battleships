@@ -10,14 +10,9 @@ import {WebsocketPayloadProcessor} from "./WebsocketPayloadProcessor";
 @injectable()
 export class PlayerJoiningPayloadProcessor implements WebsocketPayloadProcessor {
 
-    gameState: GameState
-    websocketMessageSender: WebsocketMessageSender
-
-    constructor(@inject('GameState') gameState: GameState,
-                @inject('WebsocketMessageSender') websocketMessageSender: WebsocketMessageSender) {
-        this.gameState = gameState
-        this.websocketMessageSender = websocketMessageSender
-    }
+    constructor(@inject('GameState') private gameState: GameState,
+                @inject('WebsocketMessageSender') private websocketMessageSender: WebsocketMessageSender
+    ) {}
 
     process(_payload: string, clientWs: WebSocket): void {
         const player: Player = { id: v4() }

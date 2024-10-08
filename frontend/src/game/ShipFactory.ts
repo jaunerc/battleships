@@ -5,11 +5,7 @@ import {Ship} from "./Ship.ts";
 @injectable()
 export class ShipFactory {
 
-    boardDimension: BoardDimension
-
-    constructor(@inject('BoardDimension') boardDimension: BoardDimension) {
-        this.boardDimension = boardDimension
-    }
+    constructor(@inject('BoardDimension') private boardDimension: BoardDimension) {}
 
     buildFleet(): Ship[] {
         return [

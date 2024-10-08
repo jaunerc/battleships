@@ -7,18 +7,11 @@ import {PlayerIdPayload} from "../../../messages/PlayerIdPayload.ts";
 @injectable()
 export class StartView implements View {
 
-    state: State
-    usernameView: View
-    websocket: WebSocket
-
     constructor(
-        @inject('State') state: State,
-        @inject('UsernameView') usernameView: View,
-        @inject('Websocket') websocket: WebSocket) {
-        this.state = state
-        this.usernameView = usernameView
-        this.websocket = websocket
-    }
+        @inject('State') private state: State,
+        @inject('UsernameView') private usernameView: View,
+        @inject('Websocket') private websocket: WebSocket
+    ) {}
 
     show(appDiv: HTMLDivElement): void {
         appDiv.innerHTML = `
