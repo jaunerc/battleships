@@ -32,15 +32,17 @@ export class StartView implements View {
             this.usernameView.show(appDiv)
         })
 
-        this.websocket.onmessage = (message: MessageEvent<string>) => {
-            const websocketMessage: WebsocketMessage = JSON.parse(message.data);
-            if (websocketMessage.type === 'PLAYER_ID') {
-                if (websocketMessage.payload === undefined) {
-                    throw 'the player id payload cannot be undefined'
-                }
-                const playerIdPayload: PlayerIdPayload = JSON.parse(websocketMessage.payload)
-                this.state.playerId = playerIdPayload.id
+        this.websocket.onmessage = this.onWebsocketMessage
+    }
+
+    private onWebsocketMessage = (message: MessageEvent<string>) => {
+        const websocketMessage: WebsocketMessage = JSON.parse(message.data);
+        if (websocketMessage.type === 'PLAYER_ID') {
+            if (websocketMessage.payload === undefined) {
+                throw 'the player id payload cannot be undefined'
             }
+            const playerIdPayload: PlayerIdPayload = JSON.parse(websocketMessage.payload)
+            this.state.playerId = playerIdPayload.id
         }
     }
 }
