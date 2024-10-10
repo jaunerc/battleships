@@ -9,7 +9,11 @@ export class UsernamePayloadProcessor implements WebsocketPayloadProcessor {
     constructor(@inject('GameState') private gameState: GameState) {}
 
     process(payload: string): void {
-        const sendUsernamePayload: UsernamePayload = JSON.parse(payload)
-        this.gameState.players?.push({name: sendUsernamePayload.name, id: 'asdf'});
+        const usernamePayload: UsernamePayload = JSON.parse(payload)
+        const player = this.gameState.players?.find(player => player.id === usernamePayload.playerId)
+        if (player === undefined) {
+            throw 'User does not exists with the id=' + usernamePayload.playerId
+        }
+        player.name = usernamePayload.name
     }
 }

@@ -37,7 +37,7 @@ export class UsernameView implements View {
     }
 
     sendUsername(username: string): void {
-        const usernamePayload: UsernamePayload = { name: username }
+        const usernamePayload: UsernamePayload = { name: username, playerId: this.state.playerId! }
         const websocketMessage: WebsocketMessage = { type: 'USERNAME', payload: JSON.stringify(usernamePayload) }
         this.websocket.send(JSON.stringify(websocketMessage))
     }
