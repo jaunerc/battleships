@@ -1,6 +1,6 @@
 import {describe, expect, it, test} from "vitest";
-import {FieldPosition, ShipOrientation, ShipType} from "../../src/game/Game";
-import {isShipClicked} from "../../src/game/ShipClickDetector";
+import {FieldPosition, ShipOrientation, ShipType} from "../../../src/game/Game";
+import {isShipClicked} from "../../../src/game/ship/ShipClickDetector";
 
 describe('ShipClickDetector', () => {
     describe.each([

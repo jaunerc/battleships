@@ -1,9 +1,9 @@
 import type {BoardDimension, FieldPosition} from "./Game";
-import {Ship} from "./Ship.ts";
 import type {Grid} from "./Grid.ts";
 import {convertToFieldPosition} from "./MousePositionConverter.ts";
-import type {ShipFactory} from "./ShipFactory.ts";
 import {inject, injectable} from "inversify";
+import {Ship} from "./ship/Ship.ts";
+import {ShipFactory} from "./ship/ShipFactory.ts";
 
 @injectable()
 export class BattleshipCanvas {

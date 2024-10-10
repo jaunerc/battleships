@@ -1,4 +1,4 @@
-import {ShipType} from "./Game";
+import {ShipType} from "../Game";
 
 export const ShipSize: Record<ShipType, number> = {
     Battleship: 4,

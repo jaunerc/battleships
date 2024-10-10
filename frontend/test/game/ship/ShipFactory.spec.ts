@@ -1,7 +1,7 @@
 import 'reflect-metadata'; // this import is necessary so that inversify is working with tests
 import {describe, expect, it} from "vitest";
-import {BoardDimension} from "../../src/game/Game";
-import {ShipFactory} from "../../src/game/ShipFactory";
+import {BoardDimension} from "../../../src/game/Game";
+import {ShipFactory} from "../../../src/game/ship/ShipFactory";
 
 describe('ShipFactory', () => {
     describe('should build a fleet of ships', () => {

@@ -1,4 +1,5 @@
-import {BoardDimension, FieldPosition} from "./Game";
+import {BoardDimension, FieldPosition} from "../Game";
+
 
 export class ShipDrawer {
     drawShipHorizontal(context: CanvasRenderingContext2D,

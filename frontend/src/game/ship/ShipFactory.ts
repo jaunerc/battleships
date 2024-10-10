@@ -1,6 +1,6 @@
 import {inject, injectable} from "inversify";
-import type {BoardDimension} from "./Game";
 import {Ship} from "./Ship.ts";
+import type {BoardDimension} from "../Game";
 
 @injectable()
 export class ShipFactory {

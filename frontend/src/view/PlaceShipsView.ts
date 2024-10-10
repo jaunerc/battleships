@@ -5,11 +5,11 @@ import {BoardDimension, FieldPosition} from "../game/Game";
 import {BattleshipCanvas} from "../game/BattleshipCanvas.ts";
 import {container} from "../inversify.config.ts";
 import {gameContainer} from "../game/Game.inversify.config.ts";
-import {Ship} from "../game/Ship.ts";
-import {calculateShipFields} from "../game/ShipFieldsCalculator.ts";
 import {GameView} from "./GameView.ts";
 import {FleetPayload} from "../../../messages/FleetPayload.ts";
 import {WebsocketMessage} from "../../../messages/WebsocketMessage.ts";
+import {Ship} from "../game/ship/Ship.ts";
+import { calculateShipFields } from "../game/ship/ShipFieldsCalculator.ts";
 
 @injectable()
 export class PlaceShipsView implements View {

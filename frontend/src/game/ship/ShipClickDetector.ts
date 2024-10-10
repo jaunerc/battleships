@@ -1,5 +1,5 @@
-import {FieldPosition, ShipOrientation, ShipType} from "./Game";
 import {calculateShipFields} from "./ShipFieldsCalculator.ts";
+import {FieldPosition, ShipOrientation, ShipType} from "../Game";
 
 export function isShipClicked(
     shipStartField: FieldPosition,

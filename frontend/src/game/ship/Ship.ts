@@ -1,7 +1,7 @@
 import {ShipDrawer} from "./ShipDrawer.ts";
-import {BoardDimension, FieldPosition, ShipOrientation, ShipType} from "./Game";
 import {ShipSize} from "./ShipSize.ts";
 import {isShipClicked} from "./ShipClickDetector.ts";
+import {BoardDimension, FieldPosition, ShipOrientation, ShipType} from "../Game";
 
 export class Ship {
 

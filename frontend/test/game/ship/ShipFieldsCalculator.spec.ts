@@ -1,7 +1,7 @@
 import {describe, expect, test} from "vitest";
-import {ShipSize} from "../../src/game/ShipSize";
-import {calculateShipFields} from "../../src/game/ShipFieldsCalculator";
-import {ShipType} from "../../src/game/Game";
+import {ShipType} from "../../../src/game/Game";
+import {ShipSize} from "../../../src/game/ship/ShipSize";
+import {calculateShipFields} from "../../../src/game/ship/ShipFieldsCalculator";
 
 describe('ShipFieldsCalculator', () => {
 

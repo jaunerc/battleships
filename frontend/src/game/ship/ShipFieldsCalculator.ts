@@ -1,5 +1,5 @@
-import {FieldPosition, ShipOrientation, ShipType} from "./Game";
 import {ShipSize} from "./ShipSize.ts";
+import {FieldPosition, ShipOrientation, ShipType} from "../Game";
 
 export function calculateShipFields(shipOrientation: ShipOrientation, shipType: ShipType, startField: FieldPosition): FieldPosition[] {
     switch (shipOrientation) {
