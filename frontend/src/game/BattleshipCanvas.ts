@@ -6,7 +6,7 @@ import type {ShipFactory} from "./ShipFactory.ts";
 import {inject, injectable} from "inversify";
 
 @injectable()
-export class BattleshipGame {
+export class BattleshipCanvas {
     context?: CanvasRenderingContext2D
     ships: Ship[] = []
 

@@ -2,7 +2,7 @@ import {View} from "./View.ts";
 import {inject, injectable} from "inversify";
 import type {State} from "../State.ts";
 import {BoardDimension, FieldPosition} from "../game/Game";
-import {BattleshipGame} from "../game/BattleshipGame.ts";
+import {BattleshipCanvas} from "../game/BattleshipCanvas.ts";
 import {container} from "../inversify.config.ts";
 import {gameContainer} from "../game/Game.inversify.config.ts";
 import {Ship} from "../game/Ship.ts";
@@ -16,7 +16,7 @@ export class PlaceShipsView implements View {
 
     context?: CanvasRenderingContext2D
     board?: BoardDimension
-    battleshipGame?: BattleshipGame
+    battleshipCanvas?: BattleshipCanvas
 
     constructor(
         @inject('State') private state: State,
@@ -37,10 +37,10 @@ export class PlaceShipsView implements View {
         const saveFleetButton: HTMLButtonElement = document.querySelector<HTMLButtonElement>('#save-fleet')!
 
         saveFleetButton.addEventListener('click', () => {
-            if (this.battleshipGame === undefined) {
+            if (this.battleshipCanvas === undefined) {
                 throw 'The game state must be defined.'
             }
-            const fleet: FieldPosition[][] = this.battleshipGame?.ships.map(ship => this.calculateShipFields(ship))
+            const fleet: FieldPosition[][] = this.battleshipCanvas?.ships.map(ship => this.calculateShipFields(ship))
             this.state.fleet = fleet
 
             const fleetPayload: FleetPayload = { playerId: this.state.playerId!, fleet }
@@ -60,9 +60,9 @@ export class PlaceShipsView implements View {
         }
 
         container.load(gameContainer)
-        this.battleshipGame = container.get<BattleshipGame>('BattleshipGame')
-        this.battleshipGame.init(battleShipCanvas)
-        this.battleshipGame.draw()
+        this.battleshipCanvas = container.get<BattleshipCanvas>('BattleshipCanvas')
+        this.battleshipCanvas.init(battleShipCanvas)
+        this.battleshipCanvas.draw()
     }
 
     private calculateShipFields(ship: Ship): FieldPosition[] {
