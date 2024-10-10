@@ -5,10 +5,6 @@ export interface ShipFieldCoordinate {
     y: number
 }
 
-export interface ShipCoordinates {
-    coordinates: ShipFieldCoordinate[]
-}
-
 export interface State {
     playerId?: string
     username?: string
