@@ -5,11 +5,14 @@ import {isShipClicked} from "./ShipClickDetector.ts";
 
 export class Ship {
 
+    shipType: ShipType
+
     constructor(private boardDimension: BoardDimension,
                 private startField: FieldPosition,
-                private shipType: ShipType,
+                shipType: ShipType,
                 private shipOrientation: ShipOrientation = 'Vertical',
                 private shipDrawer: ShipDrawer = new ShipDrawer()) {
+        this.shipType = shipType
     }
 
     move(nextStartField: FieldPosition): void {
