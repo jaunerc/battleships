@@ -1,12 +1,12 @@
-import type {BoardDimension, FieldPosition} from "./Game";
-import type {Grid} from "./Grid.ts";
-import {convertToFieldPosition} from "./MousePositionConverter.ts";
+import type {BoardDimension, FieldPosition} from "../Game";
+import {convertToFieldPosition} from "../MousePositionConverter.ts";
 import {inject, injectable} from "inversify";
-import {Ship} from "./ship/Ship.ts";
-import {ShipFactory} from "./ship/ShipFactory.ts";
+import {Ship} from "../ship/Ship.ts";
+import {ShipFactory} from "../ship/ShipFactory.ts";
+import {Grid} from "../grid/Grid.ts";
 
 @injectable()
-export class BattleshipCanvas {
+export class PlaceShipsCanvas {
     context?: CanvasRenderingContext2D
     ships: Ship[] = []
 

@@ -2,7 +2,7 @@ import {View} from "./View.ts";
 import {inject, injectable} from "inversify";
 import type {State} from "../State.ts";
 import {BoardDimension, FieldPosition} from "../game/Game";
-import {BattleshipCanvas} from "../game/BattleshipCanvas.ts";
+import {PlaceShipsCanvas} from "../game/canvas/PlaceShipsCanvas.ts";
 import {container} from "../inversify.config.ts";
 import {gameContainer} from "../game/Game.inversify.config.ts";
 import {GameView} from "./GameView.ts";
@@ -16,7 +16,7 @@ export class PlaceShipsView implements View {
 
     context?: CanvasRenderingContext2D
     board?: BoardDimension
-    battleshipCanvas?: BattleshipCanvas
+    placeShipsCanvas?: PlaceShipsCanvas
 
     constructor(
         @inject('State') private state: State,
@@ -37,10 +37,10 @@ export class PlaceShipsView implements View {
         const saveFleetButton: HTMLButtonElement = document.querySelector<HTMLButtonElement>('#save-fleet')!
 
         saveFleetButton.addEventListener('click', () => {
-            if (this.battleshipCanvas === undefined) {
+            if (this.placeShipsCanvas === undefined) {
                 throw 'The game state must be defined.'
             }
-            const fleet: FieldPosition[][] = this.battleshipCanvas?.ships.map(ship => this.calculateShipFields(ship))
+            const fleet: FieldPosition[][] = this.placeShipsCanvas?.ships.map(ship => this.calculateShipFields(ship))
             this.state.fleet = fleet
 
             const fleetPayload: FleetPayload = { playerId: this.state.playerId!, fleet }
@@ -60,9 +60,9 @@ export class PlaceShipsView implements View {
         }
 
         container.load(gameContainer)
-        this.battleshipCanvas = container.get<BattleshipCanvas>('BattleshipCanvas')
-        this.battleshipCanvas.init(battleShipCanvas)
-        this.battleshipCanvas.draw()
+        this.placeShipsCanvas = container.get<PlaceShipsCanvas>('PlaceShipsCanvas')
+        this.placeShipsCanvas.init(battleShipCanvas)
+        this.placeShipsCanvas.draw()
     }
 
     private calculateShipFields(ship: Ship): FieldPosition[] {

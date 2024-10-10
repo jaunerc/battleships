@@ -1,8 +1,8 @@
 import {ContainerModule, interfaces} from "inversify";
 import {BoardDimension} from "./Game";
-import {Grid} from "./Grid.ts";
-import {BattleshipCanvas} from "./BattleshipCanvas.ts";
+import {PlaceShipsCanvas} from "./canvas/PlaceShipsCanvas.ts";
 import {ShipFactory} from "./ship/ShipFactory.ts";
+import {Grid} from "./grid/Grid.ts";
 
 const gameContainer = new ContainerModule(
     (bind: interfaces.Bind,) => {
@@ -13,7 +13,7 @@ const gameContainer = new ContainerModule(
             shipStrokeStyle: '#AC2F0D'})
         bind<Grid>('Grid').to(Grid)
         bind<ShipFactory>('ShipFactory').to(ShipFactory)
-        bind<BattleshipCanvas>('BattleshipCanvas').to(BattleshipCanvas)
+        bind<PlaceShipsCanvas>('PlaceShipsCanvas').to(PlaceShipsCanvas)
     }
 )
 

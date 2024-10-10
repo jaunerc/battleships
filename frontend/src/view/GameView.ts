@@ -12,9 +12,17 @@ export class GameView implements View {
     show(appDiv: HTMLDivElement): void {
         appDiv.innerHTML = `
             <div>
-                <p>Game View</p>
+                <div>
+                    <p>Opponents fleet</p>
+                    <canvas id="opponent-canvas" width="400px" height="400px"></canvas>
+                </div>
+                <div>
+                    <p>My fleet</p>
+                    <canvas id="my-fleet-canvas" width="400px" height="400px"></canvas>
+                </div>
             </div>
         `
-        console.log(this.state.fleet)
+        //const myFleetCanvas: HTMLCanvasElement = document.querySelector<HTMLCanvasElement>('#my-fleet-canvas')!
+        console.log(this.state)
     }
 }

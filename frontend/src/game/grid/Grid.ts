@@ -1,5 +1,5 @@
-import type {BoardDimension} from "./Game";
 import {inject, injectable} from "inversify";
+import type {BoardDimension} from "../Game";
 
 @injectable()
 export class Grid {
