@@ -5,6 +5,7 @@ import {UsernamePayloadProcessor} from "./websocket/processor/UsernamePayloadPro
 import {PlayerJoiningPayloadProcessor} from "./websocket/processor/PlayerJoiningPayloadProcessor";
 import {WebsocketPayloadProcessor} from "./websocket/processor/WebsocketPayloadProcessor";
 import {WebsocketMessageProcessor} from "./websocket/WebsocketMessageProcessor";
+import {FleetPayloadProcessor} from "./websocket/processor/FleetPayloadProcessor";
 
 const container = new Container()
 container.bind<GameState>('GameState').toConstantValue({ players: [] })
@@ -12,6 +13,7 @@ container.bind<GameState>('GameState').toConstantValue({ players: [] })
 container.bind<WebsocketMessageSender>('WebsocketMessageSender').to(WebsocketMessageSender)
 container.bind<WebsocketPayloadProcessor>('UsernamePayloadProcessor').to(UsernamePayloadProcessor)
 container.bind<WebsocketPayloadProcessor>('PlayerJoiningPayloadProcessor').to(PlayerJoiningPayloadProcessor)
+container.bind<WebsocketPayloadProcessor>('FleetPayloadProcessor').to(FleetPayloadProcessor)
 container.bind<WebsocketMessageProcessor>('WebsocketMessageProcessor').to(WebsocketMessageProcessor)
 
 export { container }

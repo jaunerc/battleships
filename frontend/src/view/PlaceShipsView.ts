@@ -8,6 +8,8 @@ import {gameContainer} from "../game/Game.inversify.config.ts";
 import {Ship} from "../game/Ship.ts";
 import {calculateShipFields} from "../game/ShipFieldsCalculator.ts";
 import {GameView} from "./GameView.ts";
+import {FleetPayload} from "../../../messages/FleetPayload.ts";
+import {WebsocketMessage} from "../../../messages/WebsocketMessage.ts";
 
 @injectable()
 export class PlaceShipsView implements View {
@@ -18,6 +20,7 @@ export class PlaceShipsView implements View {
 
     constructor(
         @inject('State') private state: State,
+        @inject('Websocket') private websocket: WebSocket,
         @inject('GameView') private gameView: GameView
     ) {}
 
@@ -34,7 +37,16 @@ export class PlaceShipsView implements View {
         const saveFleetButton: HTMLButtonElement = document.querySelector<HTMLButtonElement>('#save-fleet')!
 
         saveFleetButton.addEventListener('click', () => {
-            this.state.fleet = this.battleshipGame?.ships.map(ship => this.calculateShipFields(ship))
+            if (this.battleshipGame === undefined) {
+                throw 'The game state must be defined.'
+            }
+            const fleet: FieldPosition[][] = this.battleshipGame?.ships.map(ship => this.calculateShipFields(ship))
+            this.state.fleet = fleet
+
+            const fleetPayload: FleetPayload = { playerId: this.state.playerId!, fleet }
+            const websocketMessage: WebsocketMessage = { type: 'FLEET', payload: JSON.stringify(fleetPayload) }
+            this.websocket.send(JSON.stringify(websocketMessage))
+
             this.gameView.show(appDiv)
         })
 
