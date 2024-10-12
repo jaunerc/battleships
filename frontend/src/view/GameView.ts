@@ -1,6 +1,8 @@
 import {inject, injectable} from "inversify";
 import type {State} from "../State.ts";
 import {View} from "./View.ts";
+import {MyFleetCanvas} from "../game/canvas/MyFleetCanvas.ts";
+import {container} from "../inversify.config.ts";
 
 @injectable()
 export class GameView implements View {
@@ -22,7 +24,12 @@ export class GameView implements View {
                 </div>
             </div>
         `
-        //const myFleetCanvas: HTMLCanvasElement = document.querySelector<HTMLCanvasElement>('#my-fleet-canvas')!
+
+        const myFleetHtmlCanvas: HTMLCanvasElement = document.querySelector<HTMLCanvasElement>('#my-fleet-canvas')!
+        const myFleetCanvas: MyFleetCanvas = container.get<MyFleetCanvas>('MyFleetCanvas')
+        myFleetCanvas.init(myFleetHtmlCanvas, this.state.fleet!)
+        myFleetCanvas.draw()
+
         console.log(this.state)
     }
 }

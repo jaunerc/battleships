@@ -1,7 +1,7 @@
 import {View} from "./View.ts";
 import {inject, injectable} from "inversify";
 import type {State} from "../State.ts";
-import {BoardDimension, FieldPosition} from "../game/Game";
+import {FieldPosition} from "../game/Game";
 import {PlaceShipsCanvas} from "../game/canvas/PlaceShipsCanvas.ts";
 import {container} from "../inversify.config.ts";
 import {gameContainer} from "../game/Game.inversify.config.ts";
@@ -9,13 +9,12 @@ import {GameView} from "./GameView.ts";
 import {FleetPayload} from "../../../messages/FleetPayload.ts";
 import {WebsocketMessage} from "../../../messages/WebsocketMessage.ts";
 import {Ship} from "../game/ship/Ship.ts";
-import { calculateShipFields } from "../game/ship/ShipFieldsCalculator.ts";
+import {calculateShipFields} from "../game/ship/ShipFieldsCalculator.ts";
 
 @injectable()
 export class PlaceShipsView implements View {
 
     context?: CanvasRenderingContext2D
-    board?: BoardDimension
     placeShipsCanvas?: PlaceShipsCanvas
 
     constructor(
@@ -41,7 +40,7 @@ export class PlaceShipsView implements View {
                 throw 'The game state must be defined.'
             }
             const fleet: FieldPosition[][] = this.placeShipsCanvas?.ships.map(ship => this.calculateShipFields(ship))
-            this.state.fleet = fleet
+            this.state.fleet = this.placeShipsCanvas?.ships
 
             const fleetPayload: FleetPayload = { playerId: this.state.playerId!, fleet }
             const websocketMessage: WebsocketMessage = { type: 'FLEET', payload: JSON.stringify(fleetPayload) }
@@ -51,13 +50,6 @@ export class PlaceShipsView implements View {
         })
 
         this.context = battleShipCanvas.getContext('2d')!
-
-        this.board = {
-            canvasSizeInPixels: 400,
-            columnSizeInPixels: 400 / 10,
-            shipStrokeStyle: '#AC2F0D',
-            shipFillStyle: '#FF964B80'
-        }
 
         container.load(gameContainer)
         this.placeShipsCanvas = container.get<PlaceShipsCanvas>('PlaceShipsCanvas')

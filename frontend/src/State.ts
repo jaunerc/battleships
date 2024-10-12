@@ -1,14 +1,10 @@
 import {injectable} from "inversify";
-
-export interface ShipFieldCoordinate {
-    x: number
-    y: number
-}
+import {Ship} from "./game/ship/Ship.ts";
 
 export interface State {
     playerId?: string
     username?: string
-    fleet?: ShipFieldCoordinate[][]
+    fleet?: Ship[]
 }
 
 @injectable()

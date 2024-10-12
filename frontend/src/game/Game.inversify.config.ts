@@ -3,6 +3,7 @@ import {BoardDimension} from "./Game";
 import {PlaceShipsCanvas} from "./canvas/PlaceShipsCanvas.ts";
 import {ShipFactory} from "./ship/ShipFactory.ts";
 import {Grid} from "./grid/Grid.ts";
+import {MyFleetCanvas} from "./canvas/MyFleetCanvas.ts";
 
 const gameContainer = new ContainerModule(
     (bind: interfaces.Bind,) => {
@@ -14,6 +15,7 @@ const gameContainer = new ContainerModule(
         bind<Grid>('Grid').to(Grid)
         bind<ShipFactory>('ShipFactory').to(ShipFactory)
         bind<PlaceShipsCanvas>('PlaceShipsCanvas').to(PlaceShipsCanvas)
+        bind<MyFleetCanvas>('MyFleetCanvas').to(MyFleetCanvas)
     }
 )
 
