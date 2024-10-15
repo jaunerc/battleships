@@ -15,7 +15,7 @@ export class PlayerJoiningPayloadProcessor implements WebsocketPayloadProcessor 
     ) {}
 
     process(_payload: string, clientWs: WebSocket): void {
-        const player: Player = { id: v4() }
+        const player: Player = { id: v4(), readyToStartGame: false }
         this.gameState.players.push(player)
         const playerIdPayload: PlayerIdPayload = { id: player.id }
         const websocketMessage: WebsocketMessage = { type: "PLAYER_ID", payload: JSON.stringify(playerIdPayload)}

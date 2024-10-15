@@ -6,10 +6,14 @@ export interface ShipFieldCoordinate {
 
 export interface Player {
     id: string
-    name?: string;
+    readyToStartGame: boolean
+    seatId?: SeatId
+    name?: string
     fleet?: ShipFieldCoordinate[][]
 }
 
 export interface GameState {
     players: Player[]
 }
+
+export type SeatId = 'first' | 'second'

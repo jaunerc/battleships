@@ -14,6 +14,7 @@ describe('PlayerJoiningPayloadProcessor', () => {
 
             expect(gameState.players.length).toBe(1)
             expect(gameState.players[0].id).toBeDefined()
+            expect(gameState.players[0].readyToStartGame).toBe(false)
             expect(websocketMessageSenderMock.sendTo).toHaveBeenCalled()
         })
     })
