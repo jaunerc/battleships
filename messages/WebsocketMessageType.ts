@@ -1,1 +1,1 @@
-export type WebsocketMessageType = 'PLAYER_JOINING' | 'USERNAME' | 'PLAYER_ID' | 'FLEET'
+export type WebsocketMessageType = 'PLAYER_JOINING' | 'USERNAME' | 'PLAYER_ID' | 'FLEET' | 'PLAYER_READY' | 'GAME_UPDATE'
