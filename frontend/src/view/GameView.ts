@@ -4,12 +4,15 @@ import {View} from "./View.ts";
 import {MyFleetCanvas} from "../game/canvas/MyFleetCanvas.ts";
 import {container} from "../inversify.config.ts";
 import {OpponentFleetCanvas} from "../game/canvas/OpponentFleetCanvas.ts";
+import {PlayerReadyPayload} from "../../../messages/PlayerReadyPayload.ts";
+import {WebsocketMessage} from "../../../messages/WebsocketMessage.ts";
 
 @injectable()
 export class GameView implements View {
 
     constructor(
-        @inject('State') private state: State
+        @inject('State') private state: State,
+        @inject('Websocket') private websocket: WebSocket,
     ) {}
 
     show(appDiv: HTMLDivElement): void {
@@ -36,6 +39,14 @@ export class GameView implements View {
         myFleetCanvas.draw()
         opponentFleetCanvas.draw()
 
-        console.log(this.state)
+        const playerReadyPayload: PlayerReadyPayload = { playerId: this.state.playerId! }
+        const readyMessage: WebsocketMessage = { type: 'PLAYER_READY', payload: JSON.stringify(playerReadyPayload) }
+        this.websocket.send(JSON.stringify(readyMessage))
+
+        this.websocket.onmessage = this.onWebsocketMessage
+    }
+
+    private onWebsocketMessage = (message: MessageEvent<string>) => {
+        console.log(message)
     }
 }

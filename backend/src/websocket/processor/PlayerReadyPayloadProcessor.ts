@@ -2,7 +2,6 @@ import {inject, injectable} from "inversify";
 import {GameState} from "../../Backend";
 import {WebsocketMessageSender} from "../WebsocketMessageSender";
 import {WebsocketPayloadProcessor} from "./WebsocketPayloadProcessor";
-import WebSocket from "ws";
 import {PlayerReadyPayload} from "../../../../messages/PlayerReadyPayload";
 import {WebsocketMessage} from "../../../../messages/WebsocketMessage";
 import {GameUpdatePayload} from "../../../../messages/GameUpdatePayload";
@@ -14,7 +13,7 @@ export class PlayerReadyPayloadProcessor implements WebsocketPayloadProcessor {
                 @inject('WebsocketMessageSender') private websocketMessageSender: WebsocketMessageSender
     ) {}
 
-    process(payload: string, clientWs: WebSocket) {
+    process(payload: string) {
         const playerReadyPayload: PlayerReadyPayload = JSON.parse(payload)
         const player = this.gameState.players?.find(player => player.id === playerReadyPayload.playerId)
         if (player === undefined) {
@@ -27,11 +26,10 @@ export class PlayerReadyPayloadProcessor implements WebsocketPayloadProcessor {
             .filter(player => !player.readyToStartGame)
             .length;
 
-        if (numNotReadyPlayers === 0) {
+        if (this.gameState.players.length === 2 && numNotReadyPlayers === 0) {
             const gameUpdatePayload: GameUpdatePayload = { currentPlayerSeatId: 'first' }
             const websocketMessage: WebsocketMessage = { type: 'GAME_UPDATE', payload: JSON.stringify(gameUpdatePayload) }
-            // this must be changed to a broadcast
-            this.websocketMessageSender.sendTo(clientWs, websocketMessage)
+            this.websocketMessageSender.broadcast(websocketMessage)
         }
     }
 }

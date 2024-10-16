@@ -5,29 +5,67 @@ import {PlayerReadyPayloadProcessor} from "../../../src/websocket/processor/Play
 import {PlayerReadyPayload} from "../../../../messages/PlayerReadyPayload";
 
 describe('PlayerReadyPayloadProcessor', () => {
+    let websocketMessageSenderMock: WebsocketMessageSender
+
+    beforeEach(() => {
+        websocketMessageSenderMock = mockWebsocketMessageSender()
+    })
+
     describe('process', () => {
         it('should save the ready state for the given player in the game state.', () => {
             const gameState: GameState = {
                 players: [
-                    { id: 'a', readyToStartGame: false },
-                    { id: 'b', readyToStartGame: false }
+                    { id: 'a', readyToStartGame: false, websocket: jest.fn().mockReturnValue({})() },
+                    { id: 'b', readyToStartGame: false, websocket: jest.fn().mockReturnValue({})() }
                 ]
             }
-            const websocketMessageSenderMock: WebsocketMessageSender = mockWebsocketMessageSender()
             const processor: PlayerReadyPayloadProcessor = new PlayerReadyPayloadProcessor(gameState, websocketMessageSenderMock)
             const payload: PlayerReadyPayload = { playerId: 'b' }
 
-            processor.process(JSON.stringify(payload), jest.fn().mockReturnValue({})())
+            processor.process(JSON.stringify(payload))
 
             expect(gameState.players[0].readyToStartGame).toBe(false)
             expect(gameState.players[1].readyToStartGame).toBe(true)
-            expect(websocketMessageSenderMock.sendTo).toHaveBeenCalledTimes(0)
+            expect(websocketMessageSenderMock.broadcast).toHaveBeenCalledTimes(0)
+        })
+
+        it('should not send a GAME_UPDATE message when only one player has joined.', () => {
+            const gameState: GameState = {
+                players: [
+                    { id: 'a', readyToStartGame: false, websocket: jest.fn().mockReturnValue({})() },
+                ]
+            }
+            const processor: PlayerReadyPayloadProcessor = new PlayerReadyPayloadProcessor(gameState, websocketMessageSenderMock)
+            const payload: PlayerReadyPayload = { playerId: 'a' }
+
+            processor.process(JSON.stringify(payload))
+
+            expect(gameState.players[0].readyToStartGame).toBe(true)
+            expect(websocketMessageSenderMock.broadcast).toHaveBeenCalledTimes(0)
+        })
+
+        it('should send a GAME_UPDATE message when both players are ready.', () => {
+            const gameState: GameState = {
+                players: [
+                    { id: 'a', readyToStartGame: true, websocket: jest.fn().mockReturnValue({})() },
+                    { id: 'b', readyToStartGame: false, websocket: jest.fn().mockReturnValue({})() }
+                ]
+            }
+            const processor: PlayerReadyPayloadProcessor = new PlayerReadyPayloadProcessor(gameState, websocketMessageSenderMock)
+            const payload: PlayerReadyPayload = { playerId: 'b' }
+
+            processor.process(JSON.stringify(payload))
+
+            expect(gameState.players[0].readyToStartGame).toBe(true)
+            expect(gameState.players[1].readyToStartGame).toBe(true)
+            expect(websocketMessageSenderMock.broadcast).toHaveBeenCalled()
         })
     })
 })
 
 function mockWebsocketMessageSender(): WebsocketMessageSender {
     return jest.fn().mockReturnValue({
-        sendTo: jest.fn()
+        sendTo: jest.fn(),
+        broadcast: jest.fn()
     })()
 }

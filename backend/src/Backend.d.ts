@@ -1,3 +1,4 @@
+import WebSocket from "ws";
 
 export interface ShipFieldCoordinate {
     x: number
@@ -7,6 +8,7 @@ export interface ShipFieldCoordinate {
 export interface Player {
     id: string
     readyToStartGame: boolean
+    websocket: WebSocket
     seatId?: SeatId
     name?: string
     fleet?: ShipFieldCoordinate[][]
