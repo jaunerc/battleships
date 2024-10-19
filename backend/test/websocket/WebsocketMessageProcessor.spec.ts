@@ -3,35 +3,60 @@ import 'reflect-metadata'; // this import is necessary so that inversify is work
 import {WebsocketMessageProcessor} from "../../src/websocket/WebsocketMessageProcessor";
 import {UsernamePayloadProcessor} from "../../src/websocket/processor/UsernamePayloadProcessor";
 import {PlayerJoiningPayloadProcessor} from "../../src/websocket/processor/PlayerJoiningPayloadProcessor";
+import {PlayerReadyPayloadProcessor} from "../../src/websocket/processor/PlayerReadyPayloadProcessor";
+import {FleetPayloadProcessor} from "../../src/websocket/processor/FleetPayloadProcessor";
 
 describe('WebsocketMessageProcessor', () => {
+    let sendUsernamePayloadProcessorMock: UsernamePayloadProcessor
+    let playerJoiningPayloadProcessorMock: PlayerJoiningPayloadProcessor
+    let websocketMessageProcessor: WebsocketMessageProcessor
+    let playerReadyPayloadProcessMock: PlayerReadyPayloadProcessor
+    let fleetPayloadProcessorMock: FleetPayloadProcessor
+
+    beforeEach(() => {
+        sendUsernamePayloadProcessorMock = getPayloadProcessorMock()()
+        playerJoiningPayloadProcessorMock = getPayloadProcessorMock()()
+        playerReadyPayloadProcessMock = getPayloadProcessorMock()()
+        fleetPayloadProcessorMock = getPayloadProcessorMock()()
+        websocketMessageProcessor = new WebsocketMessageProcessor(
+            sendUsernamePayloadProcessorMock,
+            playerJoiningPayloadProcessorMock,
+            fleetPayloadProcessorMock,
+            playerReadyPayloadProcessMock)
+    })
+
     describe('processWebsocketMessage', () => {
-        const sendUsernamePayloadProcessorMock: UsernamePayloadProcessor = mockSendUsernamePayloadProcess()
-        const playerJoiningPayloadProcessorMock: PlayerJoiningPayloadProcessor = mockPlayerJoiningPayloadProcess()
-        const websocketMessageProcess: WebsocketMessageProcessor = new WebsocketMessageProcessor(sendUsernamePayloadProcessorMock, playerJoiningPayloadProcessorMock)
 
         it('should throw an error if the payload is undefined.', () => {
-            expect(() => websocketMessageProcess.processWebsocketMessage({ type: 'USERNAME', payload: undefined }))
+            expect(() => websocketMessageProcessor.processWebsocketMessage({ type: 'USERNAME', payload: undefined }))
                 .toThrow()
         })
 
-        it('should call the right payload processor for a message of type SEND_USERNAME.', () => {
-            websocketMessageProcess.processWebsocketMessage({ type: 'USERNAME', payload: '{"a":"a"}' })
+        it('should call the right payload processor for a message of type USERNAME.', () => {
+            websocketMessageProcessor.processWebsocketMessage({ type: 'USERNAME', payload: '{"a":"a"}' })
             expect(sendUsernamePayloadProcessorMock.process).toHaveBeenCalled()
+        })
+
+        it('should call the right payload processor for a message of type PLAYER_JOINING.', () => {
+            websocketMessageProcessor.processWebsocketMessage({ type: 'PLAYER_JOINING', payload: '{"a":"a"}' }, jest.fn().mockReturnValue({})())
+            expect(playerJoiningPayloadProcessorMock.process).toHaveBeenCalled()
+        })
+
+        it('should call the right payload processor for a message of type FLEET.', () => {
+            websocketMessageProcessor.processWebsocketMessage({ type: 'FLEET', payload: '{"a":"a"}' })
+            expect(fleetPayloadProcessorMock.process).toHaveBeenCalled()
+        })
+
+        it('should call the right payload processor for a message of type PLAYER_READY.', () => {
+            websocketMessageProcessor.processWebsocketMessage({ type: 'PLAYER_READY', payload: '{"a":"a"}' })
+            expect(playerReadyPayloadProcessMock.process).toHaveBeenCalled()
         })
     })
 })
 
-function mockSendUsernamePayloadProcess(): UsernamePayloadProcessor {
+function getPayloadProcessorMock() {
     return jest.fn().mockReturnValue({
         process: jest.fn(),
         gameState: ''
-    })()
-}
-
-function mockPlayerJoiningPayloadProcess(): PlayerJoiningPayloadProcessor {
-    return jest.fn().mockReturnValue({
-        process: jest.fn(),
-        gameState: ''
-    })()
+    });
 }
