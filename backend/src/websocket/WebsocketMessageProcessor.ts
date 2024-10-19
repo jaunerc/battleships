@@ -5,6 +5,7 @@ import {PlayerJoiningPayloadProcessor} from "./processor/PlayerJoiningPayloadPro
 import {WebsocketMessage} from "../../../messages/WebsocketMessage";
 import {FleetPayloadProcessor} from "./processor/FleetPayloadProcessor";
 import {PlayerReadyPayloadProcessor} from "./processor/PlayerReadyPayloadProcessor";
+import {valueIfPresentOrError} from "../TypeUtils";
 
 @injectable()
 export class WebsocketMessageProcessor {
@@ -18,28 +19,22 @@ export class WebsocketMessageProcessor {
     processWebsocketMessage(websocketMessage: WebsocketMessage, clientWs?: WebSocket): void {
         switch (websocketMessage.type) {
             case 'PLAYER_JOINING':
-                if (clientWs === undefined) {
-                    throw 'the client websocket cannot be undefined'
-                }
-                this.playerJoiningPayloadProcessor.process('', clientWs)
+                this.playerJoiningPayloadProcessor.process('', valueIfPresentOrError(clientWs))
                 break
             case 'USERNAME':
-                if (websocketMessage.payload === undefined) {
-                    throw 'The payload cannot be undefined'
-                }
-                this.sendUsernameMessagePayloadProcessor.process(websocketMessage.payload)
+                this.sendUsernameMessagePayloadProcessor.process(valueIfPresentOrError(websocketMessage.payload))
                 break
             case 'FLEET':
                 if (websocketMessage.payload === undefined) {
                     throw 'The payload cannot be undefined'
                 }
-                this.fleetPayloadProcessor.process(websocketMessage.payload)
+                this.fleetPayloadProcessor.process(valueIfPresentOrError(websocketMessage.payload))
                 break
             case "PLAYER_READY":
                 if (websocketMessage.payload === undefined) {
                     throw 'The payload cannot be undefined'
                 }
-                this.playerReadyPayloadProcessor.process(websocketMessage.payload)
+                this.playerReadyPayloadProcessor.process(valueIfPresentOrError(websocketMessage.payload))
         }
     }
 }
