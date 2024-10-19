@@ -25,15 +25,9 @@ export class WebsocketMessageProcessor {
                 this.sendUsernameMessagePayloadProcessor.process(valueIfPresentOrError(websocketMessage.payload))
                 break
             case 'FLEET':
-                if (websocketMessage.payload === undefined) {
-                    throw 'The payload cannot be undefined'
-                }
                 this.fleetPayloadProcessor.process(valueIfPresentOrError(websocketMessage.payload))
                 break
             case "PLAYER_READY":
-                if (websocketMessage.payload === undefined) {
-                    throw 'The payload cannot be undefined'
-                }
                 this.playerReadyPayloadProcessor.process(valueIfPresentOrError(websocketMessage.payload))
         }
     }
