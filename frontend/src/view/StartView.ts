@@ -36,6 +36,7 @@ export class StartView implements View {
             }
             const playerIdPayload: PlayerIdPayload = JSON.parse(websocketMessage.payload)
             this.state.playerId = playerIdPayload.id
+            this.state.seatId = playerIdPayload.seatId
         }
     }
 }

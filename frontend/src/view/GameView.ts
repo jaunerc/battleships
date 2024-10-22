@@ -6,9 +6,13 @@ import {container} from "../inversify.config.ts";
 import {OpponentFleetCanvas} from "../game/canvas/OpponentFleetCanvas.ts";
 import {PlayerReadyPayload} from "../../../messages/PlayerReadyPayload.ts";
 import {WebsocketMessage} from "../../../messages/WebsocketMessage.ts";
+import {GameUpdatePayload} from "../../../messages/GameUpdatePayload.ts";
 
 @injectable()
 export class GameView implements View {
+
+    currentPlayerParagraph?: HTMLParagraphElement
+    opponentFleetCanvas?: OpponentFleetCanvas
 
     constructor(
         @inject('State') private state: State,
@@ -18,6 +22,8 @@ export class GameView implements View {
     show(appDiv: HTMLDivElement): void {
         appDiv.innerHTML = `
             <div>
+                <p>Current Player:</p>
+                <p id="current-player"></p>
                 <div>
                     <p>Opponents fleet</p>
                     <canvas id="opponent-canvas" width="400px" height="400px"></canvas>
@@ -32,12 +38,14 @@ export class GameView implements View {
         const myFleetHtmlCanvas: HTMLCanvasElement = document.querySelector<HTMLCanvasElement>('#my-fleet-canvas')!
         const opponentFleetHtmlCanvas: HTMLCanvasElement = document.querySelector<HTMLCanvasElement>('#opponent-canvas')!
         const myFleetCanvas: MyFleetCanvas = container.get<MyFleetCanvas>('MyFleetCanvas')
-        const opponentFleetCanvas: OpponentFleetCanvas = container.get<OpponentFleetCanvas>('OpponentFleetCanvas')
+        this.opponentFleetCanvas = container.get<OpponentFleetCanvas>('OpponentFleetCanvas')
+
+        this.currentPlayerParagraph = document.querySelector<HTMLParagraphElement>('#current-player')!
 
         myFleetCanvas.init(myFleetHtmlCanvas, this.state.fleet!)
-        opponentFleetCanvas.init(opponentFleetHtmlCanvas)
+        this.opponentFleetCanvas.init(opponentFleetHtmlCanvas)
         myFleetCanvas.draw()
-        opponentFleetCanvas.draw()
+        this.opponentFleetCanvas.draw()
 
         const playerReadyPayload: PlayerReadyPayload = { playerId: this.state.playerId! }
         const readyMessage: WebsocketMessage = { type: 'PLAYER_READY', payload: JSON.stringify(playerReadyPayload) }
@@ -47,6 +55,15 @@ export class GameView implements View {
     }
 
     private onWebsocketMessage = (message: MessageEvent<string>) => {
-        console.log(message)
+        const websocketMessage: WebsocketMessage = JSON.parse(message.data)
+        const gameUpdatePayload: GameUpdatePayload = JSON.parse(websocketMessage.payload!)
+
+        this.currentPlayerParagraph!.innerText = gameUpdatePayload.currentPlayerSeatId
+
+        this.opponentFleetCanvas?.setLockForUserInput(this.currentPlayerIsOpponent(gameUpdatePayload))
+    }
+
+    private currentPlayerIsOpponent(gameUpdatePayload: GameUpdatePayload): boolean {
+        return this.state.seatId !== gameUpdatePayload.currentPlayerSeatId;
     }
 }
