@@ -5,6 +5,7 @@ import {UsernamePayloadProcessor} from "../../src/websocket/processor/UsernamePa
 import {PlayerJoiningPayloadProcessor} from "../../src/websocket/processor/PlayerJoiningPayloadProcessor";
 import {PlayerReadyPayloadProcessor} from "../../src/websocket/processor/PlayerReadyPayloadProcessor";
 import {FleetPayloadProcessor} from "../../src/websocket/processor/FleetPayloadProcessor";
+import {ShootPayloadProcessor} from "../../src/websocket/processor/ShootPayloadProcessor";
 
 describe('WebsocketMessageProcessor', () => {
     let sendUsernamePayloadProcessorMock: UsernamePayloadProcessor
@@ -12,17 +13,20 @@ describe('WebsocketMessageProcessor', () => {
     let websocketMessageProcessor: WebsocketMessageProcessor
     let playerReadyPayloadProcessMock: PlayerReadyPayloadProcessor
     let fleetPayloadProcessorMock: FleetPayloadProcessor
+    let shootPayloadProcessorMock: ShootPayloadProcessor
 
     beforeEach(() => {
         sendUsernamePayloadProcessorMock = getPayloadProcessorMock()()
         playerJoiningPayloadProcessorMock = getPayloadProcessorMock()()
         playerReadyPayloadProcessMock = getPayloadProcessorMock()()
         fleetPayloadProcessorMock = getPayloadProcessorMock()()
+        shootPayloadProcessorMock = getPayloadProcessorMock()()
         websocketMessageProcessor = new WebsocketMessageProcessor(
             sendUsernamePayloadProcessorMock,
             playerJoiningPayloadProcessorMock,
             fleetPayloadProcessorMock,
-            playerReadyPayloadProcessMock)
+            playerReadyPayloadProcessMock,
+            shootPayloadProcessorMock)
     })
 
     describe('processWebsocketMessage', () => {

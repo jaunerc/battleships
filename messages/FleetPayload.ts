@@ -1,9 +1,6 @@
-export interface ShipFieldCoordinate {
-    x: number
-    y: number
-}
+import {FieldCoordinate} from "./FieldCoordinate";
 
 export interface FleetPayload {
     playerId: string
-    fleet: ShipFieldCoordinate[][]
+    fleet: FieldCoordinate[][]
 }

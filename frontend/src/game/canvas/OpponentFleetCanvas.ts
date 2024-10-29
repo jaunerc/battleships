@@ -2,6 +2,9 @@ import {inject, injectable} from "inversify";
 import type {BoardDimension} from "../Game";
 import {Grid} from "../grid/Grid.ts";
 import {convertToFieldPosition} from "../MousePositionConverter.ts";
+import {ShootPayload} from "../../../../messages/ShootPayload.ts";
+import {WebsocketMessage} from "../../../../messages/WebsocketMessage.ts";
+import type {State} from "../../State.ts";
 
 @injectable()
 export class OpponentFleetCanvas {
@@ -10,7 +13,9 @@ export class OpponentFleetCanvas {
 
     constructor(
         @inject('BoardDimension') private board: BoardDimension,
-        @inject('Grid') private grid: Grid
+        @inject('Grid') private grid: Grid,
+        @inject('Websocket') private websocket: WebSocket,
+        @inject('State') private state: State,
     ) {}
 
     init(canvas: HTMLCanvasElement): void {
@@ -39,6 +44,9 @@ export class OpponentFleetCanvas {
             return
         }
         const mousePosition = convertToFieldPosition(event.offsetX, event.offsetY, this.board.columnSizeInPixels)
-        console.log('Clicked on the field to shoot: {x:' + mousePosition.x + ',y:' + mousePosition.y + '}')
+
+        const shootPayload: ShootPayload = { playerSeatId: this.state.seatId!, shoot: mousePosition }
+        const websocketMessage: WebsocketMessage = { type: 'SHOOT', payload: JSON.stringify(shootPayload) }
+        this.websocket.send(JSON.stringify(websocketMessage))
     }
 }

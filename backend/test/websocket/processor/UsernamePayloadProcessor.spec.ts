@@ -5,7 +5,7 @@ import {UsernamePayload} from "../../../../messages/UsernamePayload";
 
 describe('UsernamePayloadProcessor', () => {
     describe('process', () => {
-        const gameState: GameState = { players: [ { id: '1234', readyToStartGame: false, websocket: jest.fn().mockReturnValue({})() }] }
+        const gameState: GameState = { players: [ { id: '1234', readyToStartGame: false, websocket: jest.fn().mockReturnValue({})() }], currentPlayerSeatId: 'first' }
         const processor: UsernamePayloadProcessor = new UsernamePayloadProcessor(gameState)
 
         it('should set the username of the existing player name in the game state.', () => {

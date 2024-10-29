@@ -6,7 +6,7 @@ import {WebsocketMessageSender} from "../../../src/websocket/WebsocketMessageSen
 describe('PlayerJoiningPayloadProcessor', () => {
     describe('process', () => {
         it('should save the player id to the game state and send a message with the player id.', () => {
-            const gameState: GameState = { players: [] }
+            const gameState: GameState = { players: [], currentPlayerSeatId: 'first' }
             const websocketMessageSenderMock: WebsocketMessageSender = mockWebsocketMessageSender()
             const processor: PlayerJoiningPayloadProcessor = new PlayerJoiningPayloadProcessor(gameState, websocketMessageSenderMock)
 

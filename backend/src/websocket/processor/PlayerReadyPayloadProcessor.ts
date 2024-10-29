@@ -19,7 +19,7 @@ export class PlayerReadyPayloadProcessor implements WebsocketPayloadProcessor {
         if (player === undefined) {
             throw 'User does not exists with the id=' + playerReadyPayload.playerId
         }
-
+        console.log('ready player')
         player.readyToStartGame = true
 
         const numNotReadyPlayers = this.gameState.players
@@ -27,7 +27,7 @@ export class PlayerReadyPayloadProcessor implements WebsocketPayloadProcessor {
             .length;
 
         if (this.gameState.players.length === 2 && numNotReadyPlayers === 0) {
-            const gameUpdatePayload: GameUpdatePayload = { currentPlayerSeatId: 'first' }
+            const gameUpdatePayload: GameUpdatePayload = { currentPlayerSeatId: 'first', fireLogs: [] }
             const websocketMessage: WebsocketMessage = { type: 'GAME_UPDATE', payload: JSON.stringify(gameUpdatePayload) }
             this.websocketMessageSender.broadcast(websocketMessage)
         }

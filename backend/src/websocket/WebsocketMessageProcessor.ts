@@ -6,6 +6,7 @@ import {WebsocketMessage} from "../../../messages/WebsocketMessage";
 import {FleetPayloadProcessor} from "./processor/FleetPayloadProcessor";
 import {PlayerReadyPayloadProcessor} from "./processor/PlayerReadyPayloadProcessor";
 import {valueIfPresentOrError} from "../TypeUtils";
+import {ShootPayloadProcessor} from "./processor/ShootPayloadProcessor";
 
 @injectable()
 export class WebsocketMessageProcessor {
@@ -13,7 +14,8 @@ export class WebsocketMessageProcessor {
     constructor(@inject('UsernamePayloadProcessor') private sendUsernameMessagePayloadProcessor: UsernamePayloadProcessor,
                 @inject('PlayerJoiningPayloadProcessor') private playerJoiningPayloadProcessor: PlayerJoiningPayloadProcessor,
                 @inject('FleetPayloadProcessor') private fleetPayloadProcessor: FleetPayloadProcessor,
-                @inject('PlayerReadyPayloadProcessor') private playerReadyPayloadProcessor: PlayerReadyPayloadProcessor
+                @inject('PlayerReadyPayloadProcessor') private playerReadyPayloadProcessor: PlayerReadyPayloadProcessor,
+                @inject('ShootPayloadProcessor') private shootPayloadProcessor: ShootPayloadProcessor
     ) {}
 
     processWebsocketMessage(websocketMessage: WebsocketMessage, clientWs?: WebSocket): void {
@@ -29,6 +31,9 @@ export class WebsocketMessageProcessor {
                 break
             case "PLAYER_READY":
                 this.playerReadyPayloadProcessor.process(valueIfPresentOrError(websocketMessage.payload))
+                break
+            case 'SHOOT':
+                this.shootPayloadProcessor.process(valueIfPresentOrError(websocketMessage.payload))
         }
     }
 }

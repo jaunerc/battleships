@@ -1,8 +1,15 @@
 import WebSocket from "ws";
 
-export interface ShipFieldCoordinate {
+export interface FieldCoordinate {
     x: number
     y: number
+}
+
+export type ShootResult = 'hit' | 'missed'
+
+export interface FireLogEntry {
+    coordinates: FieldCoordinate
+    result: ShootResult
 }
 
 export interface Player {
@@ -11,11 +18,13 @@ export interface Player {
     websocket: WebSocket
     seatId?: SeatId
     name?: string
-    fleet?: ShipFieldCoordinate[][]
+    fleet?: FieldCoordinate[][]
+    fireLog?: FireLogEntry[]
 }
 
 export interface GameState {
     players: Player[]
+    currentPlayerSeatId: SeatId
 }
 
 export type SeatId = 'first' | 'second'

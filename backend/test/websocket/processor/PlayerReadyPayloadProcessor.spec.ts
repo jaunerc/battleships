@@ -17,7 +17,8 @@ describe('PlayerReadyPayloadProcessor', () => {
                 players: [
                     { id: 'a', readyToStartGame: false, websocket: jest.fn().mockReturnValue({})() },
                     { id: 'b', readyToStartGame: false, websocket: jest.fn().mockReturnValue({})() }
-                ]
+                ],
+                currentPlayerSeatId: 'first'
             }
             const processor: PlayerReadyPayloadProcessor = new PlayerReadyPayloadProcessor(gameState, websocketMessageSenderMock)
             const payload: PlayerReadyPayload = { playerId: 'b' }
@@ -33,7 +34,8 @@ describe('PlayerReadyPayloadProcessor', () => {
             const gameState: GameState = {
                 players: [
                     { id: 'a', readyToStartGame: false, websocket: jest.fn().mockReturnValue({})() },
-                ]
+                ],
+                currentPlayerSeatId: 'first'
             }
             const processor: PlayerReadyPayloadProcessor = new PlayerReadyPayloadProcessor(gameState, websocketMessageSenderMock)
             const payload: PlayerReadyPayload = { playerId: 'a' }
@@ -49,7 +51,8 @@ describe('PlayerReadyPayloadProcessor', () => {
                 players: [
                     { id: 'a', readyToStartGame: true, websocket: jest.fn().mockReturnValue({})() },
                     { id: 'b', readyToStartGame: false, websocket: jest.fn().mockReturnValue({})() }
-                ]
+                ],
+                currentPlayerSeatId: 'first'
             }
             const processor: PlayerReadyPayloadProcessor = new PlayerReadyPayloadProcessor(gameState, websocketMessageSenderMock)
             const payload: PlayerReadyPayload = { playerId: 'b' }
