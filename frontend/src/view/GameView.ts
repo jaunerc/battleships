@@ -13,6 +13,7 @@ export class GameView implements View {
 
     currentPlayerParagraph?: HTMLParagraphElement
     opponentFleetCanvas?: OpponentFleetCanvas
+    myFleetCanvas?: MyFleetCanvas
 
     constructor(
         @inject('State') private state: State,
@@ -37,14 +38,14 @@ export class GameView implements View {
 
         const myFleetHtmlCanvas: HTMLCanvasElement = document.querySelector<HTMLCanvasElement>('#my-fleet-canvas')!
         const opponentFleetHtmlCanvas: HTMLCanvasElement = document.querySelector<HTMLCanvasElement>('#opponent-canvas')!
-        const myFleetCanvas: MyFleetCanvas = container.get<MyFleetCanvas>('MyFleetCanvas')
+        this.myFleetCanvas = container.get<MyFleetCanvas>('MyFleetCanvas')
         this.opponentFleetCanvas = container.get<OpponentFleetCanvas>('OpponentFleetCanvas')
 
         this.currentPlayerParagraph = document.querySelector<HTMLParagraphElement>('#current-player')!
 
-        myFleetCanvas.init(myFleetHtmlCanvas, this.state.fleet!)
+        this.myFleetCanvas.init(myFleetHtmlCanvas, this.state.fleet!)
         this.opponentFleetCanvas.init(opponentFleetHtmlCanvas)
-        myFleetCanvas.draw()
+        this.myFleetCanvas.draw()
         this.opponentFleetCanvas.draw()
 
         const playerReadyPayload: PlayerReadyPayload = { playerId: this.state.playerId! }
@@ -58,8 +59,19 @@ export class GameView implements View {
         const websocketMessage: WebsocketMessage = JSON.parse(message.data)
         const gameUpdatePayload: GameUpdatePayload = JSON.parse(websocketMessage.payload!)
 
+        if (gameUpdatePayload.fireLogs.length > 0) {
+            this.state.fireLogs = {
+                myFireLog: gameUpdatePayload.fireLogs.find(fireLog => fireLog.playerSeatId === this.state.seatId)!.entries,
+                opponentFireLog: gameUpdatePayload.fireLogs.find(fireLog => fireLog.playerSeatId !== this.state.seatId)!.entries
+            }
+            this.myFleetCanvas?.update(this.state.fireLogs?.opponentFireLog!)
+            this.opponentFleetCanvas?.update(this.state.fireLogs?.myFireLog!)
+        }
+
         this.currentPlayerParagraph!.innerText = gameUpdatePayload.currentPlayerSeatId
 
+        this.myFleetCanvas?.draw()
+        this.opponentFleetCanvas?.draw()
         this.opponentFleetCanvas?.setLockForUserInput(this.currentPlayerIsOpponent(gameUpdatePayload))
     }
 

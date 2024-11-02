@@ -59,7 +59,7 @@ export class ShootPayloadProcessor implements WebsocketPayloadProcessor {
     private createFireLogFor(player: Player): PlayerFireLog {
         return {
             playerSeatId: player.seatId!,
-            shoots: player.fireLog!
+            entries: player.fireLog!
         }
     }
 }

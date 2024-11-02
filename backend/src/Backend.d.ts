@@ -19,7 +19,7 @@ export interface Player {
     seatId?: SeatId
     name?: string
     fleet?: FieldCoordinate[][]
-    fireLog?: FireLogEntry[]
+    fireLog: FireLogEntry[]
 }
 
 export interface GameState {

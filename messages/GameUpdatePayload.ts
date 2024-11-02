@@ -4,14 +4,14 @@ export type PlayerSeatId = 'first' | 'second'
 
 export type ShootResult = 'hit' | 'missed'
 
-export interface Shoot {
+export interface FireLogEntry {
     coordinates: FieldCoordinate
     result: ShootResult
 }
 
 export interface PlayerFireLog {
     playerSeatId: PlayerSeatId
-    shoots: Shoot[]
+    entries: FireLogEntry[]
 }
 
 export interface GameUpdatePayload {

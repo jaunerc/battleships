@@ -5,11 +5,14 @@ import {convertToFieldPosition} from "../MousePositionConverter.ts";
 import {ShootPayload} from "../../../../messages/ShootPayload.ts";
 import {WebsocketMessage} from "../../../../messages/WebsocketMessage.ts";
 import type {State} from "../../State.ts";
+import {FireLogEntry} from "../../../../messages/GameUpdatePayload.ts";
+import {Shoot} from "../shoot/Shoot.ts";
 
 @injectable()
 export class OpponentFleetCanvas {
     context?: CanvasRenderingContext2D
     lockForUserInput: boolean = true
+    fireLogEntries: FireLogEntry[] = []
 
     constructor(
         @inject('BoardDimension') private board: BoardDimension,
@@ -29,6 +32,12 @@ export class OpponentFleetCanvas {
         }
         this.clearCanvas()
         this.grid.draw(this.context)
+        const shoot: Shoot = new Shoot(this.board)
+        this.fireLogEntries.forEach(fireLogEntry => shoot.draw(this.context!, fireLogEntry.coordinates))
+    }
+
+    update(fireLogEntries: FireLogEntry[]) {
+        this.fireLogEntries = fireLogEntries
     }
 
     setLockForUserInput(lockForUserInput: boolean): void {
