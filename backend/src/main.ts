@@ -29,7 +29,7 @@ app.ws('/', function (ws, _req) {
         const websocketMessage: WebsocketMessage = JSON.parse(msg.toString());
         console.log('msg received of type: ' + websocketMessage.type);
 
-        websocketMessageProcessor.processWebsocketMessage(websocketMessage)
+        websocketMessageProcessor.processWebsocketMessage(websocketMessage, ws)
 
     });
 

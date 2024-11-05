@@ -15,8 +15,8 @@ describe('PlayerReadyPayloadProcessor', () => {
         it('should save the ready state for the given player in the game state.', () => {
             const gameState: GameState = {
                 players: [
-                    { id: 'a', readyToStartGame: false, websocket: jest.fn().mockReturnValue({})() },
-                    { id: 'b', readyToStartGame: false, websocket: jest.fn().mockReturnValue({})() }
+                    { id: 'a', readyToStartGame: false, fireLog: [], websocket: jest.fn().mockReturnValue({})() },
+                    { id: 'b', readyToStartGame: false, fireLog: [], websocket: jest.fn().mockReturnValue({})() }
                 ],
                 currentPlayerSeatId: 'first'
             }
@@ -33,7 +33,7 @@ describe('PlayerReadyPayloadProcessor', () => {
         it('should not send a GAME_UPDATE message when only one player has joined.', () => {
             const gameState: GameState = {
                 players: [
-                    { id: 'a', readyToStartGame: false, websocket: jest.fn().mockReturnValue({})() },
+                    { id: 'a', readyToStartGame: false, fireLog: [], websocket: jest.fn().mockReturnValue({})() },
                 ],
                 currentPlayerSeatId: 'first'
             }
@@ -49,8 +49,8 @@ describe('PlayerReadyPayloadProcessor', () => {
         it('should send a GAME_UPDATE message when both players are ready.', () => {
             const gameState: GameState = {
                 players: [
-                    { id: 'a', readyToStartGame: true, websocket: jest.fn().mockReturnValue({})() },
-                    { id: 'b', readyToStartGame: false, websocket: jest.fn().mockReturnValue({})() }
+                    { id: 'a', readyToStartGame: true, fireLog: [], websocket: jest.fn().mockReturnValue({})() },
+                    { id: 'b', readyToStartGame: false, fireLog: [], websocket: jest.fn().mockReturnValue({})() }
                 ],
                 currentPlayerSeatId: 'first'
             }

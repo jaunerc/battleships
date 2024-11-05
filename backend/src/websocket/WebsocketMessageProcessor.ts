@@ -27,7 +27,7 @@ export class WebsocketMessageProcessor {
                 this.sendUsernameMessagePayloadProcessor.process(valueIfPresentOrError(websocketMessage.payload))
                 break
             case 'FLEET':
-                this.fleetPayloadProcessor.process(valueIfPresentOrError(websocketMessage.payload))
+                this.fleetPayloadProcessor.process(valueIfPresentOrError(websocketMessage.payload), valueIfPresentOrError(clientWs))
                 break
             case "PLAYER_READY":
                 this.playerReadyPayloadProcessor.process(valueIfPresentOrError(websocketMessage.payload))

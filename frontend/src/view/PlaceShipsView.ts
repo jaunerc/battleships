@@ -10,12 +10,14 @@ import {FleetPayload} from "../../../messages/FleetPayload.ts";
 import {WebsocketMessage} from "../../../messages/WebsocketMessage.ts";
 import {Ship} from "../game/ship/Ship.ts";
 import {calculateShipFields} from "../game/ship/ShipFieldsCalculator.ts";
+import {FleetValidationPayload} from "../../../messages/FleetValidationPayload.ts";
 
 @injectable()
 export class PlaceShipsView implements View {
 
     context?: CanvasRenderingContext2D
     placeShipsCanvas?: PlaceShipsCanvas
+    appDiv?: HTMLDivElement
 
     constructor(
         @inject('State') private state: State,
@@ -31,7 +33,7 @@ export class PlaceShipsView implements View {
                 <button id="save-fleet">Save Fleet</button>
             </div>
         `
-
+        this.appDiv = appDiv
         const battleShipCanvas: HTMLCanvasElement = document.querySelector<HTMLCanvasElement>('#battleship-canvas')!
         const saveFleetButton: HTMLButtonElement = document.querySelector<HTMLButtonElement>('#save-fleet')!
 
@@ -45,8 +47,6 @@ export class PlaceShipsView implements View {
             const fleetPayload: FleetPayload = { playerId: this.state.playerId!, fleet }
             const websocketMessage: WebsocketMessage = { type: 'FLEET', payload: JSON.stringify(fleetPayload) }
             this.websocket.send(JSON.stringify(websocketMessage))
-
-            this.gameView.show(appDiv)
         })
 
         this.context = battleShipCanvas.getContext('2d')!
@@ -55,9 +55,20 @@ export class PlaceShipsView implements View {
         this.placeShipsCanvas = container.get<PlaceShipsCanvas>('PlaceShipsCanvas')
         this.placeShipsCanvas.init(battleShipCanvas)
         this.placeShipsCanvas.draw()
+
+        this.websocket.onmessage = this.onWebsocketMessage
     }
 
     private calculateShipFields(ship: Ship): FieldPosition[] {
         return calculateShipFields(ship.shipOrientation, ship.shipType, ship.startField)
+    }
+
+    private onWebsocketMessage = (message: MessageEvent<string>) => {
+        const websocketMessage: WebsocketMessage = JSON.parse(message.data)
+        const fleetValidationPayload: FleetValidationPayload = JSON.parse(websocketMessage.payload!)
+
+        if (fleetValidationPayload.validationResult === 'passed') {
+            this.gameView.show(this.appDiv!)
+        }
     }
 }
