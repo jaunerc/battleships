@@ -3,7 +3,7 @@ import {FireLogEntry, GameState, Player} from "../../Backend";
 import {WebsocketMessageSender} from "../WebsocketMessageSender";
 import {WebsocketPayloadProcessor} from "./WebsocketPayloadProcessor";
 import {ShootPayload} from "../../../../messages/ShootPayload";
-import {GameUpdatePayload, PlayerFireLog} from "../../../../messages/GameUpdatePayload";
+import {GameUpdatePayload, PlayerFireLog, PlayerSeatId} from "../../../../messages/GameUpdatePayload";
 import {WebsocketMessage} from "../../../../messages/WebsocketMessage";
 import {valueIfPresentOrError} from "../../TypeUtils";
 
@@ -15,24 +15,30 @@ export class ShootPayloadProcessor implements WebsocketPayloadProcessor {
 
     process(payload: string) {
         const shootPayload: ShootPayload = JSON.parse(payload)
-
         const player: Player = valueIfPresentOrError(this.gameState.players
             .find(player => player.seatId === shootPayload.playerSeatId))
 
         const fireLogEntry: FireLogEntry = this.createFireLogEntry(shootPayload)
         player.fireLog?.push(fireLogEntry)
 
+        let gameUpdatePayload: GameUpdatePayload
         if (fireLogEntry.result === 'missed') {
             this.switchCurrentPlayer()
+            gameUpdatePayload = { currentPlayerSeatId: this.gameState.currentPlayerSeatId, fireLogs: this.createFireLogsForAllPlayers() }
+        } else {
+            const allShipsOfOpponentDestroyed: boolean = this.ifAllShipsDestroyed()
+            if (allShipsOfOpponentDestroyed) {
+                this.gameState.winnerPlayerSeatId = this.gameState.currentPlayerSeatId
+                gameUpdatePayload = { currentPlayerSeatId: this.gameState.currentPlayerSeatId, winnerSeatId: this.gameState.winnerPlayerSeatId, fireLogs: this.createFireLogsForAllPlayers() }
+            } else {
+                gameUpdatePayload = { currentPlayerSeatId: this.gameState.currentPlayerSeatId, fireLogs: this.createFireLogsForAllPlayers() }
+            }
         }
-
-        const gameUpdatePayload: GameUpdatePayload = { currentPlayerSeatId: this.gameState.currentPlayerSeatId, fireLogs: this.createFireLogsForAllPlayers() }
-        const websocketMessage: WebsocketMessage = { type: 'GAME_UPDATE', payload: JSON.stringify(gameUpdatePayload) }
-        this.websocketMessageSender.broadcast(websocketMessage)
+        this.sendGameUpdateMessage(gameUpdatePayload)
     }
 
     private createFireLogEntry(shootPayload: ShootPayload): FireLogEntry {
-        const opponent: Player = this.findOpponent(shootPayload)
+        const opponent: Player = this.findOpponent(shootPayload.playerSeatId)
 
         return { coordinates: shootPayload.shoot, result: this.missingShot(opponent, shootPayload) ? 'missed' : 'hit' }
     }
@@ -43,8 +49,8 @@ export class ShootPayloadProcessor implements WebsocketPayloadProcessor {
             .length === 0;
     }
 
-    private findOpponent(shootPayload: ShootPayload) {
-        return valueIfPresentOrError(this.gameState.players.find(player => player.seatId !== shootPayload.playerSeatId));
+    private findOpponent(shooterPlayerSeatId: PlayerSeatId) {
+        return valueIfPresentOrError(this.gameState.players.find(player => player.seatId !== shooterPlayerSeatId));
     }
 
     private switchCurrentPlayer(): void {
@@ -61,5 +67,19 @@ export class ShootPayloadProcessor implements WebsocketPayloadProcessor {
             playerSeatId: player.seatId!,
             entries: player.fireLog!
         }
+    }
+
+    private ifAllShipsDestroyed(): boolean {
+        const opponent: Player = this.findOpponent(this.gameState.currentPlayerSeatId)
+        const currentPlayer: Player = this.gameState.players.find(player => player.seatId === this.gameState.currentPlayerSeatId)!
+
+        return opponent.fleet?.flat()
+            .filter(shipField => currentPlayer.fireLog.some(firedField => firedField.coordinates.x === shipField.x && firedField.coordinates.y === shipField.y))
+            .length === opponent.fleet?.flat().length
+    }
+
+    private sendGameUpdateMessage(payload: GameUpdatePayload): void {
+        const websocketMessage: WebsocketMessage = { type: 'GAME_UPDATE', payload: JSON.stringify(payload) }
+        this.websocketMessageSender.broadcast(websocketMessage)
     }
 }

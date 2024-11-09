@@ -14,6 +14,7 @@ export class GameView implements View {
     currentPlayerParagraph?: HTMLParagraphElement
     opponentFleetCanvas?: OpponentFleetCanvas
     myFleetCanvas?: MyFleetCanvas
+    winnerPlayerParagraph?: HTMLParagraphElement;
 
     constructor(
         @inject('State') private state: State,
@@ -25,6 +26,8 @@ export class GameView implements View {
             <div>
                 <p>Current Player:</p>
                 <p id="current-player"></p>
+                <p>Winner:</p>
+                <p id="winner"></p>
                 <div>
                     <p>Opponents fleet</p>
                     <canvas id="opponent-canvas" width="400px" height="400px"></canvas>
@@ -42,6 +45,7 @@ export class GameView implements View {
         this.opponentFleetCanvas = container.get<OpponentFleetCanvas>('OpponentFleetCanvas')
 
         this.currentPlayerParagraph = document.querySelector<HTMLParagraphElement>('#current-player')!
+        this.winnerPlayerParagraph = document.querySelector<HTMLParagraphElement>('#winner')!
 
         this.myFleetCanvas.init(myFleetHtmlCanvas, this.state.fleet!)
         this.opponentFleetCanvas.init(opponentFleetHtmlCanvas)
@@ -68,11 +72,18 @@ export class GameView implements View {
             this.opponentFleetCanvas?.update(this.state.fireLogs?.myFireLog!)
         }
 
+
         this.currentPlayerParagraph!.innerText = gameUpdatePayload.currentPlayerSeatId
 
         this.myFleetCanvas?.draw()
         this.opponentFleetCanvas?.draw()
         this.opponentFleetCanvas?.setLockForUserInput(this.currentPlayerIsOpponent(gameUpdatePayload))
+
+        if (gameUpdatePayload.winnerSeatId !== undefined) {
+            this.winnerPlayerParagraph!.innerText = gameUpdatePayload.winnerSeatId
+            this.opponentFleetCanvas?.setLockForUserInput(true)
+            this.currentPlayerParagraph!.innerText = ''
+        }
     }
 
     private currentPlayerIsOpponent(gameUpdatePayload: GameUpdatePayload): boolean {

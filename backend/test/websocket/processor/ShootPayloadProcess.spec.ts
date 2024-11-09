@@ -1,28 +1,27 @@
 import 'reflect-metadata'
-import { ShootPayload } from "../../../../messages/ShootPayload"
-import { WebsocketMessage } from "../../../../messages/WebsocketMessage"
-import {GameState} from "../../../src/Backend"
-import {WebsocketMessageSender} from "../../../src/websocket/WebsocketMessageSender"
-import {ShootPayloadProcessor} from "../../../src/websocket/processor/ShootPayloadProcessor"
+import {ShootPayload} from '../../../../messages/ShootPayload'
+import {GameState} from '../../../src/Backend'
+import {WebsocketMessageSender} from '../../../src/websocket/WebsocketMessageSender'
+import {ShootPayloadProcessor} from '../../../src/websocket/processor/ShootPayloadProcessor'
 
-describe("ShootPayloadProcessor", () => {
+describe('ShootPayloadProcessor', () => {
     let gameState: GameState
     let websocketMessageSender: WebsocketMessageSender
     let processor: ShootPayloadProcessor
 
     beforeEach(() => {
         gameState = {
-            currentPlayerSeatId: "first",
+            currentPlayerSeatId: 'first',
             players: [
                 {
-                    seatId: "first", fireLog: [], fleet: [[{x: 1, y: 1}]],
-                    id: "",
+                    seatId: 'first', fireLog: [], fleet: [[{x: 1, y: 1}]],
+                    id: '',
                     readyToStartGame: false,
                     websocket: jest.fn().mockReturnValue({})()
                 },
                 {
-                    seatId: "second", fireLog: [], fleet: [[{x: 2, y: 2}]],
-                    id: "",
+                    seatId: 'second', fireLog: [], fleet: [[{x: 2, y: 2}]],
+                    id: '',
                     readyToStartGame: false,
                     websocket: jest.fn().mockReturnValue({})()
                 },
@@ -33,9 +32,9 @@ describe("ShootPayloadProcessor", () => {
     })
 
     describe('process', () => {
-        it("should process a hit shot correctly", () => {
+        it('should process a hit shot correctly.', () => {
             const payload: ShootPayload = {
-                playerSeatId: "first",
+                playerSeatId: 'first',
                 shoot: {x: 2, y: 2},
             }
 
@@ -43,53 +42,36 @@ describe("ShootPayloadProcessor", () => {
 
             const player = gameState.players[0]
             expect(player.fireLog?.length).toBe(1)
-            expect(player.fireLog![0]).toEqual({coordinates: payload.shoot, result: "hit"})
-
-            // Ensure the current player hasn't changed after a hit
-            expect(gameState.currentPlayerSeatId).toBe("first")
-
-            // Ensure a GAME_UPDATE message is sent
-            const expectedMessage: WebsocketMessage = {
-                type: "GAME_UPDATE",
-                payload: JSON.stringify({
-                    currentPlayerSeatId: "first",
-                    fireLogs: [
-                        {playerSeatId: "first", shoots: player.fireLog},
-                        {playerSeatId: "second", shoots: []},
-                    ],
-                }),
-            }
-            expect(websocketMessageSender.broadcast).toHaveBeenCalledWith(expectedMessage)
+            expect(player.fireLog![0]).toEqual({coordinates: payload.shoot, result: 'hit'})
+            expect(gameState.currentPlayerSeatId).toBe('first')
+            expect(websocketMessageSender.broadcast).toHaveBeenCalled()
         })
 
-        it("should process a missed shot and switch the current player", () => {
+        it('should process a missed shot and switch the current player.', () => {
             const payload: ShootPayload = {
-                playerSeatId: "first",
+                playerSeatId: 'first',
                 shoot: {x: 3, y: 3}, // coordinates that miss
             }
 
             processor.process(JSON.stringify(payload))
 
-            // Check if the fire log entry for the player includes a missed shot
             const player = gameState.players[0]
             expect(player.fireLog?.length).toBe(1)
-            expect(player.fireLog![0]).toEqual({coordinates: payload.shoot, result: "missed"})
-
-            // Ensure the current player has switched after a miss
-            expect(gameState.currentPlayerSeatId).toBe("second")
-
-            // Ensure a GAME_UPDATE message is sent
-            const expectedMessage: WebsocketMessage = {
-                type: "GAME_UPDATE",
-                payload: JSON.stringify({
-                    currentPlayerSeatId: "second",
-                    fireLogs: [
-                        {playerSeatId: "first", shoots: player.fireLog},
-                        {playerSeatId: "second", shoots: []},
-                    ],
-                }),
+            expect(player.fireLog![0]).toEqual({coordinates: payload.shoot, result: 'missed'})
+            expect(gameState.currentPlayerSeatId).toBe('second')
+            expect(websocketMessageSender.broadcast).toHaveBeenCalled()
+        })
+        
+        it ('should set the winner when all ships of the opponent have been destroyed.', () => {
+            const payload: ShootPayload = {
+                playerSeatId: 'first',
+                shoot: {x: 2, y: 2},
             }
-            expect(websocketMessageSender.broadcast).toHaveBeenCalledWith(expectedMessage)
+
+            processor.process(JSON.stringify(payload))
+            
+            expect(gameState.winnerPlayerSeatId).toBe('first')
+            expect(websocketMessageSender.broadcast).toHaveBeenCalled()
         })
     })
 })

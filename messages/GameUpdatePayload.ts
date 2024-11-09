@@ -16,5 +16,6 @@ export interface PlayerFireLog {
 
 export interface GameUpdatePayload {
     currentPlayerSeatId: PlayerSeatId
+    winnerSeatId?: PlayerSeatId
     fireLogs: PlayerFireLog[]
 }
