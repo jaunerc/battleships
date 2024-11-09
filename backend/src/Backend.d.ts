@@ -25,6 +25,7 @@ export interface Player {
 export interface GameState {
     players: Player[]
     currentPlayerSeatId: SeatId
+    winnerPlayerSeatId?: SeatId
 }
 
 export type SeatId = 'first' | 'second'
