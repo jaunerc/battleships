@@ -2,11 +2,11 @@ FROM node:22-alpine
 
 WORKDIR /home/node/app
 
-COPY ./backend/package*.json .
+COPY ./frontend/package*.json .
 
 RUN npm install
 
 COPY ./messages ../messages
-COPY ./backend .
+COPY ./frontend .
 
-RUN npm run backend-build
+RUN npm run build
