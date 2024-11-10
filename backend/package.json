@@ -4,6 +4,7 @@
   "main": "main.js",
   "scripts": {
     "backend-dev": "nodemon",
+    "backend-build": "tsc",
     "test": "jest"
   },
   "nodemonConfig": {
