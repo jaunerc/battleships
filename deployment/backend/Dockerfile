@@ -9,4 +9,4 @@ RUN npm install
 COPY ./messages ../messages
 COPY ./backend .
 
-RUN npm run backend-build
+RUN npm run build
