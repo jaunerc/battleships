@@ -1,0 +1,52 @@
+name: Development
+
+on:
+  pull_request:
+    types:
+        - opened
+        - edited
+        - synchronize
+        - reopened
+  workflow_call:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 22
+      - name: install dependencies
+        run: |
+          cd backend
+          npm install
+      - name: build
+        run: |
+          cd backend
+          npm run build
+      - name: unit tests
+        run: |
+          cd backend
+          npm run test
+  frontend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 22
+      - name: install dependencies
+        run: |
+          cd frontend
+          npm install
+      - name: unit tests
+        run: |
+          cd frontend
+          npm run test
