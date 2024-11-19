@@ -1,0 +1,10 @@
+name: Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    uses: jaunerc/battleships/.github/workflows/development.yml
