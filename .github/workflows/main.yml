@@ -7,4 +7,4 @@ on:
 
 jobs:
   build-and-test:
-    uses: jaunerc/battleships/.github/workflows/development.yml
+    uses: jaunerc/battleships/.github/workflows/development.yml@main
