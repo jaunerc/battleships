@@ -47,7 +47,7 @@ describe('WebsocketMessageProcessor', () => {
         })
 
         it('should call the right payload processor for a message of type FLEET.', () => {
-            websocketMessageProcessor.processWebsocketMessage({ type: 'FLEET', payload: '{"a":"a"}' })
+            websocketMessageProcessor.processWebsocketMessage({ type: 'FLEET', payload: '{"a":"a"}' }, jest.fn().mockReturnValue({})())
             expect(fleetPayloadProcessorMock.process).toHaveBeenCalled()
         })
 
