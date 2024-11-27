@@ -8,11 +8,6 @@ on:
         - synchronize
         - reopened
   workflow_call:
-    inputs:
-      should-upload-artifact:
-        description: 'Whether the artifacts should be uploaded.'
-        required: true
-        type: boolean
 
 jobs:
   backend:
@@ -37,12 +32,6 @@ jobs:
         run: |
           cd backend
           npm run test
-      - name: upload artifact
-        if: ${{ inputs.should-upload-artifact }}
-        uses: actions/upload-artifact@v4.4.3
-        with:
-          name: 'backend-artifact'
-          path: ./backend
   frontend:
     runs-on: ubuntu-latest
     timeout-minutes: 10
