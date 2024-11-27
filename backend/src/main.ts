@@ -39,5 +39,5 @@ app.ws('/', function (ws, _req) {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`server is running on port ${PORT}`);
 });
