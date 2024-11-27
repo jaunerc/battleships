@@ -12,6 +12,7 @@ jobs:
   build-and-test:
     uses: jaunerc/battleships/.github/workflows/development.yml@main
   deploy:
+    needs: build-and-test
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
