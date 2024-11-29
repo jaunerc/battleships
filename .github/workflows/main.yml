@@ -37,6 +37,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - name: checkout repository
+        uses: actions/checkout@v4.2.2
+
       - name: Deploy to DigitalOcean
         uses: digitalocean/app_action/deploy@v2
         env:
