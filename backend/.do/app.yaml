@@ -5,7 +5,6 @@ services:
       repo: jaunerc/battleships
       branch: main
       deploy_on_push: true
-    build_command: npm run build
     run_command: node ./dist/backend/src/main.js
     source_dir: /backend
     environment_slug: node-js
