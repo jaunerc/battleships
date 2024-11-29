@@ -42,4 +42,5 @@ jobs:
         env:
           SAMPLE_DIGEST: ${{ steps.push.outputs.digest }}
         with:
+          app_spec_location: './backend/.do/app.yaml'
           token: ${{ secrets.DIGITALOCEAN_API_TOKEN }}

@@ -1,0 +1,19 @@
+name: battleships-backend
+services:
+  - name: backend
+    github:
+      repo: jaunerc/battleships
+      branch: main
+      deploy_on_push: true
+    build_command: npm run build
+    run_command: node ./dist/backend/src/main.js
+    source_dir: /backend
+    environment_slug: node-js
+    http_port: 3001
+    routes:
+      - path: /
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    envs:
+      - key: NODE_ENV
+        value: production
