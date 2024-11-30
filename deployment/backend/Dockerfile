@@ -10,3 +10,5 @@ COPY ./messages ../messages
 COPY ./backend .
 
 RUN npm run build
+
+CMD ["node", "./dist/backend/src/main.js"]
