@@ -6,3 +6,6 @@ services:
       registry: ghcr.io
       repository: jaunerc/battleships
       tag: ${IMAGE_TAG}
+      authentication:
+        username: jaunerc
+        password: ${GHCR_READ_PACKAGE_TOKEN}
