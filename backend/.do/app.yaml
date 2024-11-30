@@ -3,8 +3,8 @@ services:
   - name: backend
     image:
       registry_type: GHCR
-      registry: ghcr.io
-      repository: jaunerc/battleships
+      registry: jaunerc
+      repository: battleships
       tag: ${IMAGE_TAG}
       authentication:
         username: jaunerc
