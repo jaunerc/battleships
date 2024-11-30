@@ -3,6 +3,6 @@ services:
   - name: backend
     image:
       registry_type: GHCR
-      registry: jaunerc
-      repository: battleships
+      registry: ghcr.io
+      repository: jaunerc/battleships
       digest: ${SAMPLE_DIGEST}
