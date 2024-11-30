@@ -45,6 +45,7 @@ jobs:
         uses: digitalocean/app_action/deploy@v2
         env:
           SAMPLE_DIGEST: ${{ steps.push.outputs.digest }}
+          IMAGE_TAG: ${{ github.sha }}
         with:
           app_spec_location: './backend/.do/app.yaml'
           token: ${{ secrets.DIGITALOCEAN_API_TOKEN }}
