@@ -2,9 +2,8 @@ name: battleships-backend
 services:
   - name: backend
     image:
-      registry: ghcr.io
-      repository: jaunerc/battleships
+      registry_type: GHCR
+      registry: jaunerc
+      repository: battleships
       tag: ${IMAGE_TAG}
-      authentication:
-        username: jaunerc
-        password: ${GHCR_READ_PACKAGE_TOKEN}
+      registry_credentials: "jaunerc:${GHCR_READ_PACKAGE_TOKEN}"
