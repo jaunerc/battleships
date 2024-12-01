@@ -11,4 +11,4 @@ COPY ./backend .
 
 RUN npm run build
 
-CMD ["node", "./dist/backend/src/main.js"]
+CMD ["node", "./dist/app/src/main.js"]
