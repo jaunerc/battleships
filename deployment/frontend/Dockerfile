@@ -10,3 +10,5 @@ COPY ./messages ../messages
 COPY ./frontend .
 
 RUN npm run build
+
+CMD ["npm", "run", "dev"]
