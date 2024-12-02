@@ -26,13 +26,20 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-      - name: Build and push container image to registry
+      - name: Build and push container image to registry (backend)
         id: push
         uses: docker/build-push-action@v6
         with:
           push: true
           tags: ghcr.io/jaunerc/battleships/backend:${{ github.sha }}
           file: ./deployment/backend/Dockerfile
+
+      - name: Build and push container image to registry (frontend)
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: ghcr.io/jaunerc/battleships/frontend:${{ github.sha }}
+          file: ./deployment/frontend/Dockerfile
   deploy:
     needs: build-docker-image
     runs-on: ubuntu-latest
@@ -48,5 +55,5 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
           GHCR_READ_PACKAGE_TOKEN: ${{ secrets.GHCR_READ_PACKAGE_TOKEN }}
         with:
-          app_spec_location: './backend/.do/app.yaml'
+          app_spec_location: '.do/app.yaml'
           token: ${{ secrets.DIGITALOCEAN_API_TOKEN }}
