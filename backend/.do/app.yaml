@@ -5,6 +5,6 @@ services:
     image:
       registry_type: GHCR
       registry: jaunerc
-      repository: battleships
+      repository: battleships/backend
       tag: ${IMAGE_TAG}
       registry_credentials: "jaunerc:${GHCR_READ_PACKAGE_TOKEN}"
