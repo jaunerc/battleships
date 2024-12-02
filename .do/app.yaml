@@ -2,6 +2,8 @@ name: battleships-backend
 services:
   - name: backend
     http_port: 3001
+    routes:
+      - path: /api/**
     image:
       registry_type: GHCR
       registry: jaunerc
@@ -10,6 +12,8 @@ services:
       registry_credentials: "jaunerc:${GHCR_READ_PACKAGE_TOKEN}"
   - name: frontend
     http_port: 5173
+    routes:
+      - path: /**
     image:
       registry_type: GHCR
       registry: jaunerc
