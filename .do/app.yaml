@@ -3,7 +3,7 @@ services:
   - name: backend
     http_port: 3001
     routes:
-      - path: /api/**
+      - path: /api/
     image:
       registry_type: GHCR
       registry: jaunerc
@@ -13,7 +13,7 @@ services:
   - name: frontend
     http_port: 5173
     routes:
-      - path: /**
+      - path: /
     image:
       registry_type: GHCR
       registry: jaunerc
