@@ -6,7 +6,7 @@ import {StartView} from "./view/StartView.ts";
 import {PlaceShipsView} from "./view/PlaceShipsView.ts";
 import {GameView} from "./view/GameView.ts";
 
-const websocketAddress: string = `ws://${window.location.hostname}${import.meta.env.VITE_BACKEND_PATH_SUFFIX}`
+const websocketAddress: string = `${import.meta.env.VITE_BACKEND_PROTOCOL}://${window.location.hostname}${import.meta.env.VITE_BACKEND_PATH_SUFFIX}`
 
 const container = new Container()
 container.bind<State>('State').toConstantValue(new StateImpl())
