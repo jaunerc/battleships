@@ -8,7 +8,7 @@ import {GameView} from "./view/GameView.ts";
 
 const container = new Container()
 container.bind<State>('State').toConstantValue(new StateImpl())
-container.bind<WebSocket>('Websocket').toConstantValue(new WebSocket('ws://localhost:3001'))
+container.bind<WebSocket>('Websocket').toConstantValue(new WebSocket(import.meta.env.VITE_BACKEND_URL))
 
 container.bind<View>('StartView').to(StartView)
 container.bind<View>('UsernameView').to(UsernameView)

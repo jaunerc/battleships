@@ -5,4 +5,5 @@ export default defineConfig({
     test: {
         environment: 'jsdom'
     },
+    envDir: './environment'
 })
