@@ -6,6 +6,7 @@ import {WebsocketMessageSender} from "../WebsocketMessageSender";
 import WebSocket from "ws";
 import {WebsocketMessage} from "../../../../messages/WebsocketMessage";
 import {FleetValidationPayload} from "../../../../messages/FleetValidationPayload";
+import logger from "../../Logger";
 
 type ValidationResult = 'passed' | 'overlapping_ships' | 'no_distance_between_ships'
 
@@ -40,10 +41,12 @@ export class FleetPayloadProcessor implements WebsocketPayloadProcessor {
     private validateFleet(fleet: FieldCoordinate[][]): ValidationResult {
         const noOverlappingShipsResult: ValidationResult = this.validateNoOverlappingShips(fleet)
         if (noOverlappingShipsResult !== 'passed') {
+            logger.warning('Fleet validation unsuccessfully - there are overlapping ships.')
             return noOverlappingShipsResult
         }
         const distanceBetweenShipsResult: ValidationResult = this.validateDistanceBetweenShips(fleet)
         if (distanceBetweenShipsResult !== 'passed') {
+            logger.warning('Fleet validation unsuccessfully - the distance between the ships is too small.')
             return distanceBetweenShipsResult
         }
         return 'passed'

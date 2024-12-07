@@ -5,6 +5,7 @@ import {WebsocketPayloadProcessor} from "./WebsocketPayloadProcessor";
 import {PlayerReadyPayload} from "../../../../messages/PlayerReadyPayload";
 import {WebsocketMessage} from "../../../../messages/WebsocketMessage";
 import {GameUpdatePayload} from "../../../../messages/GameUpdatePayload";
+import logger from "../../Logger";
 
 @injectable()
 export class PlayerReadyPayloadProcessor implements WebsocketPayloadProcessor {
@@ -19,7 +20,8 @@ export class PlayerReadyPayloadProcessor implements WebsocketPayloadProcessor {
         if (player === undefined) {
             throw 'User does not exists with the id=' + playerReadyPayload.playerId
         }
-        console.log('ready player')
+
+        logger.info(`The ${player.seatId} player is ready to start the game.`)
         player.readyToStartGame = true
 
         const numNotReadyPlayers = this.gameState.players

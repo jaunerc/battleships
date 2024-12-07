@@ -6,6 +6,7 @@ import {ShootPayload} from "../../../../messages/ShootPayload";
 import {GameUpdatePayload, PlayerFireLog, PlayerSeatId} from "../../../../messages/GameUpdatePayload";
 import {WebsocketMessage} from "../../../../messages/WebsocketMessage";
 import {valueIfPresentOrError} from "../../TypeUtils";
+import logger from "../../Logger";
 
 @injectable()
 export class ShootPayloadProcessor implements WebsocketPayloadProcessor {
@@ -15,6 +16,8 @@ export class ShootPayloadProcessor implements WebsocketPayloadProcessor {
 
     process(payload: string) {
         const shootPayload: ShootPayload = JSON.parse(payload)
+        logger.info(`The ${shootPayload.playerSeatId} player shoot at the position (x: ${shootPayload.shoot.x}, y: ${shootPayload.shoot.y}).`)
+
         const player: Player = valueIfPresentOrError(this.gameState.players
             .find(player => player.seatId === shootPayload.playerSeatId))
 
@@ -23,11 +26,15 @@ export class ShootPayloadProcessor implements WebsocketPayloadProcessor {
 
         let gameUpdatePayload: GameUpdatePayload
         if (fireLogEntry.result === 'missed') {
+            logger.info(`The shoot (x: ${shootPayload.shoot.x}, y: ${shootPayload.shoot.y}) missed all ships.`)
             this.switchCurrentPlayer()
             gameUpdatePayload = { currentPlayerSeatId: this.gameState.currentPlayerSeatId, fireLogs: this.createFireLogsForAllPlayers() }
         } else {
+            logger.info(`The shoot (x: ${shootPayload.shoot.x}, y: ${shootPayload.shoot.y}) hit a ship.`)
             const allShipsOfOpponentDestroyed: boolean = this.ifAllShipsDestroyed()
+
             if (allShipsOfOpponentDestroyed) {
+                logger.info(`All ships of the opponent destroyed. The ${player.seatId} wins the game.`)
                 this.gameState.winnerPlayerSeatId = this.gameState.currentPlayerSeatId
                 gameUpdatePayload = { currentPlayerSeatId: this.gameState.currentPlayerSeatId, winnerSeatId: this.gameState.winnerPlayerSeatId, fireLogs: this.createFireLogsForAllPlayers() }
             } else {
