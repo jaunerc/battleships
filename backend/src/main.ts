@@ -4,7 +4,10 @@ import expressWs from 'express-ws';
 import {WebsocketMessage} from "../../messages/WebsocketMessage";
 import {container} from "./inversify.config";
 import {WebsocketMessageProcessor} from "./websocket/WebsocketMessageProcessor";
+import {createLogger} from "./LoggerFactory";
+import WebSocket from "ws";
 
+const logger = createLogger()
 const expressWsInstance = expressWs(express());
 const app = expressWsInstance.app;
 
@@ -17,27 +20,37 @@ app.get('/api', (_req, res) => {
     res.status(200).json({message: 'Hello from the server!'});
 });
 
-// websocket handler with a placeholder
 app.ws('/', function (ws, _req) {
-    const websocketMessageProcessor: WebsocketMessageProcessor = container.get('WebsocketMessageProcessor')
-    console.log('new connection');
+    // log any error message that is occurred in this websocket handler
+    ws.on('error', function (err) {
+        logger.error(`An error is occurred: ${err}`)
+    })
 
-    const playerJoiningMessage: WebsocketMessage = { type: 'PLAYER_JOINING' }
-    websocketMessageProcessor.processWebsocketMessage(playerJoiningMessage, ws)
+    logger.info('New websocket connection')
+
+    const websocketMessageProcessor: WebsocketMessageProcessor = container.get('WebsocketMessageProcessor')
+    process(websocketMessageProcessor, {type: 'PLAYER_JOINING'}, ws)
 
     ws.on('message', function (msg) {
         const websocketMessage: WebsocketMessage = JSON.parse(msg.toString());
-        console.log('msg received of type: ' + websocketMessage.type);
+        logger.info('Message received of type: ' + websocketMessage.type);
 
-        websocketMessageProcessor.processWebsocketMessage(websocketMessage, ws)
-
+        process(websocketMessageProcessor, websocketMessage, ws)
     });
 
     ws.on('close', function (_code, _reason) {
-        console.log('connection closed')
+        logger.info('Connection closed')
     })
 });
 
+function process(websocketMessageProcessor: WebsocketMessageProcessor, playerJoiningMessage: WebsocketMessage, ws: WebSocket) {
+    try {
+        websocketMessageProcessor.processWebsocketMessage(playerJoiningMessage, ws)
+    } catch (error) {
+        ws.emit('error', error)
+    }
+}
+
 app.listen(PORT, () => {
-    console.log(`server is running on port ${PORT}`);
+    logger.info(`The server is running on port ${PORT}`);
 });
