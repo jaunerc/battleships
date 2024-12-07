@@ -4,10 +4,9 @@ import expressWs from 'express-ws';
 import {WebsocketMessage} from "../../messages/WebsocketMessage";
 import {container} from "./inversify.config";
 import {WebsocketMessageProcessor} from "./websocket/WebsocketMessageProcessor";
-import {createLogger} from "./LoggerFactory";
 import WebSocket from "ws";
+import logger from "./Logger";
 
-const logger = createLogger()
 const expressWsInstance = expressWs(express());
 const app = expressWsInstance.app;
 
@@ -23,23 +22,23 @@ app.get('/api', (_req, res) => {
 app.ws('/', function (ws, _req) {
     // log any error message that is occurred in this websocket handler
     ws.on('error', function (err) {
-        logger.error(`An error is occurred: ${err}`)
+        logger.error(`An error is occurred: ${err}.`)
     })
 
-    logger.info('New websocket connection')
+    logger.info('New websocket connection.')
 
     const websocketMessageProcessor: WebsocketMessageProcessor = container.get('WebsocketMessageProcessor')
     process(websocketMessageProcessor, {type: 'PLAYER_JOINING'}, ws)
 
     ws.on('message', function (msg) {
         const websocketMessage: WebsocketMessage = JSON.parse(msg.toString());
-        logger.info('Message received of type: ' + websocketMessage.type);
+        logger.info(`Message received of type: ${websocketMessage.type}.`);
 
         process(websocketMessageProcessor, websocketMessage, ws)
     });
 
     ws.on('close', function (_code, _reason) {
-        logger.info('Connection closed')
+        logger.info('Connection closed.')
     })
 });
 
@@ -52,5 +51,5 @@ function process(websocketMessageProcessor: WebsocketMessageProcessor, playerJoi
 }
 
 app.listen(PORT, () => {
-    logger.info(`The server is running on port ${PORT}`);
+    logger.info(`The server is running on port ${PORT}.`);
 });
