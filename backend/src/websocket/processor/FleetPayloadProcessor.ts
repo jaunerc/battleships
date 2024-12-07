@@ -41,12 +41,12 @@ export class FleetPayloadProcessor implements WebsocketPayloadProcessor {
     private validateFleet(fleet: FieldCoordinate[][]): ValidationResult {
         const noOverlappingShipsResult: ValidationResult = this.validateNoOverlappingShips(fleet)
         if (noOverlappingShipsResult !== 'passed') {
-            logger.warning('Fleet validation unsuccessfully - there are overlapping ships.')
+            logger.warn('Fleet validation unsuccessfully - there are overlapping ships.')
             return noOverlappingShipsResult
         }
         const distanceBetweenShipsResult: ValidationResult = this.validateDistanceBetweenShips(fleet)
         if (distanceBetweenShipsResult !== 'passed') {
-            logger.warning('Fleet validation unsuccessfully - the distance between the ships is too small.')
+            logger.warn('Fleet validation unsuccessfully - the distance between the ships is too small.')
             return distanceBetweenShipsResult
         }
         return 'passed'
