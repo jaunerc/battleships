@@ -2,6 +2,7 @@ import WebSocket from 'ws';
 import {WebsocketMessage} from "../../../messages/WebsocketMessage";
 import {inject, injectable} from "inversify";
 import {GameState} from "../Backend";
+import logger from "../Logger";
 
 @injectable()
 export class WebsocketMessageSender {
@@ -10,6 +11,7 @@ export class WebsocketMessageSender {
     }
 
     sendTo(ws: WebSocket, message: WebsocketMessage): void {
+        logger.info(`Send message with type ${message.type} to the client.`)
         ws.send(JSON.stringify(message))
     }
 
