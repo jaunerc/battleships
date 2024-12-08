@@ -24,6 +24,7 @@
     "vitest-canvas-mock": "^0.3.3"
   },
   "dependencies": {
+    "@svgdotjs/svg.js": "^3.2.4",
     "inversify": "^6.1.6",
     "reflect-metadata": "^0.2.2"
   }

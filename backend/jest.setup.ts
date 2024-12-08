@@ -1,1 +1,1 @@
-import "./test/MockLogger";
+import './test/MockLogger'

@@ -1,11 +1,11 @@
-import 'reflect-metadata'; // this import is necessary so that inversify is working with tests
+import 'reflect-metadata' // this import is necessary so that inversify is working with tests
 
-import {WebsocketMessageProcessor} from "../../src/websocket/WebsocketMessageProcessor";
-import {UsernamePayloadProcessor} from "../../src/websocket/processor/UsernamePayloadProcessor";
-import {PlayerJoiningPayloadProcessor} from "../../src/websocket/processor/PlayerJoiningPayloadProcessor";
-import {PlayerReadyPayloadProcessor} from "../../src/websocket/processor/PlayerReadyPayloadProcessor";
-import {FleetPayloadProcessor} from "../../src/websocket/processor/FleetPayloadProcessor";
-import {ShootPayloadProcessor} from "../../src/websocket/processor/ShootPayloadProcessor";
+import { WebsocketMessageProcessor } from '../../src/websocket/WebsocketMessageProcessor'
+import { UsernamePayloadProcessor } from '../../src/websocket/processor/UsernamePayloadProcessor'
+import { PlayerJoiningPayloadProcessor } from '../../src/websocket/processor/PlayerJoiningPayloadProcessor'
+import { PlayerReadyPayloadProcessor } from '../../src/websocket/processor/PlayerReadyPayloadProcessor'
+import { FleetPayloadProcessor } from '../../src/websocket/processor/FleetPayloadProcessor'
+import { ShootPayloadProcessor } from '../../src/websocket/processor/ShootPayloadProcessor'
 
 describe('WebsocketMessageProcessor', () => {
     let sendUsernamePayloadProcessorMock: UsernamePayloadProcessor
@@ -30,7 +30,6 @@ describe('WebsocketMessageProcessor', () => {
     })
 
     describe('processWebsocketMessage', () => {
-
         it('should throw an error if the payload is undefined.', () => {
             expect(() => websocketMessageProcessor.processWebsocketMessage({ type: 'USERNAME', payload: undefined }))
                 .toThrow()
@@ -61,6 +60,6 @@ describe('WebsocketMessageProcessor', () => {
 function getPayloadProcessorMock() {
     return jest.fn().mockReturnValue({
         process: jest.fn(),
-        gameState: ''
-    });
+        gameState: '',
+    })
 }

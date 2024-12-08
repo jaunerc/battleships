@@ -1,7 +1,7 @@
-import 'reflect-metadata';
-import {GameState} from "../../../src/Backend";
-import {PlayerJoiningPayloadProcessor} from "../../../src/websocket/processor/PlayerJoiningPayloadProcessor";
-import {WebsocketMessageSender} from "../../../src/websocket/WebsocketMessageSender";
+import 'reflect-metadata'
+import { GameState } from '../../../src/Backend'
+import { PlayerJoiningPayloadProcessor } from '../../../src/websocket/processor/PlayerJoiningPayloadProcessor'
+import { WebsocketMessageSender } from '../../../src/websocket/WebsocketMessageSender'
 
 describe('PlayerJoiningPayloadProcessor', () => {
     describe('process', () => {
@@ -22,6 +22,6 @@ describe('PlayerJoiningPayloadProcessor', () => {
 
 function mockWebsocketMessageSender(): WebsocketMessageSender {
     return jest.fn().mockReturnValue({
-        sendTo: jest.fn()
+        sendTo: jest.fn(),
     })()
 }

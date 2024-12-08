@@ -1,8 +1,8 @@
-import 'reflect-metadata';
-import {GameState} from "../../../src/Backend";
-import {WebsocketMessageSender} from "../../../src/websocket/WebsocketMessageSender";
-import {PlayerReadyPayloadProcessor} from "../../../src/websocket/processor/PlayerReadyPayloadProcessor";
-import {PlayerReadyPayload} from "../../../../messages/PlayerReadyPayload";
+import 'reflect-metadata'
+import { GameState } from '../../../src/Backend'
+import { WebsocketMessageSender } from '../../../src/websocket/WebsocketMessageSender'
+import { PlayerReadyPayloadProcessor } from '../../../src/websocket/processor/PlayerReadyPayloadProcessor'
+import { PlayerReadyPayload } from '../../../../messages/PlayerReadyPayload'
 
 describe('PlayerReadyPayloadProcessor', () => {
     let websocketMessageSenderMock: WebsocketMessageSender
@@ -16,9 +16,9 @@ describe('PlayerReadyPayloadProcessor', () => {
             const gameState: GameState = {
                 players: [
                     { id: 'a', readyToStartGame: false, fireLog: [], websocket: jest.fn().mockReturnValue({})() },
-                    { id: 'b', readyToStartGame: false, fireLog: [], websocket: jest.fn().mockReturnValue({})() }
+                    { id: 'b', readyToStartGame: false, fireLog: [], websocket: jest.fn().mockReturnValue({})() },
                 ],
-                currentPlayerSeatId: 'first'
+                currentPlayerSeatId: 'first',
             }
             const processor: PlayerReadyPayloadProcessor = new PlayerReadyPayloadProcessor(gameState, websocketMessageSenderMock)
             const payload: PlayerReadyPayload = { playerId: 'b' }
@@ -35,7 +35,7 @@ describe('PlayerReadyPayloadProcessor', () => {
                 players: [
                     { id: 'a', readyToStartGame: false, fireLog: [], websocket: jest.fn().mockReturnValue({})() },
                 ],
-                currentPlayerSeatId: 'first'
+                currentPlayerSeatId: 'first',
             }
             const processor: PlayerReadyPayloadProcessor = new PlayerReadyPayloadProcessor(gameState, websocketMessageSenderMock)
             const payload: PlayerReadyPayload = { playerId: 'a' }
@@ -50,9 +50,9 @@ describe('PlayerReadyPayloadProcessor', () => {
             const gameState: GameState = {
                 players: [
                     { id: 'a', readyToStartGame: true, fireLog: [], websocket: jest.fn().mockReturnValue({})() },
-                    { id: 'b', readyToStartGame: false, fireLog: [], websocket: jest.fn().mockReturnValue({})() }
+                    { id: 'b', readyToStartGame: false, fireLog: [], websocket: jest.fn().mockReturnValue({})() },
                 ],
-                currentPlayerSeatId: 'first'
+                currentPlayerSeatId: 'first',
             }
             const processor: PlayerReadyPayloadProcessor = new PlayerReadyPayloadProcessor(gameState, websocketMessageSenderMock)
             const payload: PlayerReadyPayload = { playerId: 'b' }
@@ -69,6 +69,6 @@ describe('PlayerReadyPayloadProcessor', () => {
 function mockWebsocketMessageSender(): WebsocketMessageSender {
     return jest.fn().mockReturnValue({
         sendTo: jest.fn(),
-        broadcast: jest.fn()
+        broadcast: jest.fn(),
     })()
 }

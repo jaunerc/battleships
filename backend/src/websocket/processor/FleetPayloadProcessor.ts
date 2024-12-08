@@ -1,20 +1,19 @@
-import {inject, injectable} from "inversify";
-import {WebsocketPayloadProcessor} from "./WebsocketPayloadProcessor";
-import {FieldCoordinate, GameState} from "../../Backend";
-import {FleetPayload} from "../../../../messages/FleetPayload";
-import {WebsocketMessageSender} from "../WebsocketMessageSender";
-import WebSocket from "ws";
-import {WebsocketMessage} from "../../../../messages/WebsocketMessage";
-import {FleetValidationPayload} from "../../../../messages/FleetValidationPayload";
-import logger from "../../Logger";
+import { inject, injectable } from 'inversify'
+import { WebsocketPayloadProcessor } from './WebsocketPayloadProcessor'
+import { FieldCoordinate, GameState } from '../../Backend'
+import { FleetPayload } from '../../../../messages/FleetPayload'
+import { WebsocketMessageSender } from '../WebsocketMessageSender'
+import WebSocket from 'ws'
+import { WebsocketMessage } from '../../../../messages/WebsocketMessage'
+import { FleetValidationPayload } from '../../../../messages/FleetValidationPayload'
+import logger from '../../Logger'
 
 type ValidationResult = 'passed' | 'overlapping_ships' | 'no_distance_between_ships'
 
 @injectable()
 export class FleetPayloadProcessor implements WebsocketPayloadProcessor {
-
     constructor(@inject('GameState') private gameState: GameState,
-                @inject('WebsocketMessageSender') private websocketMessageSender: WebsocketMessageSender) {
+        @inject('WebsocketMessageSender') private websocketMessageSender: WebsocketMessageSender) {
     }
 
     process(payload: string, clientWs: WebSocket): void {
@@ -26,10 +25,10 @@ export class FleetPayloadProcessor implements WebsocketPayloadProcessor {
 
         const result: ValidationResult = this.validateFleet(fleetPayload.fleet)
 
-        const fleetValidationPayload: FleetValidationPayload = {validationResult: result}
+        const fleetValidationPayload: FleetValidationPayload = { validationResult: result }
         const websocketMessage: WebsocketMessage = {
             type: 'FLEET_VALIDATION',
-            payload: JSON.stringify(fleetValidationPayload)
+            payload: JSON.stringify(fleetValidationPayload),
         }
         this.websocketMessageSender.sendTo(clientWs, websocketMessage)
 
@@ -73,17 +72,17 @@ export class FleetPayloadProcessor implements WebsocketPayloadProcessor {
             for (const shipField of ship) {
                 const neighbourFields: FieldCoordinate[] = [
                     // left fields
-                    {x: shipField.x - 1, y: shipField.y - 1},
-                    {x: shipField.x - 1, y: shipField.y},
-                    {x: shipField.x - 1, y: shipField.y + 1},
+                    { x: shipField.x - 1, y: shipField.y - 1 },
+                    { x: shipField.x - 1, y: shipField.y },
+                    { x: shipField.x - 1, y: shipField.y + 1 },
                     // top field
-                    {x: shipField.x, y: shipField.y - 1},
+                    { x: shipField.x, y: shipField.y - 1 },
                     // bottom field
-                    {x: shipField.x, y: shipField.y + 1},
+                    { x: shipField.x, y: shipField.y + 1 },
                     // right fields
-                    {x: shipField.x + 1, y: shipField.y - 1},
-                    {x: shipField.x + 1, y: shipField.y},
-                    {x: shipField.x + 1, y: shipField.y + 1},
+                    { x: shipField.x + 1, y: shipField.y - 1 },
+                    { x: shipField.x + 1, y: shipField.y },
+                    { x: shipField.x + 1, y: shipField.y + 1 },
                 ]
 
                 for (const neighbour of neighbourFields) {
