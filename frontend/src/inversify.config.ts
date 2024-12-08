@@ -11,7 +11,7 @@ const websocketAddress: string = `${import.meta.env.VITE_BACKEND_PROTOCOL}://${w
 const container = new Container()
 container.bind<State>('State').toConstantValue(new StateImpl())
 container.bind<WebSocket>('Websocket').toConstantValue(new WebSocket(websocketAddress))
-console.log(window.location.hostname)
+
 container.bind<View>('StartView').to(StartView)
 container.bind<View>('UsernameView').to(UsernameView)
 container.bind<View>('PlaceShipsView').to(PlaceShipsView)
