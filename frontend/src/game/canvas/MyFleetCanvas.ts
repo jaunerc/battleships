@@ -1,9 +1,9 @@
-import {Ship} from "../ship/Ship.ts";
-import {inject, injectable} from "inversify";
-import type {BoardDimension} from "../Game";
-import {Grid} from "../grid/Grid.ts";
-import {FireLogEntry} from "../../../../messages/GameUpdatePayload.ts";
-import {Shoot} from "../shoot/Shoot.ts";
+import { Ship } from '../ship/Ship.ts'
+import { inject, injectable } from 'inversify'
+import type { BoardDimension } from '../Game'
+import { Grid } from '../grid/Grid.ts'
+import { FireLogEntry } from '../../../../messages/GameUpdatePayload.ts'
+import { Shoot } from '../shoot/Shoot.ts'
 
 @injectable()
 export class MyFleetCanvas {
@@ -13,7 +13,7 @@ export class MyFleetCanvas {
 
     constructor(
         @inject('BoardDimension') private board: BoardDimension,
-        @inject('Grid') private grid: Grid
+        @inject('Grid') private grid: Grid,
     ) {}
 
     init(canvas: HTMLCanvasElement, ships: Ship[]): void {

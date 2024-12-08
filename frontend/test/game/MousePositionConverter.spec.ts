@@ -1,5 +1,5 @@
-import {describe, expect, it} from "vitest";
-import {convertToFieldPosition} from "../../src/game/MousePositionConverter";
+import { describe, expect, it } from 'vitest'
+import { convertToFieldPosition } from '../../src/game/MousePositionConverter'
 
 describe('MousePositionConverter', () => {
     it('should convert the given mouse position to a field position', () => {
@@ -9,6 +9,6 @@ describe('MousePositionConverter', () => {
 
         const fieldPosition = convertToFieldPosition(mouseX, mouseY, columnSize)
 
-        expect(fieldPosition).toStrictEqual({x: 5, y: 0})
+        expect(fieldPosition).toStrictEqual({ x: 5, y: 0 })
     })
 })

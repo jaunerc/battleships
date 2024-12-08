@@ -1,20 +1,19 @@
-import {View} from "./View.ts";
-import {inject, injectable} from "inversify";
-import type {State} from "../State.ts";
-import {FieldPosition} from "../game/Game";
-import {PlaceShipsCanvas} from "../game/canvas/PlaceShipsCanvas.ts";
-import {container} from "../inversify.config.ts";
-import {gameContainer} from "../game/Game.inversify.config.ts";
-import {GameView} from "./GameView.ts";
-import {FleetPayload} from "../../../messages/FleetPayload.ts";
-import {WebsocketMessage} from "../../../messages/WebsocketMessage.ts";
-import {Ship} from "../game/ship/Ship.ts";
-import {calculateShipFields} from "../game/ship/ShipFieldsCalculator.ts";
-import {FleetValidationPayload} from "../../../messages/FleetValidationPayload.ts";
+import { View } from './View.ts'
+import { inject, injectable } from 'inversify'
+import type { State } from '../State.ts'
+import { FieldPosition } from '../game/Game'
+import { PlaceShipsCanvas } from '../game/canvas/PlaceShipsCanvas.ts'
+import { container } from '../inversify.config.ts'
+import { gameContainer } from '../game/Game.inversify.config.ts'
+import { GameView } from './GameView.ts'
+import { FleetPayload } from '../../../messages/FleetPayload.ts'
+import { WebsocketMessage } from '../../../messages/WebsocketMessage.ts'
+import { Ship } from '../game/ship/Ship.ts'
+import { calculateShipFields } from '../game/ship/ShipFieldsCalculator.ts'
+import { FleetValidationPayload } from '../../../messages/FleetValidationPayload.ts'
 
 @injectable()
 export class PlaceShipsView implements View {
-
     context?: CanvasRenderingContext2D
     placeShipsCanvas?: PlaceShipsCanvas
     appDiv?: HTMLDivElement
@@ -22,7 +21,7 @@ export class PlaceShipsView implements View {
     constructor(
         @inject('State') private state: State,
         @inject('Websocket') private websocket: WebSocket,
-        @inject('GameView') private gameView: GameView
+        @inject('GameView') private gameView: GameView,
     ) {}
 
     show(appDiv: HTMLDivElement): void {

@@ -1,20 +1,19 @@
-import {inject, injectable} from "inversify";
-import type {State} from "../State.ts";
-import {View} from "./View.ts";
-import {MyFleetCanvas} from "../game/canvas/MyFleetCanvas.ts";
-import {container} from "../inversify.config.ts";
-import {OpponentFleetCanvas} from "../game/canvas/OpponentFleetCanvas.ts";
-import {PlayerReadyPayload} from "../../../messages/PlayerReadyPayload.ts";
-import {WebsocketMessage} from "../../../messages/WebsocketMessage.ts";
-import {GameUpdatePayload} from "../../../messages/GameUpdatePayload.ts";
+import { inject, injectable } from 'inversify'
+import type { State } from '../State.ts'
+import { View } from './View.ts'
+import { MyFleetCanvas } from '../game/canvas/MyFleetCanvas.ts'
+import { container } from '../inversify.config.ts'
+import { OpponentFleetCanvas } from '../game/canvas/OpponentFleetCanvas.ts'
+import { PlayerReadyPayload } from '../../../messages/PlayerReadyPayload.ts'
+import { WebsocketMessage } from '../../../messages/WebsocketMessage.ts'
+import { GameUpdatePayload } from '../../../messages/GameUpdatePayload.ts'
 
 @injectable()
 export class GameView implements View {
-
     currentPlayerParagraph?: HTMLParagraphElement
     opponentFleetCanvas?: OpponentFleetCanvas
     myFleetCanvas?: MyFleetCanvas
-    winnerPlayerParagraph?: HTMLParagraphElement;
+    winnerPlayerParagraph?: HTMLParagraphElement
 
     constructor(
         @inject('State') private state: State,
@@ -66,12 +65,11 @@ export class GameView implements View {
         if (gameUpdatePayload.fireLogs.length > 0) {
             this.state.fireLogs = {
                 myFireLog: gameUpdatePayload.fireLogs.find(fireLog => fireLog.playerSeatId === this.state.seatId)!.entries,
-                opponentFireLog: gameUpdatePayload.fireLogs.find(fireLog => fireLog.playerSeatId !== this.state.seatId)!.entries
+                opponentFireLog: gameUpdatePayload.fireLogs.find(fireLog => fireLog.playerSeatId !== this.state.seatId)!.entries,
             }
             this.myFleetCanvas?.update(this.state.fireLogs?.opponentFireLog)
             this.opponentFleetCanvas?.update(this.state.fireLogs?.myFireLog)
         }
-
 
         this.currentPlayerParagraph!.innerText = gameUpdatePayload.currentPlayerSeatId
 
@@ -87,6 +85,6 @@ export class GameView implements View {
     }
 
     private currentPlayerIsOpponent(gameUpdatePayload: GameUpdatePayload): boolean {
-        return this.state.seatId !== gameUpdatePayload.currentPlayerSeatId;
+        return this.state.seatId !== gameUpdatePayload.currentPlayerSeatId
     }
 }

@@ -1,18 +1,17 @@
-import {inject, injectable} from "inversify";
-import {FireLogEntry, GameState, Player} from "../../Backend";
-import {WebsocketMessageSender} from "../WebsocketMessageSender";
-import {WebsocketPayloadProcessor} from "./WebsocketPayloadProcessor";
-import {ShootPayload} from "../../../../messages/ShootPayload";
-import {GameUpdatePayload, PlayerFireLog, PlayerSeatId} from "../../../../messages/GameUpdatePayload";
-import {WebsocketMessage} from "../../../../messages/WebsocketMessage";
-import {valueIfPresentOrError} from "../../TypeUtils";
-import logger from "../../Logger";
+import { inject, injectable } from 'inversify'
+import { FireLogEntry, GameState, Player } from '../../Backend'
+import { WebsocketMessageSender } from '../WebsocketMessageSender'
+import { WebsocketPayloadProcessor } from './WebsocketPayloadProcessor'
+import { ShootPayload } from '../../../../messages/ShootPayload'
+import { GameUpdatePayload, PlayerFireLog, PlayerSeatId } from '../../../../messages/GameUpdatePayload'
+import { WebsocketMessage } from '../../../../messages/WebsocketMessage'
+import { valueIfPresentOrError } from '../../TypeUtils'
+import logger from '../../Logger'
 
 @injectable()
 export class ShootPayloadProcessor implements WebsocketPayloadProcessor {
-
     constructor(@inject('GameState') private gameState: GameState,
-                @inject('WebsocketMessageSender') private websocketMessageSender: WebsocketMessageSender) {}
+        @inject('WebsocketMessageSender') private websocketMessageSender: WebsocketMessageSender) {}
 
     process(payload: string) {
         const shootPayload: ShootPayload = JSON.parse(payload)
@@ -53,11 +52,11 @@ export class ShootPayloadProcessor implements WebsocketPayloadProcessor {
     private missingShot(opponent: Player, shootPayload: ShootPayload) {
         return opponent.fleet?.flat()
             .filter(shipCoordinate => shipCoordinate.x === shootPayload.shoot.x && shipCoordinate.y === shootPayload.shoot.y)
-            .length === 0;
+            .length === 0
     }
 
     private findOpponent(shooterPlayerSeatId: PlayerSeatId) {
-        return valueIfPresentOrError(this.gameState.players.find(player => player.seatId !== shooterPlayerSeatId));
+        return valueIfPresentOrError(this.gameState.players.find(player => player.seatId !== shooterPlayerSeatId))
     }
 
     private switchCurrentPlayer(): void {
@@ -72,7 +71,7 @@ export class ShootPayloadProcessor implements WebsocketPayloadProcessor {
     private createFireLogFor(player: Player): PlayerFireLog {
         return {
             playerSeatId: player.seatId!,
-            entries: player.fireLog!
+            entries: player.fireLog!,
         }
     }
 

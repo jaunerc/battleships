@@ -1,11 +1,10 @@
-import {inject, injectable} from "inversify";
-import type {BoardDimension} from "../Game";
+import { inject, injectable } from 'inversify'
+import type { BoardDimension } from '../Game'
 
 @injectable()
 export class Grid {
-
     constructor(@inject('BoardDimension') private boardDimension: BoardDimension) {}
-    
+
     draw(context: CanvasRenderingContext2D) {
         context.strokeStyle = '#000000'
         const numberOfColumns: number = this.boardDimension.canvasSizeInPixels / this.boardDimension.columnSizeInPixels

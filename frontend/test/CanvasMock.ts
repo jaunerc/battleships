@@ -1,4 +1,4 @@
-import {vi} from "vitest";
+import { vi } from 'vitest'
 
 // Returns a mocked canvas context with a spy for each function of the context
 export function mockedCanvasContext(): CanvasRenderingContext2D {

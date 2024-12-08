@@ -1,4 +1,3 @@
-
 export interface BoardDimension {
     canvasSizeInPixels: number
     columnSizeInPixels: number

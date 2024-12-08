@@ -1,9 +1,9 @@
-import type {BoardDimension, FieldPosition} from "../Game";
-import {convertToFieldPosition} from "../MousePositionConverter.ts";
-import {inject, injectable} from "inversify";
-import {Ship} from "../ship/Ship.ts";
-import {ShipFactory} from "../ship/ShipFactory.ts";
-import {Grid} from "../grid/Grid.ts";
+import type { BoardDimension, FieldPosition } from '../Game'
+import { convertToFieldPosition } from '../MousePositionConverter.ts'
+import { inject, injectable } from 'inversify'
+import { Ship } from '../ship/Ship.ts'
+import { ShipFactory } from '../ship/ShipFactory.ts'
+import { Grid } from '../grid/Grid.ts'
 
 @injectable()
 export class PlaceShipsCanvas {
@@ -17,7 +17,7 @@ export class PlaceShipsCanvas {
     constructor(
         @inject('BoardDimension') private board: BoardDimension,
         @inject('ShipFactory') private shipFactory: ShipFactory,
-        @inject('Grid') private grid: Grid
+        @inject('Grid') private grid: Grid,
     ) {}
 
     init(canvas: HTMLCanvasElement): void {
@@ -43,7 +43,7 @@ export class PlaceShipsCanvas {
     }
 
     private onMouseDown = (event: MouseEvent): void => {
-        this.mouseDragStart = {x: event.offsetX, y: event.offsetY}
+        this.mouseDragStart = { x: event.offsetX, y: event.offsetY }
         this.mouseDragging = true
 
         const mousePosition = convertToFieldPosition(event.offsetX, event.offsetY, this.board.columnSizeInPixels)
@@ -56,7 +56,7 @@ export class PlaceShipsCanvas {
         }
         const mousePosition = convertToFieldPosition(event.offsetX, event.offsetY, this.board.columnSizeInPixels)
 
-        this.clickedShip?.move({x: mousePosition.x, y: mousePosition.y})
+        this.clickedShip?.move({ x: mousePosition.x, y: mousePosition.y })
         this.draw()
     }
 

@@ -1,17 +1,16 @@
-import {View} from "./View.ts";
-import {inject, injectable} from "inversify";
-import type {State} from "../State.ts";
-import {PlaceShipsView} from "./PlaceShipsView.ts";
-import {UsernamePayload} from "../../../messages/UsernamePayload.ts";
-import {WebsocketMessage} from "../../../messages/WebsocketMessage.ts";
+import { View } from './View.ts'
+import { inject, injectable } from 'inversify'
+import type { State } from '../State.ts'
+import { PlaceShipsView } from './PlaceShipsView.ts'
+import { UsernamePayload } from '../../../messages/UsernamePayload.ts'
+import { WebsocketMessage } from '../../../messages/WebsocketMessage.ts'
 
 @injectable()
 export class UsernameView implements View {
-
     constructor(
         @inject('State') private state: State,
         @inject('Websocket') private websocket: WebSocket,
-        @inject('PlaceShipsView') private placeShipsView: PlaceShipsView
+        @inject('PlaceShipsView') private placeShipsView: PlaceShipsView,
     ) {}
 
     show(appDiv: HTMLDivElement): void {

@@ -1,12 +1,12 @@
-import {inject, injectable} from "inversify";
-import type {BoardDimension} from "../Game";
-import {Grid} from "../grid/Grid.ts";
-import {convertToFieldPosition} from "../MousePositionConverter.ts";
-import {ShootPayload} from "../../../../messages/ShootPayload.ts";
-import {WebsocketMessage} from "../../../../messages/WebsocketMessage.ts";
-import type {State} from "../../State.ts";
-import {FireLogEntry} from "../../../../messages/GameUpdatePayload.ts";
-import {Shoot} from "../shoot/Shoot.ts";
+import { inject, injectable } from 'inversify'
+import type { BoardDimension } from '../Game'
+import { Grid } from '../grid/Grid.ts'
+import { convertToFieldPosition } from '../MousePositionConverter.ts'
+import { ShootPayload } from '../../../../messages/ShootPayload.ts'
+import { WebsocketMessage } from '../../../../messages/WebsocketMessage.ts'
+import type { State } from '../../State.ts'
+import { FireLogEntry } from '../../../../messages/GameUpdatePayload.ts'
+import { Shoot } from '../shoot/Shoot.ts'
 
 @injectable()
 export class OpponentFleetCanvas {

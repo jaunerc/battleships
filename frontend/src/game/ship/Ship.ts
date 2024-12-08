@@ -1,17 +1,16 @@
-import {ShipDrawer} from "./ShipDrawer.ts";
-import {ShipSize} from "./ShipSize.ts";
-import {isShipClicked} from "./ShipClickDetector.ts";
-import {BoardDimension, FieldPosition, ShipOrientation, ShipType} from "../Game";
+import { ShipDrawer } from './ShipDrawer.ts'
+import { ShipSize } from './ShipSize.ts'
+import { isShipClicked } from './ShipClickDetector.ts'
+import { BoardDimension, FieldPosition, ShipOrientation, ShipType } from '../Game'
 
 export class Ship {
-
     shipType: ShipType
     shipOrientation: ShipOrientation
     startField: FieldPosition
 
     constructor(private boardDimension: BoardDimension,
-                startField: FieldPosition,
-                shipType: ShipType,
+        startField: FieldPosition,
+        shipType: ShipType,
                 shipOrientation: ShipOrientation = 'Vertical',
                 private shipDrawer: ShipDrawer = new ShipDrawer()) {
         this.shipType = shipType
@@ -22,7 +21,7 @@ export class Ship {
     move(nextStartField: FieldPosition): void {
         this.startField = nextStartField
     }
-    
+
     draw(context: CanvasRenderingContext2D): void {
         switch (this.shipOrientation) {
             case 'Horizontal':
@@ -30,7 +29,7 @@ export class Ship {
                     context,
                     this.boardDimension,
                     this.startField,
-                    ShipSize[this.shipType]
+                    ShipSize[this.shipType],
                 )
                 break
             case 'Vertical':
@@ -38,11 +37,11 @@ export class Ship {
                     context,
                     this.boardDimension,
                     this.startField,
-                    ShipSize[this.shipType]
+                    ShipSize[this.shipType],
                 )
         }
     }
-    
+
     rotate(): void {
         switch (this.shipOrientation) {
             case 'Horizontal':

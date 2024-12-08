@@ -1,13 +1,13 @@
-import {Container} from "inversify";
-import {GameState} from "./Backend";
-import {WebsocketMessageSender} from "./websocket/WebsocketMessageSender";
-import {UsernamePayloadProcessor} from "./websocket/processor/UsernamePayloadProcessor";
-import {PlayerJoiningPayloadProcessor} from "./websocket/processor/PlayerJoiningPayloadProcessor";
-import {WebsocketPayloadProcessor} from "./websocket/processor/WebsocketPayloadProcessor";
-import {WebsocketMessageProcessor} from "./websocket/WebsocketMessageProcessor";
-import {FleetPayloadProcessor} from "./websocket/processor/FleetPayloadProcessor";
-import {PlayerReadyPayloadProcessor} from "./websocket/processor/PlayerReadyPayloadProcessor";
-import {ShootPayloadProcessor} from "./websocket/processor/ShootPayloadProcessor";
+import { Container } from 'inversify'
+import { GameState } from './Backend'
+import { WebsocketMessageSender } from './websocket/WebsocketMessageSender'
+import { UsernamePayloadProcessor } from './websocket/processor/UsernamePayloadProcessor'
+import { PlayerJoiningPayloadProcessor } from './websocket/processor/PlayerJoiningPayloadProcessor'
+import { WebsocketPayloadProcessor } from './websocket/processor/WebsocketPayloadProcessor'
+import { WebsocketMessageProcessor } from './websocket/WebsocketMessageProcessor'
+import { FleetPayloadProcessor } from './websocket/processor/FleetPayloadProcessor'
+import { PlayerReadyPayloadProcessor } from './websocket/processor/PlayerReadyPayloadProcessor'
+import { ShootPayloadProcessor } from './websocket/processor/ShootPayloadProcessor'
 
 const container = new Container()
 container.bind<GameState>('GameState').toConstantValue({ players: [], currentPlayerSeatId: 'first' })

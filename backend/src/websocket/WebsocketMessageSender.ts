@@ -1,12 +1,11 @@
-import WebSocket from 'ws';
-import {WebsocketMessage} from "../../../messages/WebsocketMessage";
-import {inject, injectable} from "inversify";
-import {GameState} from "../Backend";
-import logger from "../Logger";
+import WebSocket from 'ws'
+import { WebsocketMessage } from '../../../messages/WebsocketMessage'
+import { inject, injectable } from 'inversify'
+import { GameState } from '../Backend'
+import logger from '../Logger'
 
 @injectable()
 export class WebsocketMessageSender {
-
     constructor(@inject('GameState') private gameState: GameState) {
     }
 
@@ -16,7 +15,7 @@ export class WebsocketMessageSender {
     }
 
     broadcast(message: WebsocketMessage): void {
-        this.gameState.players.forEach(player => {
+        this.gameState.players.forEach((player) => {
             this.sendTo(player.websocket, message)
         })
     }
