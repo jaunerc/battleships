@@ -68,8 +68,8 @@ export class GameView implements View {
                 myFireLog: gameUpdatePayload.fireLogs.find(fireLog => fireLog.playerSeatId === this.state.seatId)!.entries,
                 opponentFireLog: gameUpdatePayload.fireLogs.find(fireLog => fireLog.playerSeatId !== this.state.seatId)!.entries
             }
-            this.myFleetCanvas?.update(this.state.fireLogs?.opponentFireLog!)
-            this.opponentFleetCanvas?.update(this.state.fireLogs?.myFireLog!)
+            this.myFleetCanvas?.update(this.state.fireLogs?.opponentFireLog)
+            this.opponentFleetCanvas?.update(this.state.fireLogs?.myFireLog)
         }
 
 
