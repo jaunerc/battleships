@@ -19,7 +19,7 @@ app.get('/api', (_req, res) => {
     res.status(200).json({message: 'Hello from the server!'});
 });
 
-app.ws('/', function (ws, _req) {
+app.ws('/', function (ws) {
     // log any error message that is occurred in this websocket handler
     ws.on('error', function (err) {
         logger.error(`An error is occurred: ${err}.`)
@@ -37,7 +37,7 @@ app.ws('/', function (ws, _req) {
         process(websocketMessageProcessor, websocketMessage, ws)
     });
 
-    ws.on('close', function (_code, _reason) {
+    ws.on('close', function () {
         logger.info('Connection closed.')
     })
 });

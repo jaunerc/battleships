@@ -53,7 +53,7 @@ describe('FleetPayloadProcessor', () => {
             };
 
             // Spy on the validateNoOverlappingShips method
-            const validateSpy = jest.spyOn(processor as any, 'validateNoOverlappingShips');
+            const validateSpy = jest.spyOn(processor as never, 'validateNoOverlappingShips');
 
             processor.process(JSON.stringify(overlappingPayload), jest.fn().mockReturnValue({})());
 
