@@ -1,7 +1,7 @@
 import './style.css'
-import "reflect-metadata";
-import {container} from "./inversify.config.ts";
-import {View} from "./view/View.ts";
+import 'reflect-metadata'
+import { container } from './inversify.config.ts'
+import { View } from './view/View.ts'
 
 const webSocket: WebSocket = container.get<WebSocket>('Websocket')
 

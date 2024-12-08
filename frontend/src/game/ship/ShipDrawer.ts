@@ -1,11 +1,10 @@
-import {BoardDimension, FieldPosition} from "../Game";
-
+import { BoardDimension, FieldPosition } from '../Game'
 
 export class ShipDrawer {
     drawShipHorizontal(context: CanvasRenderingContext2D,
-                       board: BoardDimension,
-                       startField: FieldPosition,
-                       shipSize: number): void {
+        board: BoardDimension,
+        startField: FieldPosition,
+        shipSize: number): void {
         context.strokeStyle = board.shipStrokeStyle
         context.fillStyle = board.shipFillStyle
 
@@ -28,9 +27,9 @@ export class ShipDrawer {
     }
 
     drawShipVertical(context: CanvasRenderingContext2D,
-                     board: BoardDimension,
-                     startField: FieldPosition,
-                     shipSize: number): void {
+        board: BoardDimension,
+        startField: FieldPosition,
+        shipSize: number): void {
         context.strokeStyle = board.shipStrokeStyle
         context.fillStyle = board.shipFillStyle
 

@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
     test: {
-        environment: 'jsdom'
+        environment: 'jsdom',
     },
-    envDir: './environment'
+    envDir: './environment',
 })

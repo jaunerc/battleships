@@ -1,16 +1,15 @@
-import type {View} from "./View.ts";
-import type {State} from "../State.ts";
-import {inject, injectable} from "inversify";
-import {WebsocketMessage} from "../../../messages/WebsocketMessage.ts";
-import {PlayerIdPayload} from "../../../messages/PlayerIdPayload.ts";
+import type { View } from './View.ts'
+import type { State } from '../State.ts'
+import { inject, injectable } from 'inversify'
+import { WebsocketMessage } from '../../../messages/WebsocketMessage.ts'
+import { PlayerIdPayload } from '../../../messages/PlayerIdPayload.ts'
 
 @injectable()
 export class StartView implements View {
-
     constructor(
         @inject('State') private state: State,
         @inject('UsernameView') private usernameView: View,
-        @inject('Websocket') private websocket: WebSocket
+        @inject('Websocket') private websocket: WebSocket,
     ) {}
 
     show(appDiv: HTMLDivElement): void {
@@ -29,7 +28,7 @@ export class StartView implements View {
     }
 
     private onWebsocketMessage = (message: MessageEvent<string>) => {
-        const websocketMessage: WebsocketMessage = JSON.parse(message.data);
+        const websocketMessage: WebsocketMessage = JSON.parse(message.data)
         if (websocketMessage.type === 'PLAYER_ID') {
             if (websocketMessage.payload === undefined) {
                 throw 'the player id payload cannot be undefined'

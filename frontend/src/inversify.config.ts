@@ -1,10 +1,10 @@
-import {Container} from "inversify";
-import {State, StateImpl} from "./State.ts";
-import {View} from "./view/View.ts";
-import {UsernameView} from "./view/UsernameView.ts";
-import {StartView} from "./view/StartView.ts";
-import {PlaceShipsView} from "./view/PlaceShipsView.ts";
-import {GameView} from "./view/GameView.ts";
+import { Container } from 'inversify'
+import { State, StateImpl } from './State.ts'
+import { View } from './view/View.ts'
+import { UsernameView } from './view/UsernameView.ts'
+import { StartView } from './view/StartView.ts'
+import { PlaceShipsView } from './view/PlaceShipsView.ts'
+import { GameView } from './view/GameView.ts'
 
 const websocketAddress: string = `${import.meta.env.VITE_BACKEND_PROTOCOL}://${window.location.hostname}${import.meta.env.VITE_BACKEND_PATH_SUFFIX}`
 

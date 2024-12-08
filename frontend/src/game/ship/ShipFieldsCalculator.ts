@@ -1,5 +1,5 @@
-import {ShipSize} from "./ShipSize.ts";
-import {FieldPosition, ShipOrientation, ShipType} from "../Game";
+import { ShipSize } from './ShipSize.ts'
+import { FieldPosition, ShipOrientation, ShipType } from '../Game'
 
 export function calculateShipFields(shipOrientation: ShipOrientation, shipType: ShipType, startField: FieldPosition): FieldPosition[] {
     switch (shipOrientation) {
@@ -13,7 +13,7 @@ export function calculateShipFields(shipOrientation: ShipOrientation, shipType: 
 function calculateHorizontalShipFields(shipType: ShipType, startField: FieldPosition): FieldPosition[] {
     const fields: FieldPosition[] = []
     for (let i = 0; i < ShipSize[shipType]; i++) {
-        fields.push({ x: startField.x + i, y: startField.y})
+        fields.push({ x: startField.x + i, y: startField.y })
     }
     return fields
 }
@@ -21,7 +21,7 @@ function calculateHorizontalShipFields(shipType: ShipType, startField: FieldPosi
 function calculateVerticalShipFields(shipType: ShipType, startField: FieldPosition): FieldPosition[] {
     const fields: FieldPosition[] = []
     for (let i = 0; i < ShipSize[shipType]; i++) {
-        fields.push({ x: startField.x, y: startField.y + i})
+        fields.push({ x: startField.x, y: startField.y + i })
     }
     return fields
 }

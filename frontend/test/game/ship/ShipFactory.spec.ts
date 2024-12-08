@@ -1,11 +1,11 @@
-import 'reflect-metadata'; // this import is necessary so that inversify is working with tests
-import {describe, expect, it} from "vitest";
-import {BoardDimension} from "../../../src/game/Game";
-import {ShipFactory} from "../../../src/game/ship/ShipFactory";
+import 'reflect-metadata' // this import is necessary so that inversify is working with tests
+import { describe, expect, it } from 'vitest'
+import { BoardDimension } from '../../../src/game/Game'
+import { ShipFactory } from '../../../src/game/ship/ShipFactory'
 
 describe('ShipFactory', () => {
     describe('should build a fleet of ships', () => {
-        const boardDimensions: BoardDimension = { canvasSizeInPixels: 100, columnSizeInPixels: 10, shipStrokeStyle: '', shipFillStyle: ''}
+        const boardDimensions: BoardDimension = { canvasSizeInPixels: 100, columnSizeInPixels: 10, shipStrokeStyle: '', shipFillStyle: '' }
         const shipFactory = new ShipFactory(boardDimensions)
 
         const fleet = shipFactory.buildFleet()

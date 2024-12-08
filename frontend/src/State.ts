@@ -1,6 +1,6 @@
-import {injectable} from "inversify";
-import {Ship} from "./game/ship/Ship.ts";
-import {FireLogEntry} from "../../messages/GameUpdatePayload.ts";
+import { injectable } from 'inversify'
+import { Ship } from './game/ship/Ship.ts'
+import { FireLogEntry } from '../../messages/GameUpdatePayload.ts'
 
 export interface State {
     playerId?: string
