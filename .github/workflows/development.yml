@@ -52,7 +52,7 @@ jobs:
           npm install
       - name: lint
         run: |
-          cd backend
+          cd frontend
           npm run lint
       - name: unit tests
         run: |
