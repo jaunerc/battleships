@@ -1,9 +1,8 @@
 plugins:
   - jekyll-relative-links
-name: true
-title: false
+title: Battleships Documentation
 relative_links:
   enabled: true
   collections: true
 
-theme: jekyll-theme-minima
+theme: minima
