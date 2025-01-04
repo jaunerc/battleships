@@ -1,12 +1,12 @@
 import { injectable } from 'inversify'
-import { Ship } from './game/ship/Ship.ts'
 import { FireLogEntry } from '../../messages/GameUpdatePayload.ts'
+import { FieldPosition } from './game/Game'
 
 export interface State {
     playerId?: string
     seatId?: SeatId
     username?: string
-    fleet?: Ship[]
+    fleet?: FieldPosition[][]
     fireLogs?: FireLogs
 }
 

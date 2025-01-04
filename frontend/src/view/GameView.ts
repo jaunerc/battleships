@@ -1,18 +1,19 @@
 import { inject, injectable } from 'inversify'
 import type { State } from '../State.ts'
 import { View } from './View.ts'
-import { MyFleetCanvas } from '../game/canvas/MyFleetCanvas.ts'
+import { MyFleetSvg } from '../game/svg/MyFleetSvg.ts'
 import { container } from '../inversify.config.ts'
-import { OpponentFleetCanvas } from '../game/canvas/OpponentFleetCanvas.ts'
+import { OpponentFleetSvg } from '../game/svg/OpponentFleetSvg.ts'
 import { PlayerReadyPayload } from '../../../messages/PlayerReadyPayload.ts'
 import { WebsocketMessage } from '../../../messages/WebsocketMessage.ts'
 import { GameUpdatePayload } from '../../../messages/GameUpdatePayload.ts'
+import { SVG, Svg } from '@svgdotjs/svg.js'
 
 @injectable()
 export class GameView implements View {
     currentPlayerParagraph?: HTMLParagraphElement
-    opponentFleetCanvas?: OpponentFleetCanvas
-    myFleetCanvas?: MyFleetCanvas
+    opponentFleetSvg?: OpponentFleetSvg
+    myFleetSvg?: MyFleetSvg
     winnerPlayerParagraph?: HTMLParagraphElement
 
     constructor(
@@ -29,27 +30,29 @@ export class GameView implements View {
                 <p id="winner"></p>
                 <div>
                     <p>Opponents fleet</p>
-                    <canvas id="opponent-canvas" width="400px" height="400px"></canvas>
+                    <svg id="opponents-fleet-svg"></svg>
                 </div>
                 <div>
                     <p>My fleet</p>
-                    <canvas id="my-fleet-canvas" width="400px" height="400px"></canvas>
+                    <svg id="my-fleet-svg"></svg>
                 </div>
             </div>
         `
 
-        const myFleetHtmlCanvas: HTMLCanvasElement = document.querySelector<HTMLCanvasElement>('#my-fleet-canvas')!
-        const opponentFleetHtmlCanvas: HTMLCanvasElement = document.querySelector<HTMLCanvasElement>('#opponent-canvas')!
-        this.myFleetCanvas = container.get<MyFleetCanvas>('MyFleetCanvas')
-        this.opponentFleetCanvas = container.get<OpponentFleetCanvas>('OpponentFleetCanvas')
+        const myFleetSvg: Svg = SVG('#my-fleet-svg')
+            .size(400, 400)
+            .root()
+        const opponentsFleetSvg: Svg = SVG('#opponents-fleet-svg')
+            .size(400, 400)
+            .root()
+        this.myFleetSvg = container.get<MyFleetSvg>('MyFleetSvg')
+        this.opponentFleetSvg = container.get<OpponentFleetSvg>('OpponentFleetSvg')
 
         this.currentPlayerParagraph = document.querySelector<HTMLParagraphElement>('#current-player')!
         this.winnerPlayerParagraph = document.querySelector<HTMLParagraphElement>('#winner')!
 
-        this.myFleetCanvas.init(myFleetHtmlCanvas, this.state.fleet!)
-        this.opponentFleetCanvas.init(opponentFleetHtmlCanvas)
-        this.myFleetCanvas.draw()
-        this.opponentFleetCanvas.draw()
+        this.myFleetSvg.init(myFleetSvg, this.state.fleet!)
+        this.opponentFleetSvg.init(opponentsFleetSvg)
 
         const playerReadyPayload: PlayerReadyPayload = { playerId: this.state.playerId! }
         const readyMessage: WebsocketMessage = { type: 'PLAYER_READY', payload: JSON.stringify(playerReadyPayload) }
@@ -67,19 +70,17 @@ export class GameView implements View {
                 myFireLog: gameUpdatePayload.fireLogs.find(fireLog => fireLog.playerSeatId === this.state.seatId)!.entries,
                 opponentFireLog: gameUpdatePayload.fireLogs.find(fireLog => fireLog.playerSeatId !== this.state.seatId)!.entries,
             }
-            this.myFleetCanvas?.update(this.state.fireLogs?.opponentFireLog)
-            this.opponentFleetCanvas?.update(this.state.fireLogs?.myFireLog)
+            this.myFleetSvg?.update(this.state.fireLogs?.opponentFireLog)
+            this.opponentFleetSvg?.update(this.state.fireLogs?.myFireLog)
         }
 
         this.currentPlayerParagraph!.innerText = gameUpdatePayload.currentPlayerSeatId
 
-        this.myFleetCanvas?.draw()
-        this.opponentFleetCanvas?.draw()
-        this.opponentFleetCanvas?.setLockForUserInput(this.currentPlayerIsOpponent(gameUpdatePayload))
+        this.opponentFleetSvg?.setLockForUserInput(this.currentPlayerIsOpponent(gameUpdatePayload))
 
         if (gameUpdatePayload.winnerSeatId !== undefined) {
             this.winnerPlayerParagraph!.innerText = gameUpdatePayload.winnerSeatId
-            this.opponentFleetCanvas?.setLockForUserInput(true)
+            this.opponentFleetSvg?.setLockForUserInput(true)
             this.currentPlayerParagraph!.innerText = ''
         }
     }

@@ -1,19 +1,19 @@
 import { ShipSize } from './ShipSize.ts'
-import { FieldPosition, ShipOrientation, ShipType } from '../Game'
+import { FieldPosition, ShipType } from '../Game'
+import { Box } from '@svgdotjs/svg.js'
 
-export function calculateShipFields(shipOrientation: ShipOrientation, shipType: ShipType, startField: FieldPosition): FieldPosition[] {
-    switch (shipOrientation) {
-        case 'Horizontal':
-            return calculateHorizontalShipFields(shipType, startField)
-        case 'Vertical':
-            return calculateVerticalShipFields(shipType, startField)
+export function calculateShipFields(shipBbox: Box, shipType: ShipType, startField: FieldPosition): FieldPosition[] {
+    const horizontalShipDirection: boolean = shipBbox.width > shipBbox.height
+    if (horizontalShipDirection) {
+        return calculateHorizontalShipFields(shipType, startField)
     }
+    return calculateVerticalShipFields(shipType, startField)
 }
 
 function calculateHorizontalShipFields(shipType: ShipType, startField: FieldPosition): FieldPosition[] {
     const fields: FieldPosition[] = []
     for (let i = 0; i < ShipSize[shipType]; i++) {
-        fields.push({ x: startField.x + i, y: startField.y })
+        fields.push({ ...startField, x: startField.x + i })
     }
     return fields
 }
@@ -21,7 +21,7 @@ function calculateHorizontalShipFields(shipType: ShipType, startField: FieldPosi
 function calculateVerticalShipFields(shipType: ShipType, startField: FieldPosition): FieldPosition[] {
     const fields: FieldPosition[] = []
     for (let i = 0; i < ShipSize[shipType]; i++) {
-        fields.push({ x: startField.x, y: startField.y + i })
+        fields.push({ ...startField, y: startField.y + i })
     }
     return fields
 }

@@ -6,7 +6,7 @@ import { View } from './view/View.ts'
 const webSocket: WebSocket = container.get<WebSocket>('Websocket')
 
 const startView = container.get<View>('StartView')
-
+startView.show(document.querySelector<HTMLDivElement>('#app')!)
 webSocket.onopen = () => {
     console.log('websocket connected')
     startView.show(document.querySelector<HTMLDivElement>('#app')!)

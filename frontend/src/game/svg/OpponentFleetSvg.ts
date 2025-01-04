@@ -1,51 +1,45 @@
 import { inject, injectable } from 'inversify'
 import type { BoardDimension } from '../Game'
-import { Grid } from '../grid/Grid.ts'
 import { convertToFieldPosition } from '../MousePositionConverter.ts'
 import { ShootPayload } from '../../../../messages/ShootPayload.ts'
 import { WebsocketMessage } from '../../../../messages/WebsocketMessage.ts'
 import type { State } from '../../State.ts'
 import { FireLogEntry } from '../../../../messages/GameUpdatePayload.ts'
-import { Shoot } from '../shoot/Shoot.ts'
+import { G, Svg } from '@svgdotjs/svg.js'
+import { GridRenderer } from '../grid/GridRenderer.ts'
+import { ShootRenderer } from '../shoot/ShootRenderer.ts'
 
 @injectable()
-export class OpponentFleetCanvas {
+export class OpponentFleetSvg {
     context?: CanvasRenderingContext2D
+    svg?: Svg
+    svgShootGroup?: G
     lockForUserInput: boolean = true
     fireLogEntries: FireLogEntry[] = []
 
     constructor(
         @inject('BoardDimension') private board: BoardDimension,
-        @inject('Grid') private grid: Grid,
+        @inject('GridRenderer') private gridRenderer: GridRenderer,
+        @inject('ShootRenderer') private shootRenderer: ShootRenderer,
         @inject('Websocket') private websocket: WebSocket,
         @inject('State') private state: State,
     ) {}
 
-    init(canvas: HTMLCanvasElement): void {
-        this.context = canvas.getContext('2d')!
-        canvas.addEventListener('mousedown', this.onMouseDown)
-    }
-
-    draw(): void {
-        if (this.context === undefined) {
-            throw 'The drawing context cannot be undefined.'
-        }
-        this.clearCanvas()
-        this.grid.draw(this.context)
-        const shoot: Shoot = new Shoot(this.board)
-        this.fireLogEntries.forEach(fireLogEntry => shoot.draw(this.context!, fireLogEntry.coordinates))
+    init(svg: Svg): void {
+        this.svg = svg
+        this.gridRenderer.render(this.svg!)
+        this.svgShootGroup = svg.group()
+        svg.mousedown(this.onMouseDown)
     }
 
     update(fireLogEntries: FireLogEntry[]) {
         this.fireLogEntries = fireLogEntries
+        this.shootRenderer.createShootElement(this.svgShootGroup!, this.board,
+            fireLogEntries.map(fireLogEntry => fireLogEntry.coordinates))
     }
 
     setLockForUserInput(lockForUserInput: boolean): void {
         this.lockForUserInput = lockForUserInput
-    }
-
-    private clearCanvas(): void {
-        this.context?.clearRect(0, 0, this.board.canvasSizeInPixels, this.board.canvasSizeInPixels)
     }
 
     private onMouseDown = (event: MouseEvent): void => {
