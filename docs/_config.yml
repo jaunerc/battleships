@@ -1,8 +1,4 @@
 plugins:
   - jekyll-relative-links
 title: Battleships Documentation
-relative_links:
-  enabled: true
-  collections: true
-
 theme: minima
