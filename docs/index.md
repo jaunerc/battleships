@@ -1,3 +1,1 @@
-# Test title
-
 Some content. [link to the subpage](subpage.md)
