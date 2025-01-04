@@ -1,6 +1,7 @@
 plugins:
   - jekyll-relative-links
-title: ''
+name: true
+title: false
 relative_links:
   enabled: true
   collections: true
