@@ -1,10 +1,11 @@
 import { ContainerModule, interfaces } from 'inversify'
 import { BoardDimension } from './Game'
-import { PlaceShipsCanvas } from './canvas/PlaceShipsCanvas.ts'
+import { PlaceShipsSvg } from './svg/PlaceShipsSvg.ts'
 import { ShipFactory } from './ship/ShipFactory.ts'
-import { Grid } from './grid/Grid.ts'
-import { MyFleetCanvas } from './canvas/MyFleetCanvas.ts'
-import { OpponentFleetCanvas } from './canvas/OpponentFleetCanvas.ts'
+import { MyFleetSvg } from './svg/MyFleetSvg.ts'
+import { OpponentFleetSvg } from './svg/OpponentFleetSvg.ts'
+import { GridRenderer } from './grid/GridRenderer.ts'
+import { ShootRenderer } from './shoot/ShootRenderer.ts'
 
 const gameContainer = new ContainerModule(
     (bind: interfaces.Bind) => {
@@ -13,11 +14,12 @@ const gameContainer = new ContainerModule(
             columnSizeInPixels: 40,
             shipFillStyle: '#FF964B80',
             shipStrokeStyle: '#AC2F0D' })
-        bind<Grid>('Grid').to(Grid)
+        bind<GridRenderer>('GridRenderer').to(GridRenderer)
+        bind<ShootRenderer>('ShootRenderer').to(ShootRenderer)
         bind<ShipFactory>('ShipFactory').to(ShipFactory)
-        bind<PlaceShipsCanvas>('PlaceShipsCanvas').to(PlaceShipsCanvas)
-        bind<MyFleetCanvas>('MyFleetCanvas').to(MyFleetCanvas)
-        bind<OpponentFleetCanvas>('OpponentFleetCanvas').to(OpponentFleetCanvas)
+        bind<PlaceShipsSvg>('PlaceShipsSvg').to(PlaceShipsSvg)
+        bind<MyFleetSvg>('MyFleetSvg').to(MyFleetSvg)
+        bind<OpponentFleetSvg>('OpponentFleetSvg').to(OpponentFleetSvg)
     },
 )
 

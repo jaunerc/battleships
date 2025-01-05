@@ -10,7 +10,7 @@ export class ShipFactory {
         return [
             new Ship(this.boardDimension, { x: 2, y: 2 }, 'Battleship'),
             new Ship(this.boardDimension, { x: 6, y: 3 }, 'Carrier'),
-            new Ship(this.boardDimension, { x: 8, y: 6 }, 'Carrier'),
+            new Ship(this.boardDimension, { x: 7, y: 7 }, 'Carrier', 'Horizontal'),
             new Ship(this.boardDimension, { x: 0, y: 2 }, 'Cruiser'),
             new Ship(this.boardDimension, { x: 0, y: 6 }, 'Cruiser'),
             new Ship(this.boardDimension, { x: 4, y: 2 }, 'Cruiser'),
