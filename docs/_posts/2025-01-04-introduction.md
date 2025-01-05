@@ -10,4 +10,4 @@ The business logic of the app is a variant of the game [Battleship](https://en.w
 
 Thanks for reading and I hope it has a few interesting things for you 😄
 
-[Next article](../../../2025/01/04/project-setup.html)
+[Next article](../../../2025/01/05/project-setup.html)
