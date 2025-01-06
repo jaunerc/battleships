@@ -1,4 +1,6 @@
 plugins:
   - jekyll-relative-links
 title: Battleships Project Site
+author:
+  name: jaunerc
 theme: minima
