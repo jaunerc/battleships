@@ -1,6 +1,8 @@
 plugins:
   - jekyll-relative-links
-title: Battleships Project Site
 author:
   name: jaunerc
+title: Battleships Project Site
+description: >
+  A tech blog exploring the development of a web-based Battleship game, diving into frontend design, game logic and websockets.
 theme: minima
