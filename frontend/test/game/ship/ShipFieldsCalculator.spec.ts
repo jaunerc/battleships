@@ -2,6 +2,7 @@ import { describe, expect, test } from 'vitest'
 import { ShipType } from '../../../src/game/Game'
 import { ShipSize } from '../../../src/game/ship/ShipSize'
 import { calculateShipFields } from '../../../src/game/ship/ShipFieldsCalculator'
+import { Box } from '@svgdotjs/svg.js'
 
 describe('ShipFieldsCalculator', () => {
     describe.each([
@@ -12,8 +13,9 @@ describe('ShipFieldsCalculator', () => {
     ])('should calculate the correct number of fields', ({ ship }) => {
         test(`ShipType ${ship}`, () => {
             const shipSize = ShipSize[ship]
+            const shipBox: Box = new Box('')
 
-            const fields = calculateShipFields('Vertical', ship, { x: 0, y: 0 })
+            const fields = calculateShipFields(shipBox, ship, { x: 0, y: 0 })
 
             expect(fields.length).toBe(shipSize)
         })
