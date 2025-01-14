@@ -27,8 +27,6 @@ export class Ship {
         this.startField = targetField
         const nextShipCenterPosition: FieldPosition = this.calculateNextShipCenterPosition(targetField)
         const ship: G = valueIfPresentOrError(this.shipSvg)
-        console.log(targetField)
-        console.log(nextShipCenterPosition)
         if (this.rotated) {
             // If the ship is rotated the ship has to be rotated back first before moving.
             ship.rotate(-this.ROTATION_ANGLE_DEGREES)
