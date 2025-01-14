@@ -1,8 +1,8 @@
 Hi and welcome to this website about my small learning project.
 
-I have planned to write a few articles about the most exciting aspects of the project.
-The aim of the project was to write a small web app with a frontend and backend.
-The app will also be publicly available.
+I have planned to write a few articles about the most exciting aspects of my current learning project.
+The goal of the project was to develop a small web application comprising both a frontend and a backend, both implemented in TypeScript and managed within a monorepo.
+The app is publicly accessible, and I plan to host it using a cloud service.
 The business logic of the app is a variant of the game [Battleship](https://en.wikipedia.org/wiki/Battleship_(game)).
 
 Thanks for reading and I hope it has a few interesting things for you 😄
