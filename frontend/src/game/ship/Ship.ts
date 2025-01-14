@@ -27,6 +27,8 @@ export class Ship {
         this.startField = targetField
         const nextShipCenterPosition: FieldPosition = this.calculateNextShipCenterPosition(targetField)
         const ship: G = valueIfPresentOrError(this.shipSvg)
+        console.log(targetField)
+        console.log(nextShipCenterPosition)
         if (this.rotated) {
             // If the ship is rotated the ship has to be rotated back first before moving.
             ship.rotate(-this.ROTATION_ANGLE_DEGREES)
@@ -41,10 +43,7 @@ export class Ship {
         const columnSize: number = this.boardDimension.columnSizeInPixels
         const halfColumnSize: number = columnSize / 2
         if (this.evenShipSize()) {
-            if (this.rotated) {
-                return { x: targetField.x + halfColumnSize, y: targetField.y + columnSize }
-            }
-            return { x: targetField.x + halfColumnSize, y: targetField.y }
+            return { x: targetField.x + halfColumnSize, y: targetField.y + columnSize }
         }
         return { x: targetField.x + halfColumnSize, y: targetField.y + halfColumnSize }
     }
