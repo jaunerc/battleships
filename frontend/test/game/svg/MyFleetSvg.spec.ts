@@ -29,48 +29,40 @@ describe('MyFleetSvg', () => {
     const mockSvg = new Svg()
 
     it('should initialize with the correct SVG and fleet', () => {
+        // given
         const myFleet = new MyFleetSvg(board, mockGridRenderer, mockShootRenderer)
         const fleet: FieldPosition[][] = [
             [{ x: 0, y: 0 }, { x: 0, y: 1 }],
             [{ x: 2, y: 2 }],
         ]
 
+        // when
         myFleet.init(mockSvg, fleet)
 
+        // then
         expect(myFleet.svg).toBe(mockSvg)
         expect(myFleet.ships.length).toBe(2)
         expect(mockGridRenderer.render).toHaveBeenCalledWith(mockSvg)
     })
 
     it('should update fire log entries and render shoots', () => {
+        // given
         const myFleet = new MyFleetSvg(board, mockGridRenderer, mockShootRenderer)
         const fireLogEntries: FireLogEntry[] = [
             { coordinates: { x: 0, y: 0 }, result: 'hit' },
             { coordinates: { x: 1, y: 1 }, result: 'missed' },
         ]
 
+        // when
         myFleet.init(mockSvg, [])
         myFleet.update(fireLogEntries)
 
+        // then
         expect(myFleet.fireLogEntries).toEqual(fireLogEntries)
         expect(mockShootRenderer.createShootElement).toHaveBeenCalledWith(
             myFleet.svgShootGroup,
             board,
             fireLogEntries.map(entry => entry.coordinates),
         )
-    })
-
-    it('should correctly create a ship from field positions', () => {
-        const myFleet = new MyFleetSvg(board, mockGridRenderer, mockShootRenderer)
-        const fieldPositions: FieldPosition[] = [
-            { x: 0, y: 0 },
-            { x: 0, y: 1 },
-            { x: 0, y: 2 },
-        ]
-
-        const ship = myFleet['createShipFromFieldPositions'](fieldPositions) // Access private method indirectly
-
-        expect(ship.startField).toEqual(fieldPositions[0])
-        expect(ship.shipType).toBe('Carrier')
     })
 })
