@@ -5,11 +5,9 @@ import { Ship } from '../ship/Ship.ts'
 import { ShipFactory } from '../ship/ShipFactory.ts'
 import { GridRenderer } from '../grid/GridRenderer.ts'
 import { Svg } from '@svgdotjs/svg.js'
-import { valueIfPresentOrError } from '../../TypeUtils.ts'
 
 @injectable()
 export class PlaceShipsSvg {
-    context?: CanvasRenderingContext2D
     svg?: Svg
     ships: Ship[] = []
 
@@ -26,10 +24,7 @@ export class PlaceShipsSvg {
     init(svg: Svg): void {
         this.svg = svg
         this.ships = this.shipFactory.buildFleet()
-    }
 
-    draw(): void {
-        const svg: Svg = valueIfPresentOrError(this.svg)
         this.gridRenderer.render(svg)
         this.ships.forEach(ship => ship.createSvgElement(svg))
 

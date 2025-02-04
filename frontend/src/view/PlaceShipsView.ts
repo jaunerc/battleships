@@ -52,7 +52,6 @@ export class PlaceShipsView implements View {
         container.load(gameContainer)
         this.placeShipsSvg = container.get<PlaceShipsSvg>('PlaceShipsSvg')
         this.placeShipsSvg.init(svg)
-        this.placeShipsSvg.draw()
 
         this.websocket.onmessage = this.onWebsocketMessage
     }

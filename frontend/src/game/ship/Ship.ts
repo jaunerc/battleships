@@ -41,10 +41,7 @@ export class Ship {
         const columnSize: number = this.boardDimension.columnSizeInPixels
         const halfColumnSize: number = columnSize / 2
         if (this.evenShipSize()) {
-            if (this.rotated) {
-                return { x: targetField.x + halfColumnSize, y: targetField.y + columnSize }
-            }
-            return { x: targetField.x + halfColumnSize, y: targetField.y }
+            return { x: targetField.x + halfColumnSize, y: targetField.y + columnSize }
         }
         return { x: targetField.x + halfColumnSize, y: targetField.y + halfColumnSize }
     }
