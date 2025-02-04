@@ -27,7 +27,7 @@ describe('OpponentFleetSvg', () => {
         mockSvg = new Svg()
     })
 
-    it('should initialize the SVG and grid', () => {
+    it('should initialize the SVG and grid.', () => {
         const opponentFleet = new OpponentFleetSvg(board, mockGridRenderer, mockShootRenderer, mockWebSocket, mockState)
 
         opponentFleet.init(mockSvg)
@@ -37,7 +37,7 @@ describe('OpponentFleetSvg', () => {
         expect(opponentFleet.svgShootGroup).toBeDefined()
     })
 
-    it('should update fire log entries and render shoots', () => {
+    it('should update fire log entries and render shoots.', () => {
         const opponentFleet = new OpponentFleetSvg(board, mockGridRenderer, mockShootRenderer, mockWebSocket, mockState)
         const fireLogEntries: FireLogEntry[] = [
             { coordinates: { x: 0, y: 0 }, result: 'hit' },
@@ -55,7 +55,7 @@ describe('OpponentFleetSvg', () => {
         )
     })
 
-    it('should toggle user input lock', () => {
+    it('should toggle user input lock.', () => {
         const opponentFleet = new OpponentFleetSvg(board, mockGridRenderer, mockShootRenderer, mockWebSocket, mockState)
 
         opponentFleet.setLockForUserInput(false)
@@ -65,7 +65,7 @@ describe('OpponentFleetSvg', () => {
         expect(opponentFleet.lockForUserInput).toBe(true)
     })
 
-    it('should send a shoot message on mouse down when unlocked', () => {
+    it('should send a shoot message on mouse down when unlocked.', () => {
         const opponentFleet = new OpponentFleetSvg(board, mockGridRenderer, mockShootRenderer, mockWebSocket, mockState)
         const mockEvent = { offsetX: 25, offsetY: 25 } as unknown as MouseEvent
 
@@ -84,7 +84,7 @@ describe('OpponentFleetSvg', () => {
         )
     })
 
-    it('should not send a shoot message on mouse down when locked', () => {
+    it('should not send a shoot message on mouse down when locked.', () => {
         const opponentFleet = new OpponentFleetSvg(board, mockGridRenderer, mockShootRenderer, mockWebSocket, mockState)
         const mockEvent = { offsetX: 25, offsetY: 25 } as unknown as MouseEvent
 
