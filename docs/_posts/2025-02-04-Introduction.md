@@ -7,7 +7,6 @@ For this purpose, a web app is being developed that allows the game [Battleship]
 Thanks for reading, and I hope there are some interesting things for you 😄
 
 ## Project setup
-
 I primarily chose the technology out of personal interest.
 Additionally, I wanted to work with a lean tech stack without sacrificing comfort.
 For this reason, I decided to use **TypeScript** and the IoC framework **Inversify** for both the frontend and backend.
@@ -28,3 +27,9 @@ I want to experiment with creating a web app without common frontend frameworks 
 However, I fear that I will miss some conveniences.
 At the very least, the app's logic should be fairly simple.
 I hope this means I won't have to build too much functionality that a framework would normally provide out of the box.
+
+## Outlook
+I have already implemented a first prototype.
+The source code is available as a monorepo on [GitHub](https://github.com/jaunerc/battleships).
+In the next articles, I would like to provide insights into interesting implementation details.
+
