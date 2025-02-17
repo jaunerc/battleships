@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --fs-base: 1rem; /* 16px */
+    --fs-large: 1.5rem; /* 24px */
+    --fs-xlarge: 2rem; /* 32px */
+}
+
+html, body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+}
+
+/* Ensure that all elements use the font from its parent element by default */
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+    font-weight: inherit;
+}
+
+h1 {
+    font-size: var(--fs-xlarge);
+}
+
+input {
+    font-size: var(--fs-large);
+    padding: 0.5rem;
+}
+
+button {
+    font-size: var(--fs-base);
+    font-weight: bold;
+    padding: 0.5rem;
+}
+
+#app {
+    display: flex;
+    justify-content: center;
+}
+
+.view-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.gap-between {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2em;
+}
+
+.battleground {
+    display: flex;
+    flex-direction: row;
+    column-gap: 2em;
+}

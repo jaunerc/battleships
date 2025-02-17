@@ -15,10 +15,12 @@ export class UsernameView implements View {
 
     show(appDiv: HTMLDivElement): void {
         appDiv.innerHTML = `
-          <div>
-            <label for="username">Please type your username</label>
-            <input id="username"/>
-            <button id="submit">Submit</button>
+          <div class="view-content">
+            <h1>Type your username</h1>
+            <div class="gap-between">
+                <input id="username" placeholder="The Captain"/>
+                <button id="submit">Submit</button>
+            </div>
           </div>
         `
         const submitButton: HTMLButtonElement = document.querySelector<HTMLButtonElement>('#submit')!

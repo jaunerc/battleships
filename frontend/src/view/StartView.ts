@@ -14,7 +14,7 @@ export class StartView implements View {
 
     show(appDiv: HTMLDivElement): void {
         appDiv.innerHTML = `
-            <div>
+            <div class="view-content">
                 <h1>Welcome to Battleships</h1>
                 <button id="start">Start the game</button>
             </div>

@@ -8,6 +8,7 @@ import { PlayerReadyPayload } from '../../../messages/PlayerReadyPayload.ts'
 import { WebsocketMessage } from '../../../messages/WebsocketMessage.ts'
 import { GameUpdatePayload } from '../../../messages/GameUpdatePayload.ts'
 import { SVG, Svg } from '@svgdotjs/svg.js'
+import { BoardDimension } from '../game/Game'
 
 @injectable()
 export class GameView implements View {
@@ -23,28 +24,36 @@ export class GameView implements View {
 
     show(appDiv: HTMLDivElement): void {
         appDiv.innerHTML = `
-            <div>
+            <div class="view-content">
                 <p>Current Player:</p>
                 <p id="current-player"></p>
                 <p>Winner:</p>
                 <p id="winner"></p>
-                <div>
-                    <p>Opponents fleet</p>
-                    <svg id="opponents-fleet-svg"></svg>
-                </div>
-                <div>
-                    <p>My fleet</p>
-                    <svg id="my-fleet-svg"></svg>
+                <div class="battleground">
+                    <div>
+                        <p>Opponents fleet</p>
+                        <svg id="opponents-fleet-svg"></svg>
+                    </div>
+                    <div>
+                        <p>My fleet</p>
+                        <svg id="my-fleet-svg"></svg>
+                    </div>
                 </div>
             </div>
         `
 
+        window.addEventListener('resize', this.onResize)
+
         const myFleetSvg: Svg = SVG('#my-fleet-svg')
-            .size(400, 400)
+            .size('100%', '100%')
             .root()
         const opponentsFleetSvg: Svg = SVG('#opponents-fleet-svg')
-            .size(400, 400)
+            .size('100%', '100%')
             .root()
+
+        myFleetSvg.viewbox(0, 0, 400, 400)
+        opponentsFleetSvg.viewbox(0, 0, 400, 400)
+
         this.myFleetSvg = container.get<MyFleetSvg>('MyFleetSvg')
         this.opponentFleetSvg = container.get<OpponentFleetSvg>('OpponentFleetSvg')
 
@@ -59,6 +68,19 @@ export class GameView implements View {
         this.websocket.send(JSON.stringify(readyMessage))
 
         this.websocket.onmessage = this.onWebsocketMessage
+    }
+
+    private onResize = () => {
+        const boardDimension: BoardDimension = container.get<BoardDimension>('BoardDimension')
+        const svgSize: number = document.querySelector<SVGElement>('#my-fleet-svg')!.clientWidth
+        console.log('svgSize: ' + svgSize)
+
+        boardDimension.canvasSizeInPixels = 400
+        boardDimension.columnSizeInPixels = boardDimension.canvasSizeInPixels / 10
+        SVG('#my-fleet-svg')
+            .size('100%', '100%')
+            .root()
+        this.myFleetSvg?.resize(this.state.fleet!)
     }
 
     private onWebsocketMessage = (message: MessageEvent<string>) => {
