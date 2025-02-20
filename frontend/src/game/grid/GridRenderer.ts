@@ -12,7 +12,7 @@ export class GridRenderer {
         for (let row = 0; row < numberOfColumns; row++) {
             for (let col = 0; col < numberOfColumns; col++) {
                 svg.rect(columnsSize, columnsSize)
-                    .attr({ fill: '#FFF', stroke: '#000', strokeWidth: 1 })
+                    .attr({ 'fill': '#FFF', 'stroke': '#000', 'stroke-width': 0.5 })
                     .move(col * columnsSize, row * columnsSize)
             }
         }
