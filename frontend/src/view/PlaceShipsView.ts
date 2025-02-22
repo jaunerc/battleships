@@ -37,7 +37,7 @@ export class PlaceShipsView implements View {
         const svg: Svg = SVG('#place-ships-svg')
             .size('100%', '100%')
             .root()
-        svg.viewbox(0, 0, 400, 400)
+        svg.viewbox(-1, -1, 102, 102)
 
         const saveFleetButton: HTMLButtonElement = document.querySelector<HTMLButtonElement>('#save-fleet')!
 
