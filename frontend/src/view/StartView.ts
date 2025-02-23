@@ -1,8 +1,7 @@
 import type { View } from './View.ts'
 import type { State } from '../State.ts'
 import { inject, injectable } from 'inversify'
-import { WebsocketMessage } from '../../../messages/WebsocketMessage.ts'
-import { PlayerIdPayload } from '../../../messages/PlayerIdPayload.ts'
+import { PlayerIdPayload, WebsocketMessage } from '../../../shared/Shared.ts'
 
 @injectable()
 export class StartView implements View {

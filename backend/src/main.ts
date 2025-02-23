@@ -1,11 +1,11 @@
 import 'reflect-metadata'
 import express from 'express'
 import expressWs from 'express-ws'
-import { WebsocketMessage } from '../../messages/WebsocketMessage'
 import { container } from './inversify.config'
 import { WebsocketMessageProcessor } from './websocket/WebsocketMessageProcessor'
 import WebSocket from 'ws'
 import logger from './Logger'
+import { WebsocketMessage } from '../../shared/Shared'
 
 const expressWsInstance = expressWs(express())
 const app = expressWsInstance.app

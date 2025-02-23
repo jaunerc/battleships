@@ -1,10 +1,10 @@
 import { describe, it, expect, vi } from 'vitest'
 import { Svg, G } from '@svgdotjs/svg.js'
-import { FireLogEntry } from '../../../../messages/GameUpdatePayload'
-import { BoardDimension, FieldPosition } from '../../../src/game/Game'
 import { GridRenderer } from '../../../src/game/grid/GridRenderer'
 import { ShootRenderer } from '../../../src/game/shoot/ShootRenderer'
 import { MyFleetSvg } from '../../../src/game/svg/MyFleetSvg'
+import { FieldPosition, FireLogEntry } from '../../../../shared/Shared'
+import { BoardDimension } from '../../../src/game/GameTypes'
 
 vi.mock('@svgdotjs/svg.js', () => ({
     G: class {

@@ -4,10 +4,8 @@ import { View } from './View.ts'
 import { MyFleetSvg } from '../game/svg/MyFleetSvg.ts'
 import { container } from '../inversify.config.ts'
 import { OpponentFleetSvg } from '../game/svg/OpponentFleetSvg.ts'
-import { PlayerReadyPayload } from '../../../messages/PlayerReadyPayload.ts'
-import { WebsocketMessage } from '../../../messages/WebsocketMessage.ts'
-import { GameUpdatePayload, PlayerSeatId } from '../../../messages/GameUpdatePayload.ts'
 import { SVG, Svg } from '@svgdotjs/svg.js'
+import { GameUpdatePayload, PlayerReadyPayload, SeatId, WebsocketMessage } from '../../../shared/Shared.ts'
 
 @injectable()
 export class GameView implements View {
@@ -92,7 +90,7 @@ export class GameView implements View {
         }
     }
 
-    private isOpponentSeat(seatId: PlayerSeatId): boolean {
+    private isOpponentSeat(seatId: SeatId): boolean {
         return this.state.seatId !== seatId
     }
 

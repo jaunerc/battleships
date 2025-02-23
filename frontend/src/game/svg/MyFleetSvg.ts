@@ -1,11 +1,11 @@
 import { Ship } from '../ship/Ship.ts'
 import { inject, injectable } from 'inversify'
-import type { BoardDimension, FieldPosition } from '../Game'
-import { FireLogEntry } from '../../../../messages/GameUpdatePayload.ts'
+import type { BoardDimension } from '../GameTypes.ts'
 import { G, Svg } from '@svgdotjs/svg.js'
 import { GridRenderer } from '../grid/GridRenderer.ts'
 import { ShootRenderer } from '../shoot/ShootRenderer.ts'
 import { getShipTypeByLength } from '../ship/ShipSize.ts'
+import { FieldPosition, FireLogEntry } from '../../../../shared/Shared.ts'
 
 @injectable()
 export class MyFleetSvg {

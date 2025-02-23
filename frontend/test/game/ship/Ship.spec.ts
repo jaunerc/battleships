@@ -2,8 +2,9 @@ import { describe, it, expect, vi } from 'vitest'
 import { Svg, G, Box } from '@svgdotjs/svg.js'
 import { Ship } from '../../../src/game/ship/Ship'
 import { ShipSize } from '../../../src/game/ship/ShipSize'
-import { BoardDimension, FieldPosition, ShipType } from '../../../src/game/Game'
+import { BoardDimension } from '../../../src/game/GameTypes'
 import { ShipRenderer } from '../../../src/game/ship/ShipRenderer'
+import { FieldPosition, ShipType } from '../../../../shared/Shared'
 
 // mock the required functions for this test from svg.js
 vi.mock('@svgdotjs/svg.js', () => ({

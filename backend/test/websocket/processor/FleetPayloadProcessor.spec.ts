@@ -1,8 +1,8 @@
 import 'reflect-metadata'
 import { FleetPayloadProcessor } from '../../../src/websocket/processor/FleetPayloadProcessor'
 import { GameState } from '../../../src/Backend'
-import { FleetPayload } from '../../../../messages/FleetPayload'
 import { WebsocketMessageSender } from '../../../src/websocket/WebsocketMessageSender'
+import { FleetPayload } from '../../../../shared/Shared'
 
 describe('FleetPayloadProcessor', () => {
     let gameState: GameState

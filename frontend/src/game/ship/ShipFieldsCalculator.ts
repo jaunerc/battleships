@@ -1,6 +1,6 @@
 import { ShipSize } from './ShipSize.ts'
-import { FieldPosition, ShipType } from '../Game'
 import { Box } from '@svgdotjs/svg.js'
+import { FieldPosition, ShipType } from '../../../../shared/Shared.ts'
 
 export function calculateShipFields(shipBbox: Box, shipType: ShipType, startField: FieldPosition): FieldPosition[] {
     const horizontalShipDirection: boolean = shipBbox.width > shipBbox.height

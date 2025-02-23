@@ -1,1 +1,0 @@
-export type WebsocketMessageType = 'PLAYER_JOINING' | 'USERNAME' | 'PLAYER_ID' | 'FLEET' | 'FLEET_VALIDATION' | 'PLAYER_READY' | 'GAME_UPDATE' | 'SHOOT'

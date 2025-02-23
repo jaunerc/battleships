@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify'
-import type { BoardDimension } from '../Game'
+import type { BoardDimension } from '../GameTypes.ts'
 import { Svg } from '@svgdotjs/svg.js'
 
 @injectable()

@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify'
 import { Ship } from './Ship.ts'
-import type { BoardDimension } from '../Game'
+import type { BoardDimension } from '../GameTypes.ts'
 
 @injectable()
 export class ShipFactory {
