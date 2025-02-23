@@ -6,7 +6,7 @@ COPY ./backend/package*.json .
 
 RUN npm install
 
-COPY ./messages ../messages
+COPY ./shared ../shared
 COPY ./backend .
 
 RUN npm run build

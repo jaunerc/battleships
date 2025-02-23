@@ -6,7 +6,7 @@ COPY ./frontend/package*.json .
 
 RUN npm install
 
-COPY ./messages ../messages
+COPY ./shared ../shared
 COPY ./frontend .
 
 RUN npm run build
