@@ -6,7 +6,7 @@ import { container } from '../inversify.config.ts'
 import { OpponentFleetSvg } from '../game/svg/OpponentFleetSvg.ts'
 import { PlayerReadyPayload } from '../../../messages/PlayerReadyPayload.ts'
 import { WebsocketMessage } from '../../../messages/WebsocketMessage.ts'
-import {GameUpdatePayload, PlayerSeatId} from '../../../messages/GameUpdatePayload.ts'
+import { GameUpdatePayload, PlayerSeatId } from '../../../messages/GameUpdatePayload.ts'
 import { SVG, Svg } from '@svgdotjs/svg.js'
 
 @injectable()
