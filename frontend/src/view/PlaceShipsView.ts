@@ -25,16 +25,20 @@ export class PlaceShipsView implements View {
 
     show(appDiv: HTMLDivElement): void {
         appDiv.innerHTML = `
-            <div>
+            <div class="view-content">
                 <h1>Place your ships</h1>
-                <svg id="place-ships-svg"></svg>
-                <button id="save-fleet">Save Fleet</button>
+                <div class="gap-between">
+                    <svg id="place-ships-svg"></svg>
+                    <button id="save-fleet">Save Fleet</button>
+                </div>
             </div>
         `
         this.appDiv = appDiv
         const svg: Svg = SVG('#place-ships-svg')
-            .size(400, 400)
+            .size('100%', '100%')
             .root()
+        svg.viewbox(-1, -1, 102, 102)
+
         const saveFleetButton: HTMLButtonElement = document.querySelector<HTMLButtonElement>('#save-fleet')!
 
         saveFleetButton.addEventListener('click', () => {

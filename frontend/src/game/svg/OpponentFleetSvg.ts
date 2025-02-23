@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify'
 import type { BoardDimension } from '../Game'
-import { convertToFieldPosition } from '../MousePositionConverter.ts'
+import { convertToFieldPosition, convertToSvgCoordinates } from './SvgCoordinateConverter.ts'
 import { ShootPayload } from '../../../../messages/ShootPayload.ts'
 import { WebsocketMessage } from '../../../../messages/WebsocketMessage.ts'
 import type { State } from '../../State.ts'
@@ -46,7 +46,8 @@ export class OpponentFleetSvg {
         if (this.lockForUserInput) {
             return
         }
-        const mousePosition = convertToFieldPosition(event.offsetX, event.offsetY, this.board.columnSizeInPixels)
+        const p = convertToSvgCoordinates(this.svg!, event.clientX, event.clientY)
+        const mousePosition = convertToFieldPosition(p, this.board.columnSizeInPixels)
 
         const shootPayload: ShootPayload = { playerSeatId: this.state.seatId!, shoot: mousePosition }
         const websocketMessage: WebsocketMessage = { type: 'SHOOT', payload: JSON.stringify(shootPayload) }

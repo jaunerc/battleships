@@ -78,7 +78,10 @@ export class Ship {
     getFieldPositions(parent: Svg): FieldPosition[] {
         const ship: G = valueIfPresentOrError(this.shipSvg)
         const boundingBox: Box = ship.rbox(parent)
-        const startField: FieldPosition = { x: boundingBox.x / this.boardDimension.columnSizeInPixels, y: boundingBox.y / this.boardDimension.columnSizeInPixels }
+        const startField: FieldPosition = {
+            x: Math.round(boundingBox.x) / this.boardDimension.columnSizeInPixels,
+            y: Math.round(boundingBox.y) / this.boardDimension.columnSizeInPixels,
+        }
         return calculateShipFields(boundingBox, this.shipType, startField)
     }
 

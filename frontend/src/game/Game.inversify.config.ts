@@ -10,8 +10,8 @@ import { ShootRenderer } from './shoot/ShootRenderer.ts'
 const gameContainer = new ContainerModule(
     (bind: interfaces.Bind) => {
         bind<BoardDimension>('BoardDimension').toConstantValue({
-            canvasSizeInPixels: 400,
-            columnSizeInPixels: 40,
+            canvasSizeInPixels: 100,
+            columnSizeInPixels: 10,
             shipFillStyle: '#FF964B80',
             shipStrokeStyle: '#AC2F0D' })
         bind<GridRenderer>('GridRenderer').to(GridRenderer)

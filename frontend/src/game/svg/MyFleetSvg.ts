@@ -30,6 +30,12 @@ export class MyFleetSvg {
         this.svgShootGroup = svg.group()
     }
 
+    resize(fleet: FieldPosition[][]): void {
+        console.log(this.board)
+        this.svg!.clear()
+        this.init(this.svg!, fleet)
+    }
+
     private createShipFromFieldPositions(fieldPositions: FieldPosition[]): Ship {
         if (fieldPositions.length === 1) {
             return new Ship(this.board, fieldPositions[0], getShipTypeByLength(1), 'Vertical')
