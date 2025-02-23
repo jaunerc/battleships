@@ -2,7 +2,7 @@ import WebSocket from 'ws'
 import { inject, injectable } from 'inversify'
 import { GameState } from '../Backend'
 import logger from '../Logger'
-import {WebsocketMessage} from "../../../shared/Shared";
+import { WebsocketMessage } from '../../../shared/Shared'
 
 @injectable()
 export class WebsocketMessageSender {

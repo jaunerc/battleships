@@ -4,7 +4,7 @@ import { WebsocketMessageSender } from '../WebsocketMessageSender'
 import { WebsocketPayloadProcessor } from './WebsocketPayloadProcessor'
 import { valueIfPresentOrError } from '../../TypeUtils'
 import logger from '../../Logger'
-import {GameUpdatePayload, PlayerFireLog, SeatId, ShootPayload, WebsocketMessage} from "../../../../shared/Shared";
+import { GameUpdatePayload, PlayerFireLog, SeatId, ShootPayload, WebsocketMessage } from '../../../../shared/Shared'
 
 @injectable()
 export class ShootPayloadProcessor implements WebsocketPayloadProcessor {

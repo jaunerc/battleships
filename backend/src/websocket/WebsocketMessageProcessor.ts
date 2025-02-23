@@ -6,7 +6,7 @@ import { FleetPayloadProcessor } from './processor/FleetPayloadProcessor'
 import { PlayerReadyPayloadProcessor } from './processor/PlayerReadyPayloadProcessor'
 import { valueIfPresentOrError } from '../TypeUtils'
 import { ShootPayloadProcessor } from './processor/ShootPayloadProcessor'
-import {WebsocketMessage} from "../../../shared/Shared";
+import { WebsocketMessage } from '../../../shared/Shared'
 
 @injectable()
 export class WebsocketMessageProcessor {

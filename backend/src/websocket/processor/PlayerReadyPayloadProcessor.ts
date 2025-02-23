@@ -3,7 +3,7 @@ import { GameState } from '../../Backend'
 import { WebsocketMessageSender } from '../WebsocketMessageSender'
 import { WebsocketPayloadProcessor } from './WebsocketPayloadProcessor'
 import logger from '../../Logger'
-import {GameUpdatePayload, PlayerReadyPayload, WebsocketMessage} from "../../../../shared/Shared";
+import { GameUpdatePayload, PlayerReadyPayload, WebsocketMessage } from '../../../../shared/Shared'
 
 @injectable()
 export class PlayerReadyPayloadProcessor implements WebsocketPayloadProcessor {

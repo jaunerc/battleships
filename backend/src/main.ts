@@ -5,7 +5,7 @@ import { container } from './inversify.config'
 import { WebsocketMessageProcessor } from './websocket/WebsocketMessageProcessor'
 import WebSocket from 'ws'
 import logger from './Logger'
-import {WebsocketMessage} from "../../shared/Shared";
+import { WebsocketMessage } from '../../shared/Shared'
 
 const expressWsInstance = expressWs(express())
 const app = expressWsInstance.app

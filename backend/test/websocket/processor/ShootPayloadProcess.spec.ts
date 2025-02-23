@@ -2,7 +2,7 @@ import 'reflect-metadata'
 import { GameState } from '../../../src/Backend'
 import { WebsocketMessageSender } from '../../../src/websocket/WebsocketMessageSender'
 import { ShootPayloadProcessor } from '../../../src/websocket/processor/ShootPayloadProcessor'
-import {ShootPayload} from "../../../../shared/Shared";
+import { ShootPayload } from '../../../../shared/Shared'
 
 describe('ShootPayloadProcessor', () => {
     let gameState: GameState

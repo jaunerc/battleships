@@ -4,7 +4,7 @@ import { GameState } from '../../Backend'
 import { WebsocketMessageSender } from '../WebsocketMessageSender'
 import WebSocket from 'ws'
 import logger from '../../Logger'
-import {FieldPosition, FleetPayload, FleetValidationPayload, WebsocketMessage} from '../../../../shared/Shared'
+import { FieldPosition, FleetPayload, FleetValidationPayload, WebsocketMessage } from '../../../../shared/Shared'
 
 type ValidationResult = 'passed' | 'overlapping_ships' | 'no_distance_between_ships'
 
