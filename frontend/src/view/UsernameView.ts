@@ -2,8 +2,7 @@ import { View } from './View.ts'
 import { inject, injectable } from 'inversify'
 import type { State } from '../State.ts'
 import { PlaceShipsView } from './PlaceShipsView.ts'
-import { UsernamePayload } from '../../../messages/UsernamePayload.ts'
-import { WebsocketMessage } from '../../../messages/WebsocketMessage.ts'
+import { UsernamePayload, WebsocketMessage } from '../../../shared/Shared.ts'
 
 @injectable()
 export class UsernameView implements View {

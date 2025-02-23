@@ -1,6 +1,7 @@
 import { G } from '@svgdotjs/svg.js'
-import { BoardDimension, FieldPosition } from '../Game'
+import { BoardDimension } from '../GameTypes.ts'
 import { injectable } from 'inversify'
+import { FieldPosition } from '../../../../shared/Shared.ts'
 
 @injectable()
 export class ShootRenderer {

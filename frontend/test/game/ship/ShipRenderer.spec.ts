@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { G, Svg } from '@svgdotjs/svg.js'
 import { ShipRenderer } from '../../../src/game/ship/ShipRenderer'
-import { BoardDimension } from '../../../src/game/Game'
+import { BoardDimension } from '../../../src/game/GameTypes'
 
 // mock the required functions for this test from svg.js
 vi.mock('@svgdotjs/svg.js', () => ({

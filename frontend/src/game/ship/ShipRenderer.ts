@@ -1,5 +1,6 @@
 import { G, Svg } from '@svgdotjs/svg.js'
-import { BoardDimension, FieldPosition } from '../Game'
+import { BoardDimension } from '../GameTypes.ts'
+import { FieldPosition } from '../../../../shared/Shared.ts'
 
 export class ShipRenderer {
     createHorizontalShip(svg: Svg,

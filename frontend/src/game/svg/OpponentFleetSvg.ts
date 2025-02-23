@@ -1,13 +1,11 @@
 import { inject, injectable } from 'inversify'
-import type { BoardDimension } from '../Game'
+import type { BoardDimension } from '../GameTypes.ts'
 import { convertToFieldPosition, convertToSvgCoordinates } from './SvgCoordinateConverter.ts'
-import { ShootPayload } from '../../../../messages/ShootPayload.ts'
-import { WebsocketMessage } from '../../../../messages/WebsocketMessage.ts'
 import type { State } from '../../State.ts'
-import { FireLogEntry } from '../../../../messages/GameUpdatePayload.ts'
 import { G, Svg } from '@svgdotjs/svg.js'
 import { GridRenderer } from '../grid/GridRenderer.ts'
 import { ShootRenderer } from '../shoot/ShootRenderer.ts'
+import { FireLogEntry, ShootPayload, WebsocketMessage } from '../../../../shared/Shared.ts'
 
 @injectable()
 export class OpponentFleetSvg {

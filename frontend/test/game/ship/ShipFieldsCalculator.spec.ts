@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest'
-import { ShipType } from '../../../src/game/Game'
 import { ShipSize } from '../../../src/game/ship/ShipSize'
 import { calculateShipFields } from '../../../src/game/ship/ShipFieldsCalculator'
 import { Box } from '@svgdotjs/svg.js'
+import { ShipType } from '../../../../shared/Shared'
 
 describe('ShipFieldsCalculator', () => {
     describe.each([

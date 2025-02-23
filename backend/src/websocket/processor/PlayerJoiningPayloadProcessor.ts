@@ -1,12 +1,11 @@
 import { inject, injectable } from 'inversify'
 import { v4 } from 'uuid'
 import WebSocket from 'ws'
-import { GameState, Player, SeatId } from '../../Backend'
+import { GameState, Player } from '../../Backend'
 import { WebsocketMessageSender } from '../WebsocketMessageSender'
-import { PlayerIdPayload } from '../../../../messages/PlayerIdPayload'
-import { WebsocketMessage } from '../../../../messages/WebsocketMessage'
 import { WebsocketPayloadProcessor } from './WebsocketPayloadProcessor'
 import logger from '../../Logger'
+import {PlayerIdPayload, SeatId, WebsocketMessage} from "../../../../shared/Shared";
 
 @injectable()
 export class PlayerJoiningPayloadProcessor implements WebsocketPayloadProcessor {

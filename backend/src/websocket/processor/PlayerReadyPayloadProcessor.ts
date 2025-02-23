@@ -2,10 +2,8 @@ import { inject, injectable } from 'inversify'
 import { GameState } from '../../Backend'
 import { WebsocketMessageSender } from '../WebsocketMessageSender'
 import { WebsocketPayloadProcessor } from './WebsocketPayloadProcessor'
-import { PlayerReadyPayload } from '../../../../messages/PlayerReadyPayload'
-import { WebsocketMessage } from '../../../../messages/WebsocketMessage'
-import { GameUpdatePayload } from '../../../../messages/GameUpdatePayload'
 import logger from '../../Logger'
+import {GameUpdatePayload, PlayerReadyPayload, WebsocketMessage} from "../../../../shared/Shared";
 
 @injectable()
 export class PlayerReadyPayloadProcessor implements WebsocketPayloadProcessor {

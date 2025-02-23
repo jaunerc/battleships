@@ -1,7 +1,7 @@
 import { describe, it, vi, expect } from 'vitest'
 import { Svg } from '@svgdotjs/svg.js'
 import { GridRenderer } from '../../../src/game/grid/GridRenderer'
-import { BoardDimension } from '../../../src/game/Game'
+import { BoardDimension } from '../../../src/game/GameTypes'
 
 describe('GridRenderer', () => {
     it('should render a grid with the correct number of cells.', () => {

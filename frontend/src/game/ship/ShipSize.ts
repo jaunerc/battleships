@@ -1,5 +1,5 @@
-import { ShipType } from '../Game'
 import { valueIfPresentOrError } from '../../TypeUtils.ts'
+import { ShipType } from '../../../../shared/Shared.ts'
 
 export const ShipSize: Record<ShipType, number> = {
     Battleship: 4,

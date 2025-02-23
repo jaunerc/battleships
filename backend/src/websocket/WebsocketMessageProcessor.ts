@@ -2,11 +2,11 @@ import { inject, injectable } from 'inversify'
 import WebSocket from 'ws'
 import { UsernamePayloadProcessor } from './processor/UsernamePayloadProcessor'
 import { PlayerJoiningPayloadProcessor } from './processor/PlayerJoiningPayloadProcessor'
-import { WebsocketMessage } from '../../../messages/WebsocketMessage'
 import { FleetPayloadProcessor } from './processor/FleetPayloadProcessor'
 import { PlayerReadyPayloadProcessor } from './processor/PlayerReadyPayloadProcessor'
 import { valueIfPresentOrError } from '../TypeUtils'
 import { ShootPayloadProcessor } from './processor/ShootPayloadProcessor'
+import {WebsocketMessage} from "../../../shared/Shared";
 
 @injectable()
 export class WebsocketMessageProcessor {

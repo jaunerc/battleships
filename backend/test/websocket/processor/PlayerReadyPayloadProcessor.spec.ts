@@ -2,7 +2,7 @@ import 'reflect-metadata'
 import { GameState } from '../../../src/Backend'
 import { WebsocketMessageSender } from '../../../src/websocket/WebsocketMessageSender'
 import { PlayerReadyPayloadProcessor } from '../../../src/websocket/processor/PlayerReadyPayloadProcessor'
-import { PlayerReadyPayload } from '../../../../messages/PlayerReadyPayload'
+import {PlayerReadyPayload} from "../../../../shared/Shared";
 
 describe('PlayerReadyPayloadProcessor', () => {
     let websocketMessageSenderMock: WebsocketMessageSender

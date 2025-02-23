@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { Svg } from '@svgdotjs/svg.js'
-import { FireLogEntry } from '../../../../messages/GameUpdatePayload'
-import { BoardDimension } from '../../../src/game/Game'
+import { BoardDimension } from '../../../src/game/GameTypes'
 import { GridRenderer } from '../../../src/game/grid/GridRenderer'
 import { ShootRenderer } from '../../../src/game/shoot/ShootRenderer'
 import { State } from '../../../src/State'
 import { OpponentFleetSvg } from '../../../src/game/svg/OpponentFleetSvg'
+import { FireLogEntry } from '../../../../shared/Shared'
 
 vi.mock('../MousePositionConverter', () => ({
     convertToFieldPosition: vi.fn(() => ({ x: 0, y: 0 })),

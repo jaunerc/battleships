@@ -1,5 +1,5 @@
-import { FieldPosition } from '../Game'
 import { Point, Svg } from '@svgdotjs/svg.js'
+import { FieldPosition } from '../../../../shared/Shared.ts'
 
 export function convertToFieldPosition(svgPoint: Point, columnSizeInPixels: number): FieldPosition {
     return {

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { G } from '@svgdotjs/svg.js'
 import { ShootRenderer } from '../../../src/game/shoot/ShootRenderer'
-import { BoardDimension } from '../../../src/game/Game'
+import { BoardDimension } from '../../../src/game/GameTypes'
 
 vi.mock('@svgdotjs/svg.js', () => ({
     G: class {

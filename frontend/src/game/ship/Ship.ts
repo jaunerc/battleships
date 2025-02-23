@@ -1,9 +1,10 @@
 import { ShipSize } from './ShipSize.ts'
-import { BoardDimension, FieldPosition, ShipOrientation, ShipType } from '../Game'
 import { ShipRenderer } from './ShipRenderer.ts'
 import { Box, G, Svg } from '@svgdotjs/svg.js'
 import { valueIfPresentOrError } from '../../TypeUtils.ts'
 import { calculateShipFields } from './ShipFieldsCalculator.ts'
+import { FieldPosition, ShipType } from '../../../../shared/Shared.ts'
+import { BoardDimension, ShipOrientation } from '../GameTypes.ts'
 
 export class Ship {
     shipType: ShipType

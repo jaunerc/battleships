@@ -1,12 +1,10 @@
 import { inject, injectable } from 'inversify'
 import { WebsocketPayloadProcessor } from './WebsocketPayloadProcessor'
-import { FieldCoordinate, GameState } from '../../Backend'
-import { FleetPayload } from '../../../../messages/FleetPayload'
+import { GameState } from '../../Backend'
 import { WebsocketMessageSender } from '../WebsocketMessageSender'
 import WebSocket from 'ws'
-import { WebsocketMessage } from '../../../../messages/WebsocketMessage'
-import { FleetValidationPayload } from '../../../../messages/FleetValidationPayload'
 import logger from '../../Logger'
+import {FieldPosition, FleetPayload, FleetValidationPayload, WebsocketMessage} from '../../../../shared/Shared'
 
 type ValidationResult = 'passed' | 'overlapping_ships' | 'no_distance_between_ships'
 
@@ -37,7 +35,7 @@ export class FleetPayloadProcessor implements WebsocketPayloadProcessor {
         }
     }
 
-    private validateFleet(fleet: FieldCoordinate[][]): ValidationResult {
+    private validateFleet(fleet: FieldPosition[][]): ValidationResult {
         const noOverlappingShipsResult: ValidationResult = this.validateNoOverlappingShips(fleet)
         if (noOverlappingShipsResult !== 'passed') {
             logger.warn('Fleet validation unsuccessfully - there are overlapping ships.')
@@ -51,8 +49,8 @@ export class FleetPayloadProcessor implements WebsocketPayloadProcessor {
         return 'passed'
     }
 
-    private validateNoOverlappingShips(fleet: FieldCoordinate[][]): ValidationResult {
-        const occupiedFields: FieldCoordinate[] = []
+    private validateNoOverlappingShips(fleet: FieldPosition[][]): ValidationResult {
+        const occupiedFields: FieldPosition[] = []
 
         for (const shipField of fleet.flat()) {
             if (occupiedFields.some(neighbourField => neighbourField.x === shipField.x && neighbourField.y === shipField.y)) {
@@ -63,14 +61,14 @@ export class FleetPayloadProcessor implements WebsocketPayloadProcessor {
         return 'passed'
     }
 
-    private validateDistanceBetweenShips(fleet: FieldCoordinate[][]): ValidationResult {
-        const occupiedFields: FieldCoordinate[] = []
+    private validateDistanceBetweenShips(fleet: FieldPosition[][]): ValidationResult {
+        const occupiedFields: FieldPosition[] = []
 
         // create an array with all neighbour fields
         for (const ship of fleet) {
             // add all neighbour fields
             for (const shipField of ship) {
-                const neighbourFields: FieldCoordinate[] = [
+                const neighbourFields: FieldPosition[] = [
                     // left fields
                     { x: shipField.x - 1, y: shipField.y - 1 },
                     { x: shipField.x - 1, y: shipField.y },

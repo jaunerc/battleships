@@ -1,6 +1,5 @@
 import { injectable } from 'inversify'
-import { FireLogEntry } from '../../messages/GameUpdatePayload.ts'
-import { FieldPosition } from './game/Game'
+import { FieldPosition, FireLogEntry, SeatId } from '../../shared/Shared.ts'
 
 export interface State {
     playerId?: string
@@ -14,8 +13,6 @@ export interface FireLogs {
     myFireLog: FireLogEntry[]
     opponentFireLog: FireLogEntry[]
 }
-
-export type SeatId = 'first' | 'second'
 
 @injectable()
 export class StateImpl implements State {

@@ -1,10 +1,11 @@
-import type { BoardDimension, FieldPosition } from '../Game'
+import type { BoardDimension } from '../GameTypes.ts'
 import { convertToFieldPosition, convertToSvgCoordinates } from './SvgCoordinateConverter.ts'
 import { inject, injectable } from 'inversify'
 import { Ship } from '../ship/Ship.ts'
 import { ShipFactory } from '../ship/ShipFactory.ts'
 import { GridRenderer } from '../grid/GridRenderer.ts'
 import { Svg } from '@svgdotjs/svg.js'
+import { FieldPosition } from '../../../../shared/Shared.ts'
 
 @injectable()
 export class PlaceShipsSvg {

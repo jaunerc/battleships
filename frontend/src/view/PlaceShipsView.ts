@@ -1,15 +1,12 @@
 import { View } from './View.ts'
 import { inject, injectable } from 'inversify'
 import type { State } from '../State.ts'
-import { FieldPosition } from '../game/Game'
 import { PlaceShipsSvg } from '../game/svg/PlaceShipsSvg.ts'
 import { container } from '../inversify.config.ts'
 import { gameContainer } from '../game/Game.inversify.config.ts'
 import { GameView } from './GameView.ts'
-import { FleetPayload } from '../../../messages/FleetPayload.ts'
-import { WebsocketMessage } from '../../../messages/WebsocketMessage.ts'
-import { FleetValidationPayload } from '../../../messages/FleetValidationPayload.ts'
 import { SVG, Svg } from '@svgdotjs/svg.js'
+import { FieldPosition, FleetPayload, FleetValidationPayload, WebsocketMessage } from '../../../shared/Shared.ts'
 
 @injectable()
 export class PlaceShipsView implements View {

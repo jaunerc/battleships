@@ -1,5 +1,5 @@
 import { ContainerModule, interfaces } from 'inversify'
-import { BoardDimension } from './Game'
+import { BoardDimension } from './GameTypes.ts'
 import { PlaceShipsSvg } from './svg/PlaceShipsSvg.ts'
 import { ShipFactory } from './ship/ShipFactory.ts'
 import { MyFleetSvg } from './svg/MyFleetSvg.ts'

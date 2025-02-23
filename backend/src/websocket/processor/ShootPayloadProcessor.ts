@@ -2,11 +2,9 @@ import { inject, injectable } from 'inversify'
 import { FireLogEntry, GameState, Player } from '../../Backend'
 import { WebsocketMessageSender } from '../WebsocketMessageSender'
 import { WebsocketPayloadProcessor } from './WebsocketPayloadProcessor'
-import { ShootPayload } from '../../../../messages/ShootPayload'
-import { GameUpdatePayload, PlayerFireLog, PlayerSeatId } from '../../../../messages/GameUpdatePayload'
-import { WebsocketMessage } from '../../../../messages/WebsocketMessage'
 import { valueIfPresentOrError } from '../../TypeUtils'
 import logger from '../../Logger'
+import {GameUpdatePayload, PlayerFireLog, SeatId, ShootPayload, WebsocketMessage} from "../../../../shared/Shared";
 
 @injectable()
 export class ShootPayloadProcessor implements WebsocketPayloadProcessor {
@@ -55,7 +53,7 @@ export class ShootPayloadProcessor implements WebsocketPayloadProcessor {
             .length === 0
     }
 
-    private findOpponent(shooterPlayerSeatId: PlayerSeatId) {
+    private findOpponent(shooterPlayerSeatId: SeatId) {
         return valueIfPresentOrError(this.gameState.players.find(player => player.seatId !== shooterPlayerSeatId))
     }
 
