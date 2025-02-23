@@ -55,4 +55,10 @@ button {
     display: flex;
     flex-direction: row;
     column-gap: 2em;
+
+    div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }

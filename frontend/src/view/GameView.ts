@@ -6,15 +6,14 @@ import { container } from '../inversify.config.ts'
 import { OpponentFleetSvg } from '../game/svg/OpponentFleetSvg.ts'
 import { PlayerReadyPayload } from '../../../messages/PlayerReadyPayload.ts'
 import { WebsocketMessage } from '../../../messages/WebsocketMessage.ts'
-import { GameUpdatePayload } from '../../../messages/GameUpdatePayload.ts'
+import {GameUpdatePayload, PlayerSeatId} from '../../../messages/GameUpdatePayload.ts'
 import { SVG, Svg } from '@svgdotjs/svg.js'
 
 @injectable()
 export class GameView implements View {
-    currentPlayerParagraph?: HTMLParagraphElement
+    infoTextParagraph?: HTMLParagraphElement
     opponentFleetSvg?: OpponentFleetSvg
     myFleetSvg?: MyFleetSvg
-    winnerPlayerParagraph?: HTMLParagraphElement
 
     constructor(
         @inject('State') private state: State,
@@ -24,18 +23,16 @@ export class GameView implements View {
     show(appDiv: HTMLDivElement): void {
         appDiv.innerHTML = `
             <div class="view-content">
-                <p>Current Player:</p>
-                <p id="current-player"></p>
-                <p>Winner:</p>
-                <p id="winner"></p>
+                <h1>Battle!</h1>
+                <p id="info-text">Waiting for the other player...</p>
                 <div class="battleground">
                     <div>
-                        <p>Opponents fleet</p>
                         <svg id="opponents-fleet-svg"></svg>
+                        <p>Opponents fleet</p>
                     </div>
                     <div>
-                        <p>My fleet</p>
                         <svg id="my-fleet-svg"></svg>
+                        <p>My fleet</p>
                     </div>
                 </div>
             </div>
@@ -54,8 +51,7 @@ export class GameView implements View {
         this.myFleetSvg = container.get<MyFleetSvg>('MyFleetSvg')
         this.opponentFleetSvg = container.get<OpponentFleetSvg>('OpponentFleetSvg')
 
-        this.currentPlayerParagraph = document.querySelector<HTMLParagraphElement>('#current-player')!
-        this.winnerPlayerParagraph = document.querySelector<HTMLParagraphElement>('#winner')!
+        this.infoTextParagraph = document.querySelector<HTMLParagraphElement>('#info-text')!
 
         this.myFleetSvg.init(myFleetSvg, this.state.fleet!)
         this.opponentFleetSvg.init(opponentsFleetSvg)
@@ -80,18 +76,28 @@ export class GameView implements View {
             this.opponentFleetSvg?.update(this.state.fireLogs?.myFireLog)
         }
 
-        this.currentPlayerParagraph!.innerText = gameUpdatePayload.currentPlayerSeatId
+        this.setCurrentPlayerInfo(gameUpdatePayload)
 
-        this.opponentFleetSvg?.setLockForUserInput(this.currentPlayerIsOpponent(gameUpdatePayload))
+        this.opponentFleetSvg?.setLockForUserInput(this.isOpponentSeat(gameUpdatePayload.currentPlayerSeatId))
 
         if (gameUpdatePayload.winnerSeatId !== undefined) {
-            this.winnerPlayerParagraph!.innerText = gameUpdatePayload.winnerSeatId
+            const wonTheBattle: boolean = !this.isOpponentSeat(gameUpdatePayload.winnerSeatId)
             this.opponentFleetSvg?.setLockForUserInput(true)
-            this.currentPlayerParagraph!.innerText = ''
+
+            if (wonTheBattle) {
+                this.infoTextParagraph!.innerText = 'Congrats. You won!'
+            } else {
+                this.infoTextParagraph!.innerText = 'You lost...'
+            }
         }
     }
 
-    private currentPlayerIsOpponent(gameUpdatePayload: GameUpdatePayload): boolean {
-        return this.state.seatId !== gameUpdatePayload.currentPlayerSeatId
+    private isOpponentSeat(seatId: PlayerSeatId): boolean {
+        return this.state.seatId !== seatId
+    }
+
+    private setCurrentPlayerInfo(gameUpdatePayload: GameUpdatePayload): void {
+        const showOpponentInfo: boolean = this.isOpponentSeat(gameUpdatePayload.currentPlayerSeatId)
+        this.infoTextParagraph!.innerText = `Current Player: ${showOpponentInfo ? 'Opponent' : 'You'}`
     }
 }
