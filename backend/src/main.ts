@@ -6,6 +6,7 @@ import { WebsocketMessageProcessor } from './websocket/WebsocketMessageProcessor
 import WebSocket from 'ws'
 import logger from './Logger'
 import { WebsocketMessage } from '../../shared/Shared'
+import { GameState } from './BackendTypes'
 
 const expressWsInstance = expressWs(express())
 const app = expressWsInstance.app
@@ -35,6 +36,14 @@ app.ws('/', function (ws) {
         logger.info(`Message received of type: ${websocketMessage.type}.`)
 
         process(websocketMessageProcessor, websocketMessage, ws)
+
+        const state: GameState = container.get('GameState')
+        if (state.winnerPlayerSeatId !== undefined) {
+            // reset the game state for the next game
+            state.players = []
+            state.winnerPlayerSeatId = undefined
+            state.currentPlayerSeatId = 'first'
+        }
     })
 
     ws.on('close', function () {

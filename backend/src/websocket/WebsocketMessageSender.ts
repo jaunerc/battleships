@@ -1,6 +1,6 @@
 import WebSocket from 'ws'
 import { inject, injectable } from 'inversify'
-import { GameState } from '../Backend'
+import { GameState } from '../BackendTypes'
 import logger from '../Logger'
 import { WebsocketMessage } from '../../../shared/Shared'
 

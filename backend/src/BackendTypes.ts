@@ -1,10 +1,5 @@
 import WebSocket from 'ws'
-import { FieldPosition, SeatId, ShootResult } from '../../shared/Shared'
-
-export interface FireLogEntry {
-    coordinates: FieldPosition
-    result: ShootResult
-}
+import { FieldPosition, FireLogEntry, SeatId } from '../../shared/Shared'
 
 export interface Player {
     id: string
