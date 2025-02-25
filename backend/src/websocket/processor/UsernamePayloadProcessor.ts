@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify'
-import { GameState } from '../../Backend'
+import { GameState } from '../../BackendTypes'
 import { WebsocketPayloadProcessor } from './WebsocketPayloadProcessor'
 import { UsernamePayload } from '../../../../shared/Shared'
 

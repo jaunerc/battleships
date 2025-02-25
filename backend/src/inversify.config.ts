@@ -1,5 +1,5 @@
 import { Container } from 'inversify'
-import { GameState } from './Backend'
+import { GameState } from './BackendTypes'
 import { WebsocketMessageSender } from './websocket/WebsocketMessageSender'
 import { UsernamePayloadProcessor } from './websocket/processor/UsernamePayloadProcessor'
 import { PlayerJoiningPayloadProcessor } from './websocket/processor/PlayerJoiningPayloadProcessor'

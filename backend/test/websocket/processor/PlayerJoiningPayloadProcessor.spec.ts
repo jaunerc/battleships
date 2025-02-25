@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import { GameState } from '../../../src/Backend'
+import { GameState } from '../../../src/BackendTypes'
 import { PlayerJoiningPayloadProcessor } from '../../../src/websocket/processor/PlayerJoiningPayloadProcessor'
 import { WebsocketMessageSender } from '../../../src/websocket/WebsocketMessageSender'
 

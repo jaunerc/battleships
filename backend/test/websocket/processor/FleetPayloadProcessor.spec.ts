@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 import { FleetPayloadProcessor } from '../../../src/websocket/processor/FleetPayloadProcessor'
-import { GameState } from '../../../src/Backend'
+import { GameState } from '../../../src/BackendTypes'
 import { WebsocketMessageSender } from '../../../src/websocket/WebsocketMessageSender'
 import { FleetPayload } from '../../../../shared/Shared'
 

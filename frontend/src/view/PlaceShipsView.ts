@@ -28,6 +28,7 @@ export class PlaceShipsView implements View {
                     <svg id="place-ships-svg"></svg>
                     <button id="save-fleet">Save Fleet</button>
                 </div>
+                <p hidden class="error-text">The ship positions are invalid.</p>
             </div>
         `
         this.appDiv = appDiv
@@ -42,6 +43,9 @@ export class PlaceShipsView implements View {
             if (this.placeShipsSvg === undefined) {
                 throw 'The game state must be defined.'
             }
+            const errorParagraph: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>('.error-text')!
+            errorParagraph.hidden = true
+
             const fleet: FieldPosition[][] = this.placeShipsSvg?.ships.map(ship => ship.getFieldPositions(svg))
             this.state.fleet = fleet
 
@@ -63,6 +67,9 @@ export class PlaceShipsView implements View {
 
         if (fleetValidationPayload.validationResult === 'passed') {
             this.gameView.show(this.appDiv!)
+        } else {
+            const errorParagraph: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>('.error-text')!
+            errorParagraph.hidden = false
         }
     }
 }
