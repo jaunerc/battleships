@@ -14,13 +14,21 @@ export class PlayerJoiningPayloadProcessor implements WebsocketPayloadProcessor 
     ) {}
 
     process(_payload: string, clientWs: WebSocket): void {
+        let playerJoiningPayload: PlayerIdPayload
+
+        if (this.isJoiningNotPossible()) {
+            logger.warn('A player try to join the game but it is not possible because there are already two players connected.')
+            playerJoiningPayload = { joiningSuccessful: false }
+            this.sendWebsocketMessage(clientWs, playerJoiningPayload)
+            return
+        }
+
         const player: Player = { id: v4(), readyToStartGame: false, websocket: clientWs, seatId: this.getNextSeatId(), fireLog: [] }
         this.gameState.players.push(player)
         logger.info(`Player joined on the ${player.seatId} seat id.`)
 
-        const playerIdPayload: PlayerIdPayload = { id: player.id, seatId: player.seatId! }
-        const websocketMessage: WebsocketMessage = { type: 'PLAYER_ID', payload: JSON.stringify(playerIdPayload) }
-        this.websocketMessageSender.sendTo(clientWs, websocketMessage)
+        playerJoiningPayload = { id: player.id, seatId: player.seatId!, joiningSuccessful: true }
+        this.sendWebsocketMessage(clientWs, playerJoiningPayload)
     }
 
     private getNextSeatId(): SeatId {
@@ -28,5 +36,14 @@ export class PlayerJoiningPayloadProcessor implements WebsocketPayloadProcessor 
             return 'first'
         }
         return 'second'
+    }
+
+    private isJoiningNotPossible(): boolean {
+        return this.gameState.players.length >= 2
+    }
+
+    private sendWebsocketMessage(clientWs: WebSocket, playerJoiningPayload: PlayerIdPayload): void {
+        const websocketMessage: WebsocketMessage = { type: 'PLAYER_ID', payload: JSON.stringify(playerJoiningPayload) }
+        this.websocketMessageSender.sendTo(clientWs, websocketMessage)
     }
 }

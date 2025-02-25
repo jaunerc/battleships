@@ -47,8 +47,9 @@ export interface GameUpdatePayload {
 }
 
 export interface PlayerIdPayload {
-    id: string,
-    seatId: SeatId
+    id?: string,
+    seatId?: SeatId,
+    joiningSuccessful: boolean
 }
 
 export interface PlayerReadyPayload {

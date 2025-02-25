@@ -62,3 +62,7 @@ button {
         align-items: center;
     }
 }
+
+.error-text {
+    color: #ff0033;
+}

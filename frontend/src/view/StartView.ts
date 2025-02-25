@@ -16,6 +16,7 @@ export class StartView implements View {
             <div class="view-content">
                 <h1>Welcome to Battleships</h1>
                 <button id="start">Start the game</button>
+                <p hidden class="error-text">You cannot join. There is already a game running...</p>
             </div>
         `
         const startButton: HTMLButtonElement = document.querySelector<HTMLButtonElement>('#start')!
@@ -32,9 +33,19 @@ export class StartView implements View {
             if (websocketMessage.payload === undefined) {
                 throw 'the player id payload cannot be undefined'
             }
+
             const playerIdPayload: PlayerIdPayload = JSON.parse(websocketMessage.payload)
-            this.state.playerId = playerIdPayload.id
-            this.state.seatId = playerIdPayload.seatId
+
+            if (playerIdPayload.joiningSuccessful) {
+                this.state.playerId = playerIdPayload.id
+                this.state.seatId = playerIdPayload.seatId
+            } else {
+                const errorParagraph: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>('.error-text')!
+                const startButton: HTMLButtonElement = document.querySelector<HTMLButtonElement>('#start')!
+
+                errorParagraph.hidden = false
+                startButton.disabled = true
+            }
         }
     }
 }
