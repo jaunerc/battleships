@@ -52,6 +52,6 @@ export class MyFleetSvg {
     update(fireLogEntries: FireLogEntry[]) {
         this.fireLogEntries = fireLogEntries
         this.shootRenderer.createShootElement(this.svgShootGroup!, this.board,
-            this.fireLogEntries.map(fireLogEntry => fireLogEntry.coordinates))
+            this.fireLogEntries.map(fireLogEntry => fireLogEntry))
     }
 }

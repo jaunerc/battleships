@@ -33,7 +33,7 @@ export class OpponentFleetSvg {
     update(fireLogEntries: FireLogEntry[]) {
         this.fireLogEntries = fireLogEntries
         this.shootRenderer.createShootElement(this.svgShootGroup!, this.board,
-            fireLogEntries.map(fireLogEntry => fireLogEntry.coordinates))
+            fireLogEntries.map(fireLogEntry => fireLogEntry))
     }
 
     setLockForUserInput(lockForUserInput: boolean): void {
