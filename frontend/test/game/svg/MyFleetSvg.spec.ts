@@ -62,7 +62,7 @@ describe('MyFleetSvg', () => {
         expect(mockShootRenderer.createShootElement).toHaveBeenCalledWith(
             myFleet.svgShootGroup,
             board,
-            fireLogEntries.map(entry => entry.coordinates),
+            fireLogEntries,
         )
     })
 })

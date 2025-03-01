@@ -51,7 +51,7 @@ describe('OpponentFleetSvg', () => {
         expect(mockShootRenderer.createShootElement).toHaveBeenCalledWith(
             opponentFleet.svgShootGroup,
             board,
-            fireLogEntries.map(entry => entry.coordinates),
+            fireLogEntries,
         )
     })
 
